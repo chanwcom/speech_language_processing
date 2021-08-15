@@ -20,7 +20,7 @@ training set size is large.
 
 
 \begin{align}
-  \ssf{w} \leftarrow  \ssf{w} - \grad_{\ssf{w}} loss
+  \ssf{w} \leftarrow  \ssf{w} - \nabla_{\ssf{w}} L
 \end{align}
 
 MyST stands for "Markedly Structured Text". It
