@@ -10,8 +10,7 @@ called **MyST Markdown**.
 
 
 \begin{align}
-  x = x + 3
-  y = y + 2
+  \ssf{y} \rightarrow loss
 \end{align}
 
 MyST stands for "Markedly Structured Text". It

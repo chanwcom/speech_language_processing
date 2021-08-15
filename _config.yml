@@ -42,4 +42,4 @@ sphinx:
     mathjax_config:
       TeX:
         Macros:
-          "ssf": ["\bm{\mathsf{#1}}", 1]
+          "ssf": ["\\bm{\\mathsf{#1}}", 1]
