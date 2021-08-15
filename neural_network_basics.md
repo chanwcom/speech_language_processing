@@ -4,7 +4,15 @@ Whether you write your book's content in Jupyter Notebooks (`.ipynb`) or
 in regular markdown files (`.md`), you'll write in the same flavor of markdown
 called **MyST Markdown**.
 
+## Gradient Descent 
+
 ## Stochastic Gradient Descent (SGD)
+
+
+\begin{align}
+  x = x + 3
+  y = y + 2
+\end{align}
 
 MyST stands for "Markedly Structured Text". It
 is a slight variation on a flavor of markdown called "CommonMark" markdown,
