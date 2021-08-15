@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural network basics &#8212; My sample book</title>
+    <title>Neural Network Basics &#8212; My sample book</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -104,7 +104,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Neural network basics
+   Neural Network Basics
   </a>
  </li>
 </ul>
@@ -195,6 +195,16 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-set">
+   Training Set
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loss-function">
+   Loss Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#gradient-descent">
    Gradient Descent
   </a>
@@ -243,18 +253,26 @@
               <div>
                 
   <div class="section" id="neural-network-basics">
-<h1>Neural network basics<a class="headerlink" href="#neural-network-basics" title="Permalink to this headline">¶</a></h1>
-<p>Whether you write your book’s content in Jupyter Notebooks (<code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) or
-in regular markdown files (<code class="docutils literal notranslate"><span class="pre">.md</span></code>), you’ll write in the same flavor of markdown
-called <strong>MyST Markdown</strong>.</p>
+<h1>Neural Network Basics<a class="headerlink" href="#neural-network-basics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="training-set">
+<h2>Training Set<a class="headerlink" href="#training-set" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="loss-function">
+<h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
+<p>Suppose that the neural-network model $f$ generates output $\hat{y}$</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8737a6eb-36d2-4a27-946a-dc1987a14f83">
+<span class="eqno">(1)<a class="headerlink" href="#equation-8737a6eb-36d2-4a27-946a-dc1987a14f83" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  L = loss(y, \hat(y)) 
+\end{align}\]</div>
+</div>
 <div class="section" id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="stochastic-gradient-descent-sgd">
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
-<div class="amsmath math notranslate nohighlight" id="equation-0ad84acd-51da-4a7b-bd64-871542895574">
-<span class="eqno">(1)<a class="headerlink" href="#equation-0ad84acd-51da-4a7b-bd64-871542895574" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \ssf{y} \rightarrow loss
+<div class="amsmath math notranslate nohighlight" id="equation-beaa67c0-b281-4ceb-896b-9972eb394c1c">
+<span class="eqno">(2)<a class="headerlink" href="#equation-beaa67c0-b281-4ceb-896b-9972eb394c1c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \ssf{w} \leftarrow  \ssf{w} - loss
 \end{align}\]</div>
 <p>MyST stands for “Markedly Structured Text”. It
 is a slight variation on a flavor of markdown called “CommonMark” markdown,

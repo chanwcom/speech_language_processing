@@ -1,8 +1,14 @@
-# Neural network basics
+# Neural Network Basics
 
-Whether you write your book's content in Jupyter Notebooks (`.ipynb`) or
-in regular markdown files (`.md`), you'll write in the same flavor of markdown
-called **MyST Markdown**.
+## Training Set
+
+
+## Loss Function
+Suppose that the neural-network model $f$ generates output $\hat{y}$  
+
+\begin{align}
+  L = loss(y, \hat(y)) 
+\end{align}
 
 ## Gradient Descent 
 
@@ -10,7 +16,7 @@ called **MyST Markdown**.
 
 
 \begin{align}
-  \ssf{y} \rightarrow loss
+  \ssf{w} \leftarrow  \ssf{w} - loss
 \end{align}
 
 MyST stands for "Markedly Structured Text". It
