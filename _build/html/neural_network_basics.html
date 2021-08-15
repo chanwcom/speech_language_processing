@@ -260,9 +260,9 @@
 <div class="section" id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
 <p>Suppose that the neural-network model $f$ generates output $\hat{y}$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8737a6eb-36d2-4a27-946a-dc1987a14f83">
-<span class="eqno">(1)<a class="headerlink" href="#equation-8737a6eb-36d2-4a27-946a-dc1987a14f83" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  L = loss(y, \hat(y)) 
+<div class="amsmath math notranslate nohighlight" id="equation-bfb6b5a9-ace5-48af-b91e-dadef29f27d6">
+<span class="eqno">(1)<a class="headerlink" href="#equation-bfb6b5a9-ace5-48af-b91e-dadef29f27d6" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  L = loss(y, \hat{y}) 
 \end{align}\]</div>
 </div>
 <div class="section" id="gradient-descent">
@@ -270,9 +270,12 @@
 </div>
 <div class="section" id="stochastic-gradient-descent-sgd">
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
-<div class="amsmath math notranslate nohighlight" id="equation-beaa67c0-b281-4ceb-896b-9972eb394c1c">
-<span class="eqno">(2)<a class="headerlink" href="#equation-beaa67c0-b281-4ceb-896b-9972eb394c1c" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \ssf{w} \leftarrow  \ssf{w} - loss
+<p>The Gradient Descent
+The Gradient Descent approach described above is not practical when the
+training set size is large.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-97648960-fbd0-433b-8cf1-ee52b299155c">
+<span class="eqno">(2)<a class="headerlink" href="#equation-97648960-fbd0-433b-8cf1-ee52b299155c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \ssf{w} \leftarrow  \ssf{w} - \grad_{\ssf{w}} loss
 \end{align}\]</div>
 <p>MyST stands for “Markedly Structured Text”. It
 is a slight variation on a flavor of markdown called “CommonMark” markdown,

@@ -7,16 +7,20 @@
 Suppose that the neural-network model $f$ generates output $\hat{y}$  
 
 \begin{align}
-  L = loss(y, \hat(y)) 
+  L = loss(y, \hat{y}) 
 \end{align}
 
 ## Gradient Descent 
 
 ## Stochastic Gradient Descent (SGD)
 
+The Gradient Descent 
+The Gradient Descent approach described above is not practical when the
+training set size is large.
+
 
 \begin{align}
-  \ssf{w} \leftarrow  \ssf{w} - loss
+  \ssf{w} \leftarrow  \ssf{w} - \grad_{\ssf{w}} loss
 \end{align}
 
 MyST stands for "Markedly Structured Text". It
