@@ -74,7 +74,7 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="_static/slp_lab.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">Introduction to Speech and Language Processing using Deep Learning</h1>
@@ -206,8 +206,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training-set">
-   Training Set
+  <a class="reference internal nav-link" href="#training-data-set">
+   Training Data Set
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -251,64 +251,114 @@ simplicity of discussion, we will focus only on <em>the classification problem</
 input.</p>
 <p>When the number of output classes is <span class="math notranslate nohighlight">\(V\)</span>, then <span class="math notranslate nohighlight">\(y\)</span> may take a value in the
 following range:</p>
-<div class="math notranslate nohighlight">
-\[  0 \le y \le V - 1.\]</div>
+<div class="math notranslate nohighlight" id="equation-output-label">
+<span class="eqno">(1)<a class="headerlink" href="#equation-output-label" title="Permalink to this equation">¶</a></span>\[  0 \le y \le V - 1.\]</div>
 <p>In stead of the above <em>sparse representation of the output class</em>, we may use
 <em>the one-hot vector</em> representation as below:</p>
 </div>
-<div class="section" id="training-set">
-<h2>Training Set<a class="headerlink" href="#training-set" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="training-data-set">
+<h2>Training Data Set<a class="headerlink" href="#training-data-set" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we consider the supervised training case, which might be the
 most basic case of training neural-network models.
 Other cases such as unsupervised or semi-supervised training cases will
-be covered in TODO(<a class="reference external" href="http://chanw.com">chanw.com</a>).</p>
-<p>In the supervised training, we are given a set of labeled data. Each element of
-this set is usually the input <span class="math notranslate nohighlight">\(\bsf{x}^{(i)}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f915118-8305-4e41-8523-99bf7859d62c">
-<span class="eqno">(1)<a class="headerlink" href="#equation-2f915118-8305-4e41-8523-99bf7859d62c" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \mathcal{T} = \big \{ &lt;\bsf{x}^{(i)},\, y^{(i)} &gt; | 0 \le i \le N_{\text{tr}} - 1 \big \}
-\end{align}\]</div>
+be covered later.</p>
+<div class="math notranslate nohighlight" id="equation-training-set">
+<span class="eqno">(2)<a class="headerlink" href="#equation-training-set" title="Permalink to this equation">¶</a></span>\[  \mathcal{T} = \big \{ (\bsf{x}^{(k)},\, \bsf{y}^{(k)})
+      \; \big | \; 0 \le k \le N_{\text{tr}} - 1 \big \},\]</div>
+<p>where <span class="math notranslate nohighlight">\(N_{\text{tr}}\)</span> is the number of examples in the training set
+<span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
 </div>
 <div class="section" id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
-<p>Suppose that the neural-network model <span class="math notranslate nohighlight">\(f\)</span> generates output <span class="math notranslate nohighlight">\(\hat{y}\)</span></p>
+<p>In training neural network models, our objective is making the model output <span class="math notranslate nohighlight">\(\hat{\bsf{y}}\)</span>
+as close to the ground truth <span class="math notranslate nohighlight">\(\bsf{y}\)</span> as possible. To perform this task
+analytically, we usually define a certain <em>loss function</em> and minimize it.
+The entire loss <span class="math notranslate nohighlight">\(\mathbb{L}\)</span> is defined by the following equation for the
+entire training set defined in <a class="reference internal" href="#equation-training-set">(2)</a>:</p>
 <div class="math notranslate nohighlight" id="equation-entire-loss">
-<span class="eqno">(2)<a class="headerlink" href="#equation-entire-loss" title="Permalink to this equation">¶</a></span>\[  \mathbb{L} = \frac{1}{N_{\text{tr}}} \sum_{i=0}^{N_{\text{tr} - 1}}
-    \text{loss}(y^{(i)}, \hat{y}^{(i)}) \]</div>
+<span class="eqno">(3)<a class="headerlink" href="#equation-entire-loss" title="Permalink to this equation">¶</a></span>\[  \mathbb{L} = \frac{1}{N_{\text{tr}}} \sum_{k=0}^{N_{\text{tr} - 1}}
+    \text{loss}(\bsf{y}^{(k)}, \hat{\bsf{y}}^{(k)}) \]</div>
+<p>where <span class="math notranslate nohighlight">\(N_{tr}\)</span> is the number of training examples as defined in</p>
 <p>Now, the question is what would be a good candidate for the loss function in
-<a class="reference internal" href="#equation-entire-loss">(2)</a>.</p>
-<p>As will be discussed later, an appropriate loss function is different
-depending on applications. TODO(<a class="reference external" href="http://chanw.com">chanw.com</a>) Mention where it will be or was
-discussed.</p>
-<p>In the classification problem, we assume that for a specific input <span class="math notranslate nohighlight">\(\bsf{x}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-4508125d-cae0-45dc-9182-94c387d01ed7">
-<span class="eqno">(3)<a class="headerlink" href="#equation-4508125d-cae0-45dc-9182-94c387d01ed7" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \mathbb{L} = - E \left[ \log(f( | )) \right]
-\end{align}\]</div>
+<a class="reference internal" href="#equation-entire-loss">(3)</a>. Various types of functions may be condidates for this loss
+function including the well know <span class="math notranslate nohighlight">\(L_1\)</span> or <span class="math notranslate nohighlight">\(L_2\)</span> losses and so on.
+As will be discussed later, an appropriate loss function is different
+depending on applications.</p>
+<p>In the classification problem, we would like to make the distribution of prediction by
+the model <span class="math notranslate nohighlight">\(\hat{\bsf{y}} = f(\bsf{x})\)</span>
+as close to the distribution of the training data set as possible. In this
+classification problem, note that both the ground truth output <span class="math notranslate nohighlight">\(\bsf{y}\)</span> and
+the predicted output <span class="math notranslate nohighlight">\(\hat{\bsf{y}}\)</span> are probability distributions of the set
+of output labels defined in <a class="reference internal" href="#equation-output-label">(1)</a>.</p>
+<p>To measure the difference between two distributions, we may use the KL
+divergence or the Cross Entropy (CE). Since the distribution of the training
+set is already fixed, minimizing the following Cross Entropy (CE) loss is equvalent to
+minizing <em>the KL divergence</em>, which is shown in the following equation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \mathbb{L}_{\text{CE}} &amp; =  H(\bsf{y}, \bsf{\hat{y}}) \\
+                         &amp; =  H(\bsf{y}) + D_{\text{KL}} (\bsf{y} || \hat{\bsf{y}})\end{split}\]</div>
+<p>From the definition of cross entropy (CE), <span class="math notranslate nohighlight">\(\mathbb{L}_{\text{CE}}\)</span> is given by
+the following equation:</p>
+<div class="math notranslate nohighlight" id="equation-ce-loss">
+<span class="eqno">(4)<a class="headerlink" href="#equation-ce-loss" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+         &amp; =  -E_{\bsf{y} \sim \text{training_data}} \left[ \log \hat{\bsf{y}} \right]. \\\end{split}\]</div>
+<p>When the one-hot vector representation is used in <a class="reference internal" href="#equation-ce-loss">(4)</a>, <a class="reference internal" href="#equation-ce-loss">(4)</a>
+is calculated as follows:</p>
+<div class="math notranslate nohighlight" id="equation-ce-loss-one-hot">
+<span class="eqno">(5)<a class="headerlink" href="#equation-ce-loss-one-hot" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+         &amp; =  -E_{\bsf{y} \sim \text{training_data}} 
+          \left[ \sum_{v=0}^{V-1} y_v   \log \hat{y}_v  \right]. \\\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y_v\)</span> and <span class="math notranslate nohighlight">\(\hat{y}_v\)</span> are <span class="math notranslate nohighlight">\(v\)</span>-th element of the one-hot vector
+<span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span> respectively, and <span class="math notranslate nohighlight">\(V\)</span> is the number of
+output classes as shown in <a class="reference internal" href="#equation-output-label">(1)</a>.</p>
+<p><a class="reference internal" href="#equation-ce-loss-one-hot">(5)</a> may be expressed in summation rather than the expection as
+follows:</p>
+<div class="math notranslate nohighlight" id="equation-ce-loss-one-hot-sum">
+<span class="eqno">(6)<a class="headerlink" href="#equation-ce-loss-one-hot-sum" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+         &amp; =  -\sum_{k=0}^{N_{\text{tr}}}
+           \sum_{v=0}^{V-1} y^{(k)}_v   \log \hat{y}^{(k)}_v . \\\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y^{(k)}_v\)</span> and <span class="math notranslate nohighlight">\(\hat{y}^{(k)}_v\)</span> represent the <span class="math notranslate nohighlight">\(v\)</span>-th element of the
+one-hot vector of the k-th training example <span class="math notranslate nohighlight">\(\mathbf{y}^{(k)}\)</span> and the
+corresponding predicted output using the model <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(k)}\)</span>.</p>
 </div>
 <div class="section" id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
-<div class="amsmath math notranslate nohighlight" id="equation-276ffc17-5661-429f-803c-034653038190">
-<span class="eqno">(4)<a class="headerlink" href="#equation-276ffc17-5661-429f-803c-034653038190" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
+<p>Suppose that the entire parameters of our neural network model is denoted by
+<span class="math notranslate nohighlight">\(\mathsf{w}\)</span>. If we can directly differentiate the loss function <span class="math notranslate nohighlight">\(\mathbb{L}\)</span>,
+we improve the model parameters using the well-known Gradient Descent approach
+as shown below:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cea8df4b-9b0b-4df8-9ae5-e8ca809c862d">
+<span class="eqno">(7)<a class="headerlink" href="#equation-cea8df4b-9b0b-4df8-9ae5-e8ca809c862d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}.
 \end{align}\]</div>
-<p>Gradient Descent (GD) is not a practical approach when the training set size is
+<p>It is well known that the direction of the negative of gradient is the
+direction of <em>steepest descent</em> in the surface defined by the loss function
+<span class="math notranslate nohighlight">\(\mathbb{L}\)</span>.
+However, Gradient Descent (GD) is not a practical approach when the training set size is
 sufficiently large for the following two reasons.</p>
 <ul class="simple">
-<li><p>Inefficiency in computation</p></li>
-<li><p>Slow convergence</p></li>
+<li><p><strong>Inefficiency in computation</strong> <br>
+It is usually not possible to load all the training examples in memory at
+once. Thus, we may need to store partial results and part of inputs in the
+disk, and repeatedly load and save partial result.</p></li>
+<li><p><strong>Slow convergence</strong> <br>
+Parameter update is done only once after processing the entire training
+set. That is to say, the parameter update is done only once for one <em>epoch</em>.</p></li>
 </ul>
-<p>The Gradient Descent (GD) approach described above is not practical when the
-training set size is large for the following two reagons.</p>
-<p>This is because the parameter update represented by</p>
 </div>
 <div class="section" id="stochastic-gradient-descent-sgd">
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
-<p>() happens only once for the entire training set.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-19d09340-093d-432b-8a29-2ae0fa9cba53">
-<span class="eqno">(5)<a class="headerlink" href="#equation-19d09340-093d-432b-8a29-2ae0fa9cba53" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i
+<p>Unlike the GD approach using the loss from the entire training dataset, in SGD,
+we update the parameter for each training example <span class="math notranslate nohighlight">\((\bsf{x}^{(k)}, \bsf{y}^{(k)})\)</span> iteratively.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5ea107f0-c0a4-421e-8e96-58a2c04d2a88">
+<span class="eqno">(8)<a class="headerlink" href="#equation-5ea107f0-c0a4-421e-8e96-58a2c04d2a88" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}^{(k)}
 \end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbb{L}^{(k)}\)</span> is the loss value calculated using only a single
+training example <span class="math notranslate nohighlight">\((\bsf{x}^{(k)}, \bsf{y}^{(k)})\)</span> and the prediction by the
+model <span class="math notranslate nohighlight">\(\hat{\bsf{y}}^{(k)}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[  \mathbb{L}^{(k)} = \text{loss}(\bsf{y}^{(k)}, \hat{\bsf{y}}^{(k)})\]</div>
 </div>
 <div class="section" id="back-propagation">
 <h2>Back-Propagation<a class="headerlink" href="#back-propagation" title="Permalink to this headline">¶</a></h2>
