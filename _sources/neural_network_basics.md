@@ -5,8 +5,8 @@ simplicity of discussion, we will focus only on *the classification problem*.
 
 ## Model
 
-The model can be considered a function to predicts the output class given the
-input.
+The model can be considered a function to predicts the output class $y$ given the
+input $\bsf{x}$.
 
 
 When the number of output classes is $V$, then $y$ may take a value in the
@@ -105,6 +105,11 @@ where $y^{(k)}_v$ and $\hat{y}^{(k)}_v$ represent the $v$-th element of the
 one-hot vector of the k-th training example $\mathbf{y}^{(k)}$ and the
 corresponding predicted output using the model $\hat{\mathbf{y}}^{(k)}$.
 
+In Tensorflow, cross entropy is calculated using
+**tf.nn.softmax_cross_entropy_with_logits** for one hot vector representation
+and **tf.nn.sparse_softmax_cross_entropy_with_logits** for sparse matrix
+representation.
+
 
 ## Gradient Descent 
 
@@ -115,6 +120,7 @@ as shown below:
 \begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}.
 \end{align}
+where $\mu$ is a constant called the *learning rate*.
 
 It is well known that the direction of the negative of gradient is the
 direction of *steepest descent* in the surface defined by the loss function
