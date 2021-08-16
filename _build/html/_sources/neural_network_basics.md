@@ -2,40 +2,41 @@
 
 ## Training Set
 
+\begin{align}
+  \mathcal{T} = \left{ ,<\bsf{x}^{(i)},\, > ,   \right}
+\end{align}
+
 
 ## Loss Function
 Suppose that the neural-network model $f$ generates output $\hat{y}$  
 
 \begin{align}
-  L = loss(y, \hat{y}) 
+  \mathbb{L} = loss(y, \hat{y}) 
 \end{align}
 
 ## Gradient Descent 
 
-## Stochastic Gradient Descent (SGD)
-
-The Gradient Descent 
-The Gradient Descent approach described above is not practical when the
-training set size is large.
-
-
 \begin{align}
-  \ssf{w} \leftarrow  \ssf{w} - \nabla_{\ssf{w}} L
+  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
 \end{align}
 
-MyST stands for "Markedly Structured Text". It
-is a slight variation on a flavor of markdown called "CommonMark" markdown,
-with small syntax extensions to allow you to write **roles** and **directives**
-in the Sphinx ecosystem.
+## Stochastic Gradient Descent (SGD)
 
-## What are roles and directives?
+The Gradient Descent (GD) approach described above is not practical when the
+training set size is large. As shown in (), the 
 
-Roles and directives are two of the most powerful tools in Jupyter Book. They
-are kind of like functions, but written in a markup language. They both
-serve a similar purpose, but **roles are written in one line**, whereas
-**directives span many lines**. They both accept different kinds of inputs,
-and what they do with those inputs depends on the specific role or directive
-that is being called.
+\begin{align}
+  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i
+\end{align}
+
+
+
+## Back-Propagation 
+
+
+
+## Back-Propagation Through Time (BPTT)
+
 
 ### Using a directive
 

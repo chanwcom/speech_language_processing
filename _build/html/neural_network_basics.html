@@ -44,7 +44,7 @@
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"ssf": ["\\mathbb{\\mathsf{#1}}", 1]}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"mathjax_path": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js", "TeX": {"Macros": {"bsf": ["\\mathbb{\\mathsf{#1}}", 1]}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -215,8 +215,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-are-roles-and-directives">
-   What are roles and directives?
+  <a class="reference internal nav-link" href="#back-propagation">
+   Back-Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#back-propagation-through-time-bptt">
+   Back-Propagation Through Time (BPTT)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -256,40 +261,40 @@
 <h1>Neural Network Basics<a class="headerlink" href="#neural-network-basics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="training-set">
 <h2>Training Set<a class="headerlink" href="#training-set" title="Permalink to this headline">¶</a></h2>
+<div class="amsmath math notranslate nohighlight" id="equation-87e9b373-92f6-48ed-8e0b-add6992cd7d4">
+<span class="eqno">(1)<a class="headerlink" href="#equation-87e9b373-92f6-48ed-8e0b-add6992cd7d4" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \mathcal{T} = \left{ ,&lt;\bsf{x}^{(i)},\, &gt; ,   \right}
+\end{align}\]</div>
 </div>
 <div class="section" id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
 <p>Suppose that the neural-network model $f$ generates output $\hat{y}$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cabc9010-7c2e-45ed-9f16-9f3175eff15f">
-<span class="eqno">(1)<a class="headerlink" href="#equation-cabc9010-7c2e-45ed-9f16-9f3175eff15f" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  L = loss(y, \hat{y}) 
+<div class="amsmath math notranslate nohighlight" id="equation-01603625-683e-4a4a-b4c5-09f3ad6fdc29">
+<span class="eqno">(2)<a class="headerlink" href="#equation-01603625-683e-4a4a-b4c5-09f3ad6fdc29" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \mathbb{L} = loss(y, \hat{y}) 
 \end{align}\]</div>
 </div>
 <div class="section" id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
+<div class="amsmath math notranslate nohighlight" id="equation-dde29a69-6a96-432e-80d3-b62faa538752">
+<span class="eqno">(3)<a class="headerlink" href="#equation-dde29a69-6a96-432e-80d3-b62faa538752" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
+\end{align}\]</div>
 </div>
 <div class="section" id="stochastic-gradient-descent-sgd">
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
-<p>The Gradient Descent
-The Gradient Descent approach described above is not practical when the
-training set size is large.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3b33b2be-c480-4559-ba20-fbe5b2c229fc">
-<span class="eqno">(2)<a class="headerlink" href="#equation-3b33b2be-c480-4559-ba20-fbe5b2c229fc" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \ssf{w} \leftarrow  \ssf{w} - \nabla_{\ssf{w}} L
+<p>The Gradient Descent (GD) approach described above is not practical when the
+training set size is large. As shown in (), the</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b9306fd3-5577-4220-9128-1ac84f4557e7">
+<span class="eqno">(4)<a class="headerlink" href="#equation-b9306fd3-5577-4220-9128-1ac84f4557e7" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i
 \end{align}\]</div>
-<p>MyST stands for “Markedly Structured Text”. It
-is a slight variation on a flavor of markdown called “CommonMark” markdown,
-with small syntax extensions to allow you to write <strong>roles</strong> and <strong>directives</strong>
-in the Sphinx ecosystem.</p>
 </div>
-<div class="section" id="what-are-roles-and-directives">
-<h2>What are roles and directives?<a class="headerlink" href="#what-are-roles-and-directives" title="Permalink to this headline">¶</a></h2>
-<p>Roles and directives are two of the most powerful tools in Jupyter Book. They
-are kind of like functions, but written in a markup language. They both
-serve a similar purpose, but <strong>roles are written in one line</strong>, whereas
-<strong>directives span many lines</strong>. They both accept different kinds of inputs,
-and what they do with those inputs depends on the specific role or directive
-that is being called.</p>
+<div class="section" id="back-propagation">
+<h2>Back-Propagation<a class="headerlink" href="#back-propagation" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="back-propagation-through-time-bptt">
+<h2>Back-Propagation Through Time (BPTT)<a class="headerlink" href="#back-propagation-through-time-bptt" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="using-a-directive">
 <h3>Using a directive<a class="headerlink" href="#using-a-directive" title="Permalink to this headline">¶</a></h3>
 <p>At its simplest, you can insert a directive into your book’s content like so:</p>

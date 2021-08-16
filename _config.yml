@@ -40,8 +40,9 @@ parse:
 sphinx:
   config:
     mathjax_config:
+      mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
       TeX:
         Macros:
-          #  "ssf": ["\\bm{\\mathsf{#1}}", 1]
+          #  "bsf": ["\\bm{\\mathsf{#1}}", 1]
           #  \bm does not work.
-          "ssf": ["\\mathbb{\\mathsf{#1}}", 1]
+          "bsf": ["\\mathbb{\\mathsf{#1}}", 1]
