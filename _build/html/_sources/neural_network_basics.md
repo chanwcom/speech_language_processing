@@ -2,8 +2,16 @@
 
 ## Training Set
 
+In this section, we consider the supervised training case, which might be the
+most basic case of training neural-network models.
+Other cases such as unsupervised or semi-supervised training cases will 
+be covered in TODO(chanw.com). 
+
+In the supervised training, we are given a set of labeled data. Each element of
+this set is usually the input $\bsf{x}^{(i)}$
+
 \begin{align}
-  \mathcal{T} = \left{ ,<\bsf{x}^{(i)},\, > ,   \right}
+  \mathcal{T} = \big \{ <\bsf{x}^{(i)},\, y^{(i)} > | 0 \le i \le N_{\text{tr}} - 1 \big \}
 \end{align}
 
 
@@ -11,7 +19,7 @@
 Suppose that the neural-network model $f$ generates output $\hat{y}$  
 
 \begin{align}
-  \mathbb{L} = loss(y, \hat{y}) 
+  \mathbb{L} = \text{loss}(y, \hat{y}) 
 \end{align}
 
 ## Gradient Descent 
@@ -20,10 +28,25 @@ Suppose that the neural-network model $f$ generates output $\hat{y}$
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
 \end{align}
 
-## Stochastic Gradient Descent (SGD)
+Gradient Descent (GD) is not a practical approach when the training set size is
+sufficiently large for the following two reasons.
+
+ * Inefficiency in computation
+
+ * Slow convergence
+
 
 The Gradient Descent (GD) approach described above is not practical when the
-training set size is large. As shown in (), the 
+training set size is large for the following two reagons. 
+
+This is because the parameter update represented by
+
+## Stochastic Gradient Descent (SGD)
+
+
+
+
+() happens only once for the entire training set.
 
 \begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i

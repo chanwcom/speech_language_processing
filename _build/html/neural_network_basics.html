@@ -261,32 +261,46 @@
 <h1>Neural Network Basics<a class="headerlink" href="#neural-network-basics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="training-set">
 <h2>Training Set<a class="headerlink" href="#training-set" title="Permalink to this headline">¶</a></h2>
-<div class="amsmath math notranslate nohighlight" id="equation-87e9b373-92f6-48ed-8e0b-add6992cd7d4">
-<span class="eqno">(1)<a class="headerlink" href="#equation-87e9b373-92f6-48ed-8e0b-add6992cd7d4" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \mathcal{T} = \left{ ,&lt;\bsf{x}^{(i)},\, &gt; ,   \right}
+<p>In this section, we consider the supervised training case, which might be the
+most basic case of training neural-network models.
+Other cases such as unsupervised or semi-supervised training cases will
+be covered in TODO(chanw.com).</p>
+<p>In the supervised training, we are given a set of labeled data. Each element of
+this set is usually the input <span class="math notranslate nohighlight">\(\bsf{x}^{(i)}\)</span></p>
+<div class="amsmath math notranslate nohighlight" id="equation-c8256a6c-0911-49ba-b1c4-9a30e2f9922e">
+<span class="eqno">(1)<a class="headerlink" href="#equation-c8256a6c-0911-49ba-b1c4-9a30e2f9922e" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \mathcal{T} = \big \{ &lt;\bsf{x}^{(i)},\, y^{(i)} &gt; | 0 \le i \le N_{\text{tr}} - 1 \big \}
 \end{align}\]</div>
 </div>
 <div class="section" id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
-<p>Suppose that the neural-network model $f$ generates output $\hat{y}$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-01603625-683e-4a4a-b4c5-09f3ad6fdc29">
-<span class="eqno">(2)<a class="headerlink" href="#equation-01603625-683e-4a4a-b4c5-09f3ad6fdc29" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \mathbb{L} = loss(y, \hat{y}) 
+<p>Suppose that the neural-network model <span class="math notranslate nohighlight">\(f\)</span> generates output <span class="math notranslate nohighlight">\(\hat{y}\)</span></p>
+<div class="amsmath math notranslate nohighlight" id="equation-a6c8e9a5-916f-498b-b2b9-d678b3dd1825">
+<span class="eqno">(2)<a class="headerlink" href="#equation-a6c8e9a5-916f-498b-b2b9-d678b3dd1825" title="Permalink to this equation">¶</a></span>\[\begin{align}
+  \mathbb{L} = \text{loss}(y, \hat{y}) 
 \end{align}\]</div>
 </div>
 <div class="section" id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
-<div class="amsmath math notranslate nohighlight" id="equation-dde29a69-6a96-432e-80d3-b62faa538752">
-<span class="eqno">(3)<a class="headerlink" href="#equation-dde29a69-6a96-432e-80d3-b62faa538752" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-06ba0a6c-9341-4ea1-b36e-6453577cf37a">
+<span class="eqno">(3)<a class="headerlink" href="#equation-06ba0a6c-9341-4ea1-b36e-6453577cf37a" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
 \end{align}\]</div>
+<p>Gradient Descent (GD) is not a practical approach when the training set size is
+sufficiently large for the following two reasons.</p>
+<ul class="simple">
+<li><p>Inefficiency in computation</p></li>
+<li><p>Slow convergence</p></li>
+</ul>
+<p>The Gradient Descent (GD) approach described above is not practical when the
+training set size is large for the following two reagons.</p>
+<p>This is because the parameter update represented by</p>
 </div>
 <div class="section" id="stochastic-gradient-descent-sgd">
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
-<p>The Gradient Descent (GD) approach described above is not practical when the
-training set size is large. As shown in (), the</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b9306fd3-5577-4220-9128-1ac84f4557e7">
-<span class="eqno">(4)<a class="headerlink" href="#equation-b9306fd3-5577-4220-9128-1ac84f4557e7" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<p>() happens only once for the entire training set.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-415e4840-47e9-4bc5-9c19-e7bb98e7edfd">
+<span class="eqno">(4)<a class="headerlink" href="#equation-415e4840-47e9-4bc5-9c19-e7bb98e7edfd" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i
 \end{align}\]</div>
 </div>

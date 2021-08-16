@@ -2,8 +2,16 @@
 
 ## Training Set
 
+In this section, we consider the supervised training case, which might be the
+most basic case of training neural-network models.
+Other cases such as unsupervised or semi-supervised training cases will 
+be covered in TODO(chanw.com). 
+
+In the supervised training, we are given a set of labeled data. Each element of
+this set is usually the input $\bsf{x}^{(i)}$
+
 \begin{align}
-  \mathcal{T} = \{ ,<\bsf{x}^{(i)},\, > ,   \}
+  \mathcal{T} = \big \{ <\bsf{x}^{(i)},\, y^{(i)} > | 0 \le i \le N_{\text{tr}} - 1 \big \}
 \end{align}
 
 
@@ -11,7 +19,7 @@
 Suppose that the neural-network model $f$ generates output $\hat{y}$  
 
 \begin{align}
-  \mathbb{L} = loss(y, \hat{y}) 
+  \mathbb{L} = \text{loss}(y, \hat{y}) 
 \end{align}
 
 ## Gradient Descent 
@@ -21,7 +29,11 @@ Suppose that the neural-network model $f$ generates output $\hat{y}$
 \end{align}
 
 Gradient Descent (GD) is not a practical approach when the training set size is
-sufficiently large. for the following two reasons.
+sufficiently large for the following two reasons.
+
+ * Inefficiency in computation
+
+ * Slow convergence
 
 
 The Gradient Descent (GD) approach described above is not practical when the
