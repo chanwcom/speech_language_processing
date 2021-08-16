@@ -4,6 +4,7 @@
 format: jb-book
 root: intro
 chapters:
+- file: neural_network_basics
+- file: sequence_modeling
 - file: markdown
 - file: notebooks
-- file: neural_network_basics
