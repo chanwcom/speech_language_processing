@@ -1,16 +1,12 @@
-# Welcome to your Jupyter Book
+# Introduction to Speech and Language Processing
 
-This is a small sample book to give you a feel for how book content is
-structured.
+# Chanwoo Kim (chanwcom@gmail.com)
 
-:::{note}
-Here is a note!
-:::
+In this book, we will cover the following topics:
+ * Deep-learning basics
+ * Sequence modeling
+ * Language modeling training
+ * Speech recognition
+ * Speech synthesis
 
-And here is a code block:
-
-```
-e = mc^2
-```
-
-Check out the content pages bundled with this sample book to see more.
+Aug. 16th, 2021

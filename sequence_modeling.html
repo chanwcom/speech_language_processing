@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Network Basics &#8212; Introduction to Speech and Language Processing using Deep Learning</title>
+    <title>Sequence Modeling &#8212; Introduction to Speech and Language Processing using Deep Learning</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -54,8 +54,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Sequence Modeling" href="sequence_modeling.html" />
-    <link rel="prev" title="Introduction to Speech and Language Processing" href="intro.html" />
+    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="prev" title="Neural Network Basics" href="neural_network_basics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -93,13 +93,13 @@
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="neural_network_basics.html">
    Neural Network Basics
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sequence_modeling.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Sequence Modeling
   </a>
  </li>
@@ -154,7 +154,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/neural_network_basics.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/sequence_modeling.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -174,7 +174,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fneural_network_basics.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsequence_modeling.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -201,18 +201,13 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model">
-   Model
+  <a class="reference internal nav-link" href="#recurrent-neural-network-rnn">
+   Recurrent Neural Network (RNN)
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training-set">
-   Training Set
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loss-function">
-   Loss Function
+  <a class="reference internal nav-link" href="#sequence-loss">
+   Sequence Loss
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -230,6 +225,33 @@
    Back-Propagation
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#back-propagation-through-time-bptt">
+   Back-Propagation Through Time (BPTT)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-a-directive">
+     Using a directive
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-a-role">
+     Using a role
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-a-citation">
+     Adding a citation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#executing-code-in-your-markdown-files">
+     Executing code in your markdown files
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
             </nav>
@@ -241,55 +263,29 @@
         
               <div>
                 
-  <div class="section" id="neural-network-basics">
-<h1>Neural Network Basics<a class="headerlink" href="#neural-network-basics" title="Permalink to this headline">¶</a></h1>
-<p>There are various applications of neural-network models. In this section, for
-simplicity of discussion, we will focus only on <em>the classification problem</em>.</p>
-<div class="section" id="model">
-<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
-<p>The model can be considered a function to predicts the output class given the
-input.</p>
-<p>When the number of output classes is <span class="math notranslate nohighlight">\(V\)</span>, then <span class="math notranslate nohighlight">\(y\)</span> may take a value in the
-following range:</p>
-<div class="math notranslate nohighlight">
-\[  0 \le y \le V - 1.\]</div>
-<p>In stead of the above <em>sparse representation of the output class</em>, we may use
-<em>the one-hot vector</em> representation as below:</p>
-</div>
-<div class="section" id="training-set">
-<h2>Training Set<a class="headerlink" href="#training-set" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="sequence-modeling">
+<h1>Sequence Modeling<a class="headerlink" href="#sequence-modeling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="recurrent-neural-network-rnn">
+<h2>Recurrent Neural Network (RNN)<a class="headerlink" href="#recurrent-neural-network-rnn" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we consider the supervised training case, which might be the
 most basic case of training neural-network models.
 Other cases such as unsupervised or semi-supervised training cases will
 be covered in TODO(<a class="reference external" href="http://chanw.com">chanw.com</a>).</p>
 <p>In the supervised training, we are given a set of labeled data. Each element of
 this set is usually the input <span class="math notranslate nohighlight">\(\bsf{x}^{(i)}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f915118-8305-4e41-8523-99bf7859d62c">
-<span class="eqno">(1)<a class="headerlink" href="#equation-2f915118-8305-4e41-8523-99bf7859d62c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-94043703-9ef5-4116-8a16-caf2ac50d63c">
+<span class="eqno">(6)<a class="headerlink" href="#equation-94043703-9ef5-4116-8a16-caf2ac50d63c" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \mathcal{T} = \big \{ &lt;\bsf{x}^{(i)},\, y^{(i)} &gt; | 0 \le i \le N_{\text{tr}} - 1 \big \}
 \end{align}\]</div>
 </div>
-<div class="section" id="loss-function">
-<h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sequence-loss">
+<h2>Sequence Loss<a class="headerlink" href="#sequence-loss" title="Permalink to this headline">¶</a></h2>
 <p>Suppose that the neural-network model <span class="math notranslate nohighlight">\(f\)</span> generates output <span class="math notranslate nohighlight">\(\hat{y}\)</span></p>
-<div class="math notranslate nohighlight" id="equation-entire-loss">
-<span class="eqno">(2)<a class="headerlink" href="#equation-entire-loss" title="Permalink to this equation">¶</a></span>\[  \mathbb{L} = \frac{1}{N_{\text{tr}}} \sum_{i=0}^{N_{\text{tr} - 1}}
-    \text{loss}(y^{(i)}, \hat{y}^{(i)}) \]</div>
-<p>Now, the question is what would be a good candidate for the loss function in
-<a class="reference internal" href="#equation-entire-loss">(2)</a>.</p>
-<p>As will be discussed later, an appropriate loss function is different
-depending on applications. TODO(<a class="reference external" href="http://chanw.com">chanw.com</a>) Mention where it will be or was
-discussed.</p>
-<p>In the classification problem, we assume that for a specific input <span class="math notranslate nohighlight">\(\bsf{x}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-4508125d-cae0-45dc-9182-94c387d01ed7">
-<span class="eqno">(3)<a class="headerlink" href="#equation-4508125d-cae0-45dc-9182-94c387d01ed7" title="Permalink to this equation">¶</a></span>\[\begin{align}
-  \mathbb{L} = - E \left[ \log(f( | )) \right]
-\end{align}\]</div>
 </div>
 <div class="section" id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
-<div class="amsmath math notranslate nohighlight" id="equation-276ffc17-5661-429f-803c-034653038190">
-<span class="eqno">(4)<a class="headerlink" href="#equation-276ffc17-5661-429f-803c-034653038190" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f985cbaf-173c-412c-b317-73115677ed13">
+<span class="eqno">(7)<a class="headerlink" href="#equation-f985cbaf-173c-412c-b317-73115677ed13" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
 \end{align}\]</div>
 <p>Gradient Descent (GD) is not a practical approach when the training set size is
@@ -305,13 +301,102 @@ training set size is large for the following two reagons.</p>
 <div class="section" id="stochastic-gradient-descent-sgd">
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
 <p>() happens only once for the entire training set.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-19d09340-093d-432b-8a29-2ae0fa9cba53">
-<span class="eqno">(5)<a class="headerlink" href="#equation-19d09340-093d-432b-8a29-2ae0fa9cba53" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-11225120-5cf5-49d0-9bf1-7ddcddb1526b">
+<span class="eqno">(8)<a class="headerlink" href="#equation-11225120-5cf5-49d0-9bf1-7ddcddb1526b" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i
 \end{align}\]</div>
 </div>
 <div class="section" id="back-propagation">
 <h2>Back-Propagation<a class="headerlink" href="#back-propagation" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="back-propagation-through-time-bptt">
+<h2>Back-Propagation Through Time (BPTT)<a class="headerlink" href="#back-propagation-through-time-bptt" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-a-directive">
+<h3>Using a directive<a class="headerlink" href="#using-a-directive" title="Permalink to this headline">¶</a></h3>
+<p>At its simplest, you can insert a directive into your book’s content like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{mydirectivename}
+My directive content
+```
+</pre></div>
+</div>
+<p>This will only work if a directive with name <code class="docutils literal notranslate"><span class="pre">mydirectivename</span></code> already exists
+(which it doesn’t). There are many pre-defined directives associated with
+Jupyter Book. For example, to insert a note box into your content, you can
+use the following directive:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{note}
+Here is a note
+```
+</pre></div>
+</div>
+<p>This results in:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here is a note</p>
+</div>
+<p>In your built book.</p>
+<p>For more information on writing directives, see the
+<a class="reference external" href="https://myst-parser.readthedocs.io/">MyST documentation</a>.</p>
+</div>
+<div class="section" id="using-a-role">
+<h3>Using a role<a class="headerlink" href="#using-a-role" title="Permalink to this headline">¶</a></h3>
+<p>Roles are very similar to directives, but they are less-complex and written
+entirely on one line. You can insert a role into your book’s content with
+this pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Some content {rolename}`and here is my role&#39;s content!`
+</pre></div>
+</div>
+<p>Again, roles will only work if <code class="docutils literal notranslate"><span class="pre">rolename</span></code> is a valid role’s name. For example,
+the <code class="docutils literal notranslate"><span class="pre">doc</span></code> role can be used to refer to another page in your book. You can
+refer directly to another page by its relative path. For example, the
+role syntax <code class="docutils literal notranslate"><span class="pre">{doc}`intro`</span></code> will result in: <a class="reference internal" href="intro.html"><span class="doc">Introduction to Speech and Language Processing</span></a>.</p>
+<p>For more information on writing roles, see the
+<a class="reference external" href="https://myst-parser.readthedocs.io/">MyST documentation</a>.</p>
+</div>
+<div class="section" id="adding-a-citation">
+<h3>Adding a citation<a class="headerlink" href="#adding-a-citation" title="Permalink to this headline">¶</a></h3>
+<p>You can also cite references that are stored in a <code class="docutils literal notranslate"><span class="pre">bibtex</span></code> file. For example,
+the following syntax: <code class="docutils literal notranslate"><span class="pre">{cite}`holdgraf_evidence_2014`</span></code> will render like
+this: <span id="id1">[<a class="reference internal" href="#id3">HdHPK14</a>]</span>.</p>
+<p>Moreoever, you can insert a bibliography into your page with this syntax:
+The <code class="docutils literal notranslate"><span class="pre">{bibliography}</span></code> directive must be used for all the <code class="docutils literal notranslate"><span class="pre">{cite}</span></code> roles to
+render properly.
+For example, if the references for your book are stored in <code class="docutils literal notranslate"><span class="pre">references.bib</span></code>,
+then the bibliography is inserted with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{bibliography}
+```
+</pre></div>
+</div>
+<p>Resulting in a rendered bibliography that looks like:</p>
+<p id="id2"><dl class="citation">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">HdHPK14</a></span></dt>
+<dd><p>Christopher Ramsay Holdgraf, Wendy de Heer, Brian N. Pasley, and Robert T. Knight. Evidence for Predictive Coding in Human Auditory Cortex. In <em>International Conference on Cognitive Neuroscience</em>. Brisbane, Australia, Australia, 2014. Frontiers in Neuroscience.</p>
+</dd>
+</dl>
+</p>
+</div>
+<div class="section" id="executing-code-in-your-markdown-files">
+<h3>Executing code in your markdown files<a class="headerlink" href="#executing-code-in-your-markdown-files" title="Permalink to this headline">¶</a></h3>
+<p>If you’d like to include computational content inside these markdown files,
+you can use MyST Markdown to define cells that will be executed when your
+book is built. Jupyter Book uses <em>jupytext</em> to do this.</p>
+<p>First, add Jupytext metadata to the file. For example, to add Jupytext metadata
+to this markdown page, run this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span> <span class="n">myst</span> <span class="n">init</span> <span class="n">markdown</span><span class="o">.</span><span class="n">md</span>
+</pre></div>
+</div>
+<p>Once a markdown file has Jupytext metadata in it, you can add the following
+directive to run the code at build time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{code-cell}
+print(&quot;Here is some code to execute&quot;)
+```
+</pre></div>
+</div>
+<p>When your book is built, the contents of any <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> blocks will be
+executed with your default Jupyter kernel, and their outputs will be displayed
+in-line with the rest of your content.</p>
+<p>For more information about executing computational content with Jupyter Book,
+see <a class="reference external" href="https://myst-nb.readthedocs.io/">The MyST-NB documentation</a>.</p>
+</div>
 </div>
 </div>
 
@@ -340,8 +425,8 @@ training set size is large for the following two reagons.</p>
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Introduction to Speech and Language Processing</a>
-    <a class='right-next' id="next-link" href="sequence_modeling.html" title="next page">Sequence Modeling</a>
+    <a class='left-prev' id="prev-link" href="neural_network_basics.html" title="previous page">Neural Network Basics</a>
+    <a class='right-next' id="next-link" href="markdown.html" title="next page">Markdown Files</a>
 
         </div>
         
