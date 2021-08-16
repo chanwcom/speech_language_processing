@@ -42,14 +42,14 @@ Now, the input and the predicted output may be sequences as follows:
 Using this, the equation {eq}`class_prob` may be expressed as:
 ```{math}
   :label: seq_prob
-  \hat{\bsf{y}} = \hat{p}(\bsf{y}_{0:L} | \bsf{x}_{0:M}).
+  \hat{\bsf{y}}_{0:L} = \hat{p}(\bsf{y}_{0:L} | \bsf{x}_{0:M}).
 ```
 
 Usually, it is not tractable to directly calculate the sequence probability in
 {eq}`seq_prob`. Thus, we usually take the conditional independence assumption:
 ```{math}
   :label: seq_prob_assumption
-  \hat{\bsf{y}} & = \Pi_{l=0}^{L-1} \hat{p}(\bsf{y}_l | \bsf{x}_{0:M}) \\
+  \hat{\bsf{y}}_{0:L} & = \Pi_{l=0}^{L-1} \hat{p}(\bsf{y}_l | \bsf{x}_{0:M}) \\
                 & = \Pi_{l=0}^{L-1} \hat{y}_l
 ```
 

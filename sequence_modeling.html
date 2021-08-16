@@ -261,11 +261,11 @@ following equation:</p>
                            \bsf{y}_{L-1} \right]\end{split}\]</div>
 <p>Using this, the equation <a class="reference internal" href="#equation-class-prob">(10)</a> may be expressed as:</p>
 <div class="math notranslate nohighlight" id="equation-seq-prob">
-<span class="eqno">(11)<a class="headerlink" href="#equation-seq-prob" title="Permalink to this equation">¶</a></span>\[  \hat{\bsf{y}} = \hat{p}(\bsf{y}_{0:L} | \bsf{x}_{0:M}).\]</div>
+<span class="eqno">(11)<a class="headerlink" href="#equation-seq-prob" title="Permalink to this equation">¶</a></span>\[  \hat{\bsf{y}}_{0:L} = \hat{p}(\bsf{y}_{0:L} | \bsf{x}_{0:M}).\]</div>
 <p>Usually, it is not tractable to directly calculate the sequence probability in
 <a class="reference internal" href="#equation-seq-prob">(11)</a>. Thus, we usually take the conditional independence assumption:</p>
 <div class="math notranslate nohighlight" id="equation-seq-prob-assumption">
-<span class="eqno">(12)<a class="headerlink" href="#equation-seq-prob-assumption" title="Permalink to this equation">¶</a></span>\[\begin{split}  \hat{\bsf{y}} &amp; = \Pi_{l=0}^{L-1} \hat{p}(\bsf{y}_l | \bsf{x}_{0:M}) \\
+<span class="eqno">(12)<a class="headerlink" href="#equation-seq-prob-assumption" title="Permalink to this equation">¶</a></span>\[\begin{split}  \hat{\bsf{y}}_{0:L} &amp; = \Pi_{l=0}^{L-1} \hat{p}(\bsf{y}_l | \bsf{x}_{0:M}) \\
                 &amp; = \Pi_{l=0}^{L-1} \hat{y}_l\end{split}\]</div>
 <p>By putting <a class="reference internal" href="#equation-seq-prob-assumption">(12)</a> into <a class="reference internal" href="#equation-ce-loss-none-seq">(9)</a>, we obtain the
 following sequence loss:</p>
