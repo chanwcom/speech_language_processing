@@ -3,7 +3,7 @@
 
 title: Introduction to Speech and Language Processing using Deep Learning
 author: Chanwoo Kim (chanwcom@gmail.com)
-logo: logo.png
+logo: ./figures/slp_lab.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
