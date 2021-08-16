@@ -37,6 +37,8 @@ parse:
     # including those that are enabled by default!
     - amsmath
     - dollarmath
+    - html_image
+    - linkify
 
 sphinx:
   config:
