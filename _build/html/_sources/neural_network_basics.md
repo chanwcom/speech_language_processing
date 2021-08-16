@@ -5,8 +5,8 @@ simplicity of discussion, we will focus only on *the classification problem*.
 
 ## Model
 
-The model can be considered a function to predicts the output class given the
-input.
+The model can be considered a function to predicts the output class $y$ given the
+input $\bsf{x}$.
 
 
 When the number of output classes is $V$, then $y$ may take a value in the
@@ -115,6 +115,7 @@ as shown below:
 \begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}.
 \end{align}
+where $\mu$ is a constant called the *learning rate*.
 
 It is well known that the direction of the negative of gradient is the
 direction of *steepest descent* in the surface defined by the loss function
