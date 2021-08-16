@@ -6,5 +6,6 @@ root: intro
 chapters:
 - file: neural_network_basics
 - file: sequence_modeling
-- file: markdown
-- file: notebooks
+- file: language_modeling
+- file: speech_recognition
+- file: speech_synthesis

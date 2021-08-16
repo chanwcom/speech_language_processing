@@ -2,162 +2,81 @@
 
 ## Recurrent Neural Network (RNN)
 
-In this section, we consider the supervised training case, which might be the
-most basic case of training neural-network models.
-Other cases such as unsupervised or semi-supervised training cases will 
-be covered in TODO(chanw.com). 
 
-In the supervised training, we are given a set of labeled data. Each element of
-this set is usually the input $\bsf{x}^{(i)}$
-
-\begin{align}
-  \mathcal{T} = \big \{ <\bsf{x}^{(i)},\, y^{(i)} > | 0 \le i \le N_{\text{tr}} - 1 \big \}
-\end{align}
 
 
 ## Sequence Loss
-Suppose that the neural-network model $f$ generates output $\hat{y}$  
 
+In the previous Chapter, we observe that the Cross Entropy (CE) loss is given
+by the following equation:
 
-## Gradient Descent 
+```{math}
+  :label: ce_loss_none_seq
+  \mathbb{L}_{\text{CE}} 
+         & =  -E_{\bsf{y} \sim \text{training_data}} \left[ \log \hat{\bsf{y}} \right]. \\
+```
+where $\hat{\bsf{y}}$ is the *class probability* predicted by the model.
 
-\begin{align}
-  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
-\end{align}
+If we represent $\hat{\bsf{y}}$ as the predicted probability, then we obtain the
+following equation:
 
-Gradient Descent (GD) is not a practical approach when the training set size is
-sufficiently large for the following two reasons.
+```{math}
+  :label: class_prob
+  \hat{\bsf{y}} = \hat{p}(\bsf{y} | \bsf{x}).
+```
 
- * Inefficiency in computation
+In the sequence modelling, we use the same equation as in 
+{eq}`ce_loss_none_seq`. Note that in the above equation {eq}`class_prob`,
+$\bsf{y}$ is not the ground-truth label, but just a dummy vector variable.
 
- * Slow convergence
+Now, the input and the predicted output may be sequences as follows:
+```{math}
+  \bsf{x}_{0:M}  & = \left[ \bsf{x}_0,\, \bsf{x}_1,\,  
+                           \bsf{x}_2,\, \cdots, \,
+                           \bsf{x}_{M-1} \right]   \\
+  \bsf{y}_{0:L}  & = \left[ \bsf{y}_0,\, \bsf{y}_1,\,  
+                           \bsf{y}_2,\, \cdots, \,
+                           \bsf{y}_{L-1} \right]
+```
 
+Using this, the equation {eq}`class_prob` may be expressed as:
+```{math}
+  :label: seq_prob
+  \hat{\bsf{y}} = \hat{p}(\bsf{y}_{0:L} | \bsf{x}_{0:M}).
+```
 
-The Gradient Descent (GD) approach described above is not practical when the
-training set size is large for the following two reagons. 
+Usually, it is not tractable to directly calculate the sequence probability in
+{eq}`seq_prob`. Thus, we usually take the conditional independence assumption:
+```{math}
+  :label: seq_prob_assumption
+  \hat{\bsf{y}} & = \Pi_{l=0}^{L-1} \hat{p}(\bsf{y}_l | \bsf{x}_{0:M}) \\
+                & = \Pi_{l=0}^{L-1} \hat{y}_l
+```
 
-This is because the parameter update represented by
+By putting {eq}`seq_prob_assumption` into {eq}`ce_loss_none_seq`, we obtain the
+following sequence loss:
+```{math}
+  :label: ce_loss_seq
+  \mathbb{L}_{\text{CE}} 
+         & =  -E_{\bsf{y}_{0:L} \sim \text{training_data}} \left[ \sum_{l=0}^{L-1} \log \hat{\bsf{y}}_l \right]. \\
+```
+Even though we use a fixed value of $L$ in {eq}`ce_loss_seq`, the length may
+vary for each example in the training data set.
+When there are $V$ classes, then {eq}`ce_loss_seq` is represented by:
+```{math}
+  :label: ce_loss_seq_element
+  \mathbb{L}_{\text{CE}} 
+         & =  -E_{\bsf{y}_{0:L} \sim \text{training_data}} \left[ 
+            \sum_{l=0}^{L-1} \sum_{v=0}^{V-1} (y_l)_v \log (\hat{\bsf{y}}_l)_v \right]. \\
+```
 
-## Stochastic Gradient Descent (SGD)
-
-
-
-
-() happens only once for the entire training set.
-
-\begin{align}
-  \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i
-\end{align}
-
-
-
-## Back-Propagation 
+In Tensorflow, it is implemented as tfa.seq2seq.sequence_loss method.
 
 
 
 ## Back-Propagation Through Time (BPTT)
 
-
-### Using a directive
-
-At its simplest, you can insert a directive into your book's content like so:
-
-````
-```{mydirectivename}
-My directive content
-```
-````
-
-This will only work if a directive with name `mydirectivename` already exists
-(which it doesn't). There are many pre-defined directives associated with
-Jupyter Book. For example, to insert a note box into your content, you can
-use the following directive:
-
-````
-```{note}
-Here is a note
-```
-````
-
-This results in:
-
-```{note}
-Here is a note
-```
-
-In your built book.
-
-For more information on writing directives, see the
-[MyST documentation](https://myst-parser.readthedocs.io/).
+For deep neural network models, we may not directly obtain the gradient. Thus
+we use the *chain rule* to obtain the gradient with respect to a certain 
 
 
-### Using a role
-
-Roles are very similar to directives, but they are less-complex and written
-entirely on one line. You can insert a role into your book's content with
-this pattern:
-
-```
-Some content {rolename}`and here is my role's content!`
-```
-
-Again, roles will only work if `rolename` is a valid role's name. For example,
-the `doc` role can be used to refer to another page in your book. You can
-refer directly to another page by its relative path. For example, the
-role syntax `` {doc}`intro` `` will result in: {doc}`intro`.
-
-For more information on writing roles, see the
-[MyST documentation](https://myst-parser.readthedocs.io/).
-
-
-### Adding a citation
-
-You can also cite references that are stored in a `bibtex` file. For example,
-the following syntax: `` {cite}`holdgraf_evidence_2014` `` will render like
-this: {cite}`holdgraf_evidence_2014`.
-
-Moreoever, you can insert a bibliography into your page with this syntax:
-The `{bibliography}` directive must be used for all the `{cite}` roles to
-render properly.
-For example, if the references for your book are stored in `references.bib`,
-then the bibliography is inserted with:
-
-````
-```{bibliography}
-```
-````
-
-Resulting in a rendered bibliography that looks like:
-
-```{bibliography}
-```
-
-
-### Executing code in your markdown files
-
-If you'd like to include computational content inside these markdown files,
-you can use MyST Markdown to define cells that will be executed when your
-book is built. Jupyter Book uses *jupytext* to do this.
-
-First, add Jupytext metadata to the file. For example, to add Jupytext metadata
-to this markdown page, run this command:
-
-```
-jupyter-book myst init markdown.md
-```
-
-Once a markdown file has Jupytext metadata in it, you can add the following
-directive to run the code at build time:
-
-````
-```{code-cell}
-print("Here is some code to execute")
-```
-````
-
-When your book is built, the contents of any `{code-cell}` blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.
-
-For more information about executing computational content with Jupyter Book,
-see [The MyST-NB documentation](https://myst-nb.readthedocs.io/).

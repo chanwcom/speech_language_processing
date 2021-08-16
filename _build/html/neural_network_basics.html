@@ -104,13 +104,18 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
+  <a class="reference internal" href="language_modeling.html">
+   Language Modeling
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+  <a class="reference internal" href="speech_recognition.html">
+   Speech Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="speech_synthesis.html">
+   Speech Synthesis
   </a>
  </li>
 </ul>
@@ -320,6 +325,10 @@ follows:</p>
 <p>where <span class="math notranslate nohighlight">\(y^{(k)}_v\)</span> and <span class="math notranslate nohighlight">\(\hat{y}^{(k)}_v\)</span> represent the <span class="math notranslate nohighlight">\(v\)</span>-th element of the
 one-hot vector of the k-th training example <span class="math notranslate nohighlight">\(\mathbf{y}^{(k)}\)</span> and the
 corresponding predicted output using the model <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}^{(k)}\)</span>.</p>
+<p>In Tensorflow, cross entropy is calculated using
+<strong>tf.nn.softmax_cross_entropy_with_logits</strong> for one hot vector representation
+and <strong>tf.nn.sparse_softmax_cross_entropy_with_logits</strong> for sparse matrix
+representation.</p>
 </div>
 <div class="section" id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
@@ -327,8 +336,8 @@ corresponding predicted output using the model <span class="math notranslate noh
 <span class="math notranslate nohighlight">\(\mathsf{w}\)</span>. If we can directly differentiate the loss function <span class="math notranslate nohighlight">\(\mathbb{L}\)</span>,
 we improve the model parameters using the well-known Gradient Descent approach
 as shown below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-51b21ede-1e89-4e67-b594-8aea7907aecf">
-<span class="eqno">(7)<a class="headerlink" href="#equation-51b21ede-1e89-4e67-b594-8aea7907aecf" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-76e2695f-d39b-48bd-853c-7dd376f8e518">
+<span class="eqno">(7)<a class="headerlink" href="#equation-76e2695f-d39b-48bd-853c-7dd376f8e518" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}.
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is a constant called the <em>learning rate</em>.</p>
@@ -351,8 +360,8 @@ set. That is to say, the parameter update is done only once for one <em>epoch</e
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
 <p>Unlike the GD approach using the loss from the entire training dataset, in SGD,
 we update the parameter for each training example <span class="math notranslate nohighlight">\((\bsf{x}^{(k)}, \bsf{y}^{(k)})\)</span> iteratively.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c7312bad-c751-47b9-8cff-2d7a0983ba4b">
-<span class="eqno">(8)<a class="headerlink" href="#equation-c7312bad-c751-47b9-8cff-2d7a0983ba4b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6f088e8f-91c1-4bb5-a7c3-340c835b9e17">
+<span class="eqno">(8)<a class="headerlink" href="#equation-6f088e8f-91c1-4bb5-a7c3-340c835b9e17" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}^{(k)}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{L}^{(k)}\)</span> is the loss value calculated using only a single
