@@ -1,6 +1,6 @@
 # Introduction to Speech and Language Processing
 
-# Chanwoo Kim (chanwcom@gmail.com)
+### Chanwoo Kim (chanwcom@gmail.com)
 
 In this book, we will cover the following topics:
  * Deep-learning basics

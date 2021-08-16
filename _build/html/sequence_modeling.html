@@ -274,7 +274,7 @@ be covered in TODO(<a class="reference external" href="http://chanw.com">chanw.c
 <p>In the supervised training, we are given a set of labeled data. Each element of
 this set is usually the input <span class="math notranslate nohighlight">\(\bsf{x}^{(i)}\)</span></p>
 <div class="amsmath math notranslate nohighlight" id="equation-94043703-9ef5-4116-8a16-caf2ac50d63c">
-<span class="eqno">(6)<a class="headerlink" href="#equation-94043703-9ef5-4116-8a16-caf2ac50d63c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<span class="eqno">(9)<a class="headerlink" href="#equation-94043703-9ef5-4116-8a16-caf2ac50d63c" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \mathcal{T} = \big \{ &lt;\bsf{x}^{(i)},\, y^{(i)} &gt; | 0 \le i \le N_{\text{tr}} - 1 \big \}
 \end{align}\]</div>
 </div>
@@ -285,7 +285,7 @@ this set is usually the input <span class="math notranslate nohighlight">\(\bsf{
 <div class="section" id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
 <div class="amsmath math notranslate nohighlight" id="equation-f985cbaf-173c-412c-b317-73115677ed13">
-<span class="eqno">(7)<a class="headerlink" href="#equation-f985cbaf-173c-412c-b317-73115677ed13" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<span class="eqno">(10)<a class="headerlink" href="#equation-f985cbaf-173c-412c-b317-73115677ed13" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}
 \end{align}\]</div>
 <p>Gradient Descent (GD) is not a practical approach when the training set size is
@@ -302,7 +302,7 @@ training set size is large for the following two reagons.</p>
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
 <p>() happens only once for the entire training set.</p>
 <div class="amsmath math notranslate nohighlight" id="equation-11225120-5cf5-49d0-9bf1-7ddcddb1526b">
-<span class="eqno">(8)<a class="headerlink" href="#equation-11225120-5cf5-49d0-9bf1-7ddcddb1526b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<span class="eqno">(11)<a class="headerlink" href="#equation-11225120-5cf5-49d0-9bf1-7ddcddb1526b" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}_i
 \end{align}\]</div>
 </div>
