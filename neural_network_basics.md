@@ -1,23 +1,33 @@
 # Neural Network Basics
 
+## Classification problem
+
 There are various applications of neural-network models. In this section, for
 simplicity of discussion, we will focus only on *the classification problem*.
-
-## Model
-
-The model can be considered a function to predicts the output class $y$ given the
-input $\bsf{x}$.
-
-
-When the number of output classes is $V$, then $y$ may take a value in the
-following range:
-```{math}
+In the classification problem, 
+when the number of output classes is $V$, then the class index $v$ may take a 
+value in the following range:
+```{math} 
   :label: output_label
-  0 \le y \le V - 1.
+  0 \le v \le V - 1.
 ```
 In stead of the above *sparse representation of the output class*, we may use
 *the one-hot vector* representation as below:
 
+Sometimes, the class index $v$ in {eq}`output_label` is referred to as 
+*sparse representation* compared to the one-hot vector representation in Table 
+
+## Model
+
+In the classification problem, the model can be considered a function to predict 
+the output class probability $\bsf{y}$ given the input $\bsf{x}$. Thus when the
+model is represented by a function $f$, the relation is represented by the
+following equation. 
+```{math}
+  :label: model
+  \hat{\bsf{y}} = f\left(\bsf{x}\right)
+
+```
 
 ## Training Data Set
 
@@ -41,6 +51,13 @@ $\mathcal{T}$.
 In training neural network models, our objective is making the model output $\hat{\bsf{y}}$
 as close to the ground truth $\bsf{y}$ as possible. To perform this task
 analytically, we usually define a certain *loss function* and minimize it.
+
+```{figure-md} model_and_loss 
+<img src="./figures/model_and_loss.png" width="500px">
+
+A model and the corresponding loss.
+```
+
 The entire loss $\mathbb{L}$ is defined by the following equation for the
 entire training set defined in {eq}`training_set`:
 
@@ -160,5 +177,13 @@ model $\hat{\bsf{y}}^{(k)}$:
 
 ## Back-Propagation 
 
+
+## Questions
+
+Q1. Calculate the cross entropy between the following two vectors containing
+probability distributions:
+
+
+Q2. 
 
 
