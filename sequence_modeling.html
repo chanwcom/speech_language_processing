@@ -241,15 +241,15 @@
 <p>In the previous Chapter, we observe that the Cross Entropy (CE) loss is given
 by the following equation:</p>
 <div class="math notranslate nohighlight" id="equation-ce-loss-none-seq">
-<span class="eqno">(9)<a class="headerlink" href="#equation-ce-loss-none-seq" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+<span class="eqno">(10)<a class="headerlink" href="#equation-ce-loss-none-seq" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
          &amp; =  -E_{\bsf{y} \sim \text{training_data}} \left[ \log \hat{\bsf{y}} \right]. \\\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{\bsf{y}}\)</span> is the <em>class probability</em> predicted by the model.</p>
 <p>If we represent <span class="math notranslate nohighlight">\(\hat{\bsf{y}}\)</span> as the predicted probability, then we obtain the
 following equation:</p>
 <div class="math notranslate nohighlight" id="equation-class-prob">
-<span class="eqno">(10)<a class="headerlink" href="#equation-class-prob" title="Permalink to this equation">¶</a></span>\[  \hat{\bsf{y}} = \hat{p}(\bsf{y} | \bsf{x}).\]</div>
+<span class="eqno">(11)<a class="headerlink" href="#equation-class-prob" title="Permalink to this equation">¶</a></span>\[  \hat{\bsf{y}} = \hat{p}(\bsf{y} | \bsf{x}).\]</div>
 <p>In the sequence modelling, we use the same equation as in
-<a class="reference internal" href="#equation-ce-loss-none-seq">(9)</a>. Note that in the above equation <a class="reference internal" href="#equation-class-prob">(10)</a>,
+<a class="reference internal" href="#equation-ce-loss-none-seq">(10)</a>. Note that in the above equation <a class="reference internal" href="#equation-class-prob">(11)</a>,
 <span class="math notranslate nohighlight">\(\bsf{y}\)</span> is not the ground-truth label, but just a dummy vector variable.</p>
 <p>Now, the input and the predicted output may be sequences as follows:</p>
 <div class="math notranslate nohighlight">
@@ -259,24 +259,24 @@ following equation:</p>
   \bsf{y}_{0:L}  &amp; = \left[ \bsf{y}_0,\, \bsf{y}_1,\,  
                            \bsf{y}_2,\, \cdots, \,
                            \bsf{y}_{L-1} \right]\end{split}\]</div>
-<p>Using this, the equation <a class="reference internal" href="#equation-class-prob">(10)</a> may be expressed as:</p>
+<p>Using this, the equation <a class="reference internal" href="#equation-class-prob">(11)</a> may be expressed as:</p>
 <div class="math notranslate nohighlight" id="equation-seq-prob">
-<span class="eqno">(11)<a class="headerlink" href="#equation-seq-prob" title="Permalink to this equation">¶</a></span>\[  \hat{\bsf{y}}_{0:L} = \hat{p}(\bsf{y}_{0:L} | \bsf{x}_{0:M}).\]</div>
+<span class="eqno">(12)<a class="headerlink" href="#equation-seq-prob" title="Permalink to this equation">¶</a></span>\[  \hat{\bsf{y}}_{0:L} = \hat{p}(\bsf{y}_{0:L} | \bsf{x}_{0:M}).\]</div>
 <p>Usually, it is not tractable to directly calculate the sequence probability in
-<a class="reference internal" href="#equation-seq-prob">(11)</a>. Thus, we usually take the conditional independence assumption:</p>
+<a class="reference internal" href="#equation-seq-prob">(12)</a>. Thus, we usually take the conditional independence assumption:</p>
 <div class="math notranslate nohighlight" id="equation-seq-prob-assumption">
-<span class="eqno">(12)<a class="headerlink" href="#equation-seq-prob-assumption" title="Permalink to this equation">¶</a></span>\[\begin{split}  \hat{\bsf{y}}_{0:L} &amp; = \Pi_{l=0}^{L-1} \hat{p}(\bsf{y}_l | \bsf{x}_{0:M}) \\
+<span class="eqno">(13)<a class="headerlink" href="#equation-seq-prob-assumption" title="Permalink to this equation">¶</a></span>\[\begin{split}  \hat{\bsf{y}}_{0:L} &amp; = \Pi_{l=0}^{L-1} \hat{p}(\bsf{y}_l | \bsf{x}_{0:M}) \\
                 &amp; = \Pi_{l=0}^{L-1} \hat{y}_l\end{split}\]</div>
-<p>By putting <a class="reference internal" href="#equation-seq-prob-assumption">(12)</a> into <a class="reference internal" href="#equation-ce-loss-none-seq">(9)</a>, we obtain the
+<p>By putting <a class="reference internal" href="#equation-seq-prob-assumption">(13)</a> into <a class="reference internal" href="#equation-ce-loss-none-seq">(10)</a>, we obtain the
 following sequence loss:</p>
 <div class="math notranslate nohighlight" id="equation-ce-loss-seq">
-<span class="eqno">(13)<a class="headerlink" href="#equation-ce-loss-seq" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+<span class="eqno">(14)<a class="headerlink" href="#equation-ce-loss-seq" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
          &amp; =  -E_{\bsf{y}_{0:L} \sim \text{training_data}} \left[ \sum_{l=0}^{L-1} \log \hat{\bsf{y}}_l \right]. \\\end{split}\]</div>
-<p>Even though we use a fixed value of <span class="math notranslate nohighlight">\(L\)</span> in <a class="reference internal" href="#equation-ce-loss-seq">(13)</a>, the length may
+<p>Even though we use a fixed value of <span class="math notranslate nohighlight">\(L\)</span> in <a class="reference internal" href="#equation-ce-loss-seq">(14)</a>, the length may
 vary for each example in the training data set.
-When there are <span class="math notranslate nohighlight">\(V\)</span> classes, then <a class="reference internal" href="#equation-ce-loss-seq">(13)</a> is represented by:</p>
+When there are <span class="math notranslate nohighlight">\(V\)</span> classes, then <a class="reference internal" href="#equation-ce-loss-seq">(14)</a> is represented by:</p>
 <div class="math notranslate nohighlight" id="equation-ce-loss-seq-element">
-<span class="eqno">(14)<a class="headerlink" href="#equation-ce-loss-seq-element" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+<span class="eqno">(15)<a class="headerlink" href="#equation-ce-loss-seq-element" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
          &amp; =  -E_{\bsf{y}_{0:L} \sim \text{training_data}} \left[ 
             \sum_{l=0}^{L-1} \sum_{v=0}^{V-1} (y_l)_v \log (\hat{\bsf{y}}_l)_v \right]. \\\end{split}\]</div>
 <p>In Tensorflow, it is implemented as tfa.seq2seq.sequence_loss method.</p>
