@@ -127,6 +127,14 @@ In Tensorflow, cross entropy is calculated using
 and **tf.nn.sparse_softmax_cross_entropy_with_logits** for sparse matrix
 representation.
 
+## Softmax and Logit
+
+For classification tasks, we usually apply the softamx function to represent
+the probabilities corresponding to each class.
+```{math}
+    :label: softmax_eq
+    Softmax(\mathbf{h})_j = \frac{\exp(h_j)}{\sum_{i=0}^{C-1} \exp(h_i)}
+```
 
 ## Gradient Descent 
 
