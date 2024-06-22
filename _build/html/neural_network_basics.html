@@ -1,311 +1,457 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Neural Network Basics &#8212; Introduction to Speech and Language Processing using Deep Learning</title>
-    
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
 
-    
-    <link rel="stylesheet" href="_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
-    <script src="_static/togglebutton.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"mathjax_path": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js", "TeX": {"Macros": {"bsf": ["\\mathbb{\\mathsf{#1}}", 1]}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"mathjax_path": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js", "TeX": {"Macros": {"bsf": ["\\mathbb{\\mathsf{#1}}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'neural_network_basics';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Sequence Modeling" href="sequence_modeling.html" />
     <link rel="prev" title="Introduction to Speech and Language Processing" href="intro.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      <img src="_static/slp_lab.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">Introduction to Speech and Language Processing using Deep Learning</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction to Speech and Language Processing
-  </a>
- </li>
-</ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Neural Network Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sequence_modeling.html">
-   Sequence Modeling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="language_modeling.html">
-   Language Modeling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="speech_recognition.html">
-   Speech Recognition
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="speech_synthesis.html">
-   Speech Synthesis
-  </a>
- </li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
 
-    </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/neural_network_basics.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
 
-            <!-- Source interaction buttons -->
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fneural_network_basics.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/slp_lab.png" class="logo__image only-light" alt="Introduction to Speech and Language Processing using Deep Learning - Home"/>
+    <script>document.write(`<img src="_static/slp_lab.png" class="logo__image only-dark" alt="Introduction to Speech and Language Processing using Deep Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Speech and Language Processing
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Neural Network Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sequence_modeling.html">Sequence Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language_modeling.html">Language Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="speech_recognition.html">Speech Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="speech_synthesis.html">Speech Synthesis</a></li>
+</ul>
+
     </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fneural_network_basics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-        </div>
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/neural_network_basics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Neural Network Basics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div>
+                <h2> Contents </h2>
             </div>
-            <nav id="bd-toc-nav">
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#classification-problem">
-   Classification problem
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model">
-   Model
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training-data-set">
-   Training Data Set
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loss-function">
-   Loss Function
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#gradient-descent">
-   Gradient Descent
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stochastic-gradient-descent-sgd">
-   Stochastic Gradient Descent (SGD)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#back-propagation">
-   Back-Propagation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#questions">
-   Questions
-  </a>
- </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-problem">Classification problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data-set">Training Data Set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#softmax-and-logit">Softmax and Logit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">Gradient Descent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-propagation">Back-Propagation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="neural-network-basics">
-<h1>Neural Network Basics<a class="headerlink" href="#neural-network-basics" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="classification-problem">
-<h2>Classification problem<a class="headerlink" href="#classification-problem" title="Permalink to this headline">¶</a></h2>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="neural-network-basics">
+<h1>Neural Network Basics<a class="headerlink" href="#neural-network-basics" title="Link to this heading">#</a></h1>
+<section id="classification-problem">
+<h2>Classification problem<a class="headerlink" href="#classification-problem" title="Link to this heading">#</a></h2>
 <p>There are various applications of neural-network models. In this section, for
 simplicity of discussion, we will focus only on <em>the classification problem</em>.
 In the classification problem,
 when the number of output classes is <span class="math notranslate nohighlight">\(V\)</span>, then the class index <span class="math notranslate nohighlight">\(v\)</span> may take a
 value in the following range:</p>
 <div class="math notranslate nohighlight" id="equation-output-label">
-<span class="eqno">(1)<a class="headerlink" href="#equation-output-label" title="Permalink to this equation">¶</a></span>\[  0 \le v \le V - 1.\]</div>
+<span class="eqno">(1)<a class="headerlink" href="#equation-output-label" title="Link to this equation">#</a></span>\[  0 \le v \le V - 1.\]</div>
 <p>In stead of the above <em>sparse representation of the output class</em>, we may use
 <em>the one-hot vector</em> representation as below:</p>
 <p>Sometimes, the class index <span class="math notranslate nohighlight">\(v\)</span> in <a class="reference internal" href="#equation-output-label">(1)</a> is referred to as
 <em>sparse representation</em> compared to the one-hot vector representation in Table</p>
-</div>
-<div class="section" id="model">
-<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="model">
+<h2>Model<a class="headerlink" href="#model" title="Link to this heading">#</a></h2>
 <p>In the classification problem, the model can be considered a function to predict
 the output class probability <span class="math notranslate nohighlight">\(\bsf{y}\)</span> given the input <span class="math notranslate nohighlight">\(\bsf{x}\)</span>. Thus when the
 model is represented by a function <span class="math notranslate nohighlight">\(f\)</span>, the relation is represented by the
 following equation.</p>
 <div class="math notranslate nohighlight" id="equation-model">
-<span class="eqno">(2)<a class="headerlink" href="#equation-model" title="Permalink to this equation">¶</a></span>\[  \hat{\bsf{y}} = f\left(\bsf{x}\right)\]</div>
-</div>
-<div class="section" id="training-data-set">
-<h2>Training Data Set<a class="headerlink" href="#training-data-set" title="Permalink to this headline">¶</a></h2>
+<span class="eqno">(2)<a class="headerlink" href="#equation-model" title="Link to this equation">#</a></span>\[  \hat{\bsf{y}} = f\left(\bsf{x}\right)\]</div>
+</section>
+<section id="training-data-set">
+<h2>Training Data Set<a class="headerlink" href="#training-data-set" title="Link to this heading">#</a></h2>
 <p>In this section, we consider the supervised training case, which might be the
 most basic case of training neural-network models.
 Other cases such as unsupervised or semi-supervised training cases will
 be covered later.</p>
 <div class="math notranslate nohighlight" id="equation-training-set">
-<span class="eqno">(3)<a class="headerlink" href="#equation-training-set" title="Permalink to this equation">¶</a></span>\[  \mathcal{T} = \big \{ (\bsf{x}^{(k)},\, \bsf{y}^{(k)})
+<span class="eqno">(3)<a class="headerlink" href="#equation-training-set" title="Link to this equation">#</a></span>\[  \mathcal{T} = \big \{ (\bsf{x}^{(k)},\, \bsf{y}^{(k)})
       \; \big | \; 0 \le k \le N_{\text{tr}} - 1 \big \},\]</div>
 <p>where <span class="math notranslate nohighlight">\(N_{\text{tr}}\)</span> is the number of examples in the training set
 <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
-</div>
-<div class="section" id="loss-function">
-<h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="loss-function">
+<h2>Loss Function<a class="headerlink" href="#loss-function" title="Link to this heading">#</a></h2>
 <p>In training neural network models, our objective is making the model output <span class="math notranslate nohighlight">\(\hat{\bsf{y}}\)</span>
 as close to the ground truth <span class="math notranslate nohighlight">\(\bsf{y}\)</span> as possible. To perform this task
 analytically, we usually define a certain <em>loss function</em> and minimize it.</p>
-<div class="figure align-default" id="model-and-loss">
+<figure class="align-default" id="model-and-loss">
 <a class="reference internal image-reference" href="_images/model_and_loss.png"><img alt="_images/model_and_loss.png" src="_images/model_and_loss.png" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">A model and the corresponding loss.</span><a class="headerlink" href="#model-and-loss" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">A model and the corresponding loss.</span><a class="headerlink" href="#model-and-loss" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The entire loss <span class="math notranslate nohighlight">\(\mathbb{L}\)</span> is defined by the following equation for the
 entire training set defined in <a class="reference internal" href="#equation-training-set">(3)</a>:</p>
 <div class="math notranslate nohighlight" id="equation-entire-loss">
-<span class="eqno">(4)<a class="headerlink" href="#equation-entire-loss" title="Permalink to this equation">¶</a></span>\[  \mathbb{L} = \frac{1}{N_{\text{tr}}} \sum_{k=0}^{N_{\text{tr} - 1}}
+<span class="eqno">(4)<a class="headerlink" href="#equation-entire-loss" title="Link to this equation">#</a></span>\[  \mathbb{L} = \frac{1}{N_{\text{tr}}} \sum_{k=0}^{N_{\text{tr} - 1}}
     \text{loss}(\bsf{y}^{(k)}, \hat{\bsf{y}}^{(k)}) \]</div>
 <p>where <span class="math notranslate nohighlight">\(N_{tr}\)</span> is the number of training examples as defined in</p>
 <p>Now, the question is what would be a good candidate for the loss function in
@@ -329,12 +475,12 @@ minizing <em>the KL divergence</em>, which is shown in the following equation:</
 <p>From the definition of cross entropy (CE), <span class="math notranslate nohighlight">\(\mathbb{L}_{\text{CE}}\)</span> is given by
 the following equation:</p>
 <div class="math notranslate nohighlight" id="equation-ce-loss">
-<span class="eqno">(5)<a class="headerlink" href="#equation-ce-loss" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+<span class="eqno">(5)<a class="headerlink" href="#equation-ce-loss" title="Link to this equation">#</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
          &amp; =  -E_{\bsf{y} \sim \text{training_data}} \left[ \log \hat{\bsf{y}} \right]. \\\end{split}\]</div>
 <p>When the one-hot vector representation is used in <a class="reference internal" href="#equation-ce-loss">(5)</a>, <a class="reference internal" href="#equation-ce-loss">(5)</a>
 is calculated as follows:</p>
 <div class="math notranslate nohighlight" id="equation-ce-loss-one-hot">
-<span class="eqno">(6)<a class="headerlink" href="#equation-ce-loss-one-hot" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+<span class="eqno">(6)<a class="headerlink" href="#equation-ce-loss-one-hot" title="Link to this equation">#</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
          &amp; =  -E_{\bsf{y} \sim \text{training_data}} 
           \left[ \sum_{v=0}^{V-1} y_v   \log \hat{y}_v  \right]. \\\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_v\)</span> and <span class="math notranslate nohighlight">\(\hat{y}_v\)</span> are <span class="math notranslate nohighlight">\(v\)</span>-th element of the one-hot vector
@@ -343,7 +489,7 @@ output classes as shown in <a class="reference internal" href="#equation-output-
 <p><a class="reference internal" href="#equation-ce-loss-one-hot">(6)</a> may be expressed in summation rather than the expection as
 follows:</p>
 <div class="math notranslate nohighlight" id="equation-ce-loss-one-hot-sum">
-<span class="eqno">(7)<a class="headerlink" href="#equation-ce-loss-one-hot-sum" title="Permalink to this equation">¶</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
+<span class="eqno">(7)<a class="headerlink" href="#equation-ce-loss-one-hot-sum" title="Link to this equation">#</a></span>\[\begin{split}  \mathbb{L}_{\text{CE}} 
          &amp; =  -\sum_{k=0}^{N_{\text{tr}}}
            \sum_{v=0}^{V-1} y^{(k)}_v   \log \hat{y}^{(k)}_v . \\\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y^{(k)}_v\)</span> and <span class="math notranslate nohighlight">\(\hat{y}^{(k)}_v\)</span> represent the <span class="math notranslate nohighlight">\(v\)</span>-th element of the
@@ -353,15 +499,22 @@ corresponding predicted output using the model <span class="math notranslate noh
 <strong>tf.nn.softmax_cross_entropy_with_logits</strong> for one hot vector representation
 and <strong>tf.nn.sparse_softmax_cross_entropy_with_logits</strong> for sparse matrix
 representation.</p>
-</div>
-<div class="section" id="gradient-descent">
-<h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="softmax-and-logit">
+<h2>Softmax and Logit<a class="headerlink" href="#softmax-and-logit" title="Link to this heading">#</a></h2>
+<p>For classification tasks, we usually apply the softamx function to represent
+the probabilities corresponding to each class.</p>
+<div class="math notranslate nohighlight" id="equation-softmax-eq">
+<span class="eqno">(8)<a class="headerlink" href="#equation-softmax-eq" title="Link to this equation">#</a></span>\[    Softmax(\mathbf{h})_j = \frac{\exp(h_j)}{\sum_{i=0}^{C-1} \exp(h_i)}\]</div>
+</section>
+<section id="gradient-descent">
+<h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Link to this heading">#</a></h2>
 <p>Suppose that the entire parameters of our neural network model is denoted by
 <span class="math notranslate nohighlight">\(\mathsf{w}\)</span>. If we can directly differentiate the loss function <span class="math notranslate nohighlight">\(\mathbb{L}\)</span>,
 we improve the model parameters using the well-known Gradient Descent approach
 as shown below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3fce010e-9463-44ea-8422-fa1dbf9dbb85">
-<span class="eqno">(8)<a class="headerlink" href="#equation-3fce010e-9463-44ea-8422-fa1dbf9dbb85" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6bd7f6dd-b288-4675-ae22-f782ff55d38d">
+<span class="eqno">(9)<a class="headerlink" href="#equation-6bd7f6dd-b288-4675-ae22-f782ff55d38d" title="Permalink to this equation">#</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}.
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is a constant called the <em>learning rate</em>.</p>
@@ -379,13 +532,13 @@ disk, and repeatedly load and save partial result.</p></li>
 Parameter update is done only once after processing the entire training
 set. That is to say, the parameter update is done only once for one <em>epoch</em>.</p></li>
 </ul>
-</div>
-<div class="section" id="stochastic-gradient-descent-sgd">
-<h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="stochastic-gradient-descent-sgd">
+<h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Link to this heading">#</a></h2>
 <p>Unlike the GD approach using the loss from the entire training dataset, in SGD,
 we update the parameter for each training example <span class="math notranslate nohighlight">\((\bsf{x}^{(k)}, \bsf{y}^{(k)})\)</span> iteratively.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4992e0f-8d12-491f-b3d6-6b6c3e1d0f7d">
-<span class="eqno">(9)<a class="headerlink" href="#equation-d4992e0f-8d12-491f-b3d6-6b6c3e1d0f7d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6ac74514-327c-48df-941c-4f986322f549">
+<span class="eqno">(10)<a class="headerlink" href="#equation-6ac74514-327c-48df-941c-4f986322f549" title="Permalink to this equation">#</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}^{(k)}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{L}^{(k)}\)</span> is the loss value calculated using only a single
@@ -393,17 +546,17 @@ training example <span class="math notranslate nohighlight">\((\bsf{x}^{(k)}, \b
 model <span class="math notranslate nohighlight">\(\hat{\bsf{y}}^{(k)}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[  \mathbb{L}^{(k)} = \text{loss}(\bsf{y}^{(k)}, \hat{\bsf{y}}^{(k)})\]</div>
-</div>
-<div class="section" id="back-propagation">
-<h2>Back-Propagation<a class="headerlink" href="#back-propagation" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="questions">
-<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="back-propagation">
+<h2>Back-Propagation<a class="headerlink" href="#back-propagation" title="Link to this heading">#</a></h2>
+</section>
+<section id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Link to this heading">#</a></h2>
 <p>Q1. Calculate the cross entropy between the following two vectors containing
 probability distributions:</p>
 <p>Q2.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -417,7 +570,7 @@ probability distributions:</p>
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -425,36 +578,111 @@ probability distributions:</p>
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-        
-        <div class='prev-next-bottom'>
-            
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Introduction to Speech and Language Processing</a>
-    <a class='right-next' id="next-link" href="sequence_modeling.html" title="next page">Sequence Modeling</a>
 
-        </div>
-        
-        </div>
-    </div>
-    <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By Chanwoo Kim (chanwcom@gmail.com)<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Speech and Language Processing</p>
       </div>
-    </div>
-  
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+    </a>
+    <a class="right-next"
+       href="sequence_modeling.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Sequence Modeling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-problem">Classification problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data-set">Training Data Set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#softmax-and-logit">Softmax and Logit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent">Gradient Descent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-propagation">Back-Propagation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
+  <div class="footer-item">
+    
+<p class="component-author">
+By Chanwoo Kim (chanwcom@gmail.com)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
