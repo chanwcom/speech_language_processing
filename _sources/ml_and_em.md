@@ -14,7 +14,7 @@ MLE is built on a simple yet powerful frequentist principle: **"The best paramet
 
 If we have a set of independent and identically distributed (i.i.d.) observations 
 $X = \{x_0, x_1,  \cdots, x_{I-1}\}$, and a probability model $P(X|\theta)$, the likelihood function $L(\theta)$ is given by:
-$$L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{N-1} P(x_i \mid \theta).$$
+$$L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).$$
 
 ### 1.2 The Necessity of the Log-Likelihood
 
@@ -65,31 +65,103 @@ Solving this yields the maximum likelihood estimator for the variance:
 $$\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2$$
 
 
-## 2. The Breakthrough: Expectation-Maximization (EM) Algorithm
+## 2. Expectation-Maximization (EM) Algorithm
+
+In statistics, an expectation–maximization (EM) algorithm is an iterative method to find (local) maximum likelihood or maximum a posteriori (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.
+
 
 ### 2.1 The Latent Variable Problem
-MLE fails when our data is "incomplete." Consider a **Gaussian Mixture Model (GMM)**:
-- We see the data points $X$.
-- We **do not see** which Gaussian component $Z$ generated each point.
+Maximum Likelihood Estimation (MLE) fails when our data is "incomplete." Consider a **Gaussian Mixture Model (GMM)**:
+- We see the data points $X = \{x_0, x_1,  \cdots, x_{I-1}\}$.
+- We **do not see** which Gaussian component $Z = \{z_0, z_1,  \cdots, z_{I-1}\}$ generated each point.
 If we knew $Z$, we could use MLE. If we knew the parameters $\theta$, we could guess $Z$. This circular dependency is what EM solves.
 
 ### 2.2 The Mathematical Mechanism
-EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood $P(X|\theta) = \sum_{Z} P(X, Z | \theta)$.
+In Maximum Likelihood (ML) framework, the estimated parameter 
+$\hat{\theta}$ is given by the following equation:
+$$
+    \begin{aligned}
+        \hat{\theta} = \arg \max_{\theta} p(X \mid \theta).
+    \end{aligned}
+$$
+EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood $p(X|\theta) = \sum\limits_{Z \in \mathcal{Z}} p\left(X, Z \mid \theta\right)$. As mentioned in the above section, $X$ and $Z$ are observed data and latent data, respectively:
+$$
+\begin{aligned}
+    X & = \{x_0, x_1,  \cdots, x_{I-1}\}, \\
+    Z & = \{z_0, z_1,  \cdots, z_{I-1}\}
+\end{aligned}
+$$
+The fundamental assumption is that while the ** complete-data likelihood**  $p(X, Z \mid \theta) $
+is defined, $Z$ is not observed, making direct maximization of 
+$p(X | \theta)$ difficult.
 
 #### A. The E-Step (Expectation)
-We don't know the latent variables $Z$, so we calculate the "responsibility" or the posterior probability of $Z$ given the current parameter estimate $\theta^{(t)}$:
-$$w_{ik} = P(z_i = k | x_i, \theta^{(t)})$$
+We do not know the latent variables $Z$, so we calculate the "responsibility" or the posterior probability of $Z$ given the current parameter estimate $\theta^{(t)}$:
+$$W = P\left(Z \mid X, \theta^{(t)}\right)$$
 Then, we define the **Auxiliary Function (Q-function)**:
-$$Q(\theta | \theta^{(t)}) = \sum_{Z} P(Z|X, \theta^{(t)}) \log P(X, Z | \theta)$$
+$$Q(\theta | \theta^{(t)}) = 
+    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
+    \log P\left(X, Z \mid \theta\right), $$
 
 #### B. The M-Step (Maximization)
 We update the parameters by maximizing the Q-function:
 $$\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})$$
 
-### 2.3 Why Does it Work? (Jensen's Inequality)
+### 2.3 Further Modification of the E-Step Equation
+
+Let us modify the **auxilary function** given in the following form:
+$$
+\begin{aligned}
+Q(\theta | \theta^{(t)}) & = 
+    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
+    \log P\left(X, Z \mid \theta\right), 
+\end{aligned}
+$$
+Since 
+$$
+\begin{align}
+    \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
+        \log p\left(x_i, z_i \mid \theta\right),
+\end{align}
+$$ the auxiliary function can be written:
+$$
+\begin{align}
+    Q(\theta | \theta^{(t)}) 
+     & =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+       \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
+    & = 
+       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+        \log p\left(x_i, z_i \mid \theta\right), 
+\end{align}
+$$
+Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
+$$
+\begin{align}
+    \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
+        = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
+\end{align}
+$$
+
+
+### 2.4 Why Does it Work? (Jensen's Inequality)
 The EM algorithm works by creating a lower bound (surrogate function) on the log-likelihood at each step. By maximizing this lower bound, we guarantee that the true log-likelihood $\ell(\theta)$ never decreases:
 $$\ell(\theta^{(t+1)}) \geq \ell(\theta^{(t)})$$
 This property ensures convergence, although it may settle at a **local optimum** rather than the global one.
+
+### 2.5 Alternative Representation of the Auxiliary Function
+
+Instead of using $X$ and $Z$, we may define the complete
+data by:
+$$ k = (X, Z) $$
+Nothing that $P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(k \mid X, \theta^{(t)}\right) $, the **Auxiliary Function** can be represented by:
+
+$$
+\begin{aligned}
+Q\left(\theta \mid \theta^{(t)}\right) & = \sum_{Z \in \mathcal{Z}} 
+    P\left(Z \mid X, \theta^{(t)}\right)  \log P(X, Z \mid \theta) \\
+& =   \sum_{k \in \mathcal{K}} P\left(k \mid X, \theta^{(t)}\right)  \log P(k \mid \theta). 
+\end{aligned}
+$$
 
 ---
 

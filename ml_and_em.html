@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
@@ -381,14 +381,15 @@
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-breakthrough-expectation-maximization-em-algorithm">2. The Breakthrough: Expectation-Maximization (EM) Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-maximization-em-algorithm">2. Expectation-Maximization (EM) Algorithm</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-latent-variable-problem">2.1 The Latent Variable Problem</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathematical-mechanism">2.2 The Mathematical Mechanism</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-the-e-step-expectation">A. The E-Step (Expectation)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-the-m-step-maximization">B. The M-Step (Maximization)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.3 Why Does it Work? (Jensen’s Inequality)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-modification-of-the-e-step-equation">2.3 Further Modification of the E-Step Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-representation-of-the-auxiliary-function">2.5 Alternative Representation of the Auxiliary Function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-analysis-and-use-cases">3. Comparative Analysis and Use Cases</a><ul class="nav section-nav flex-column">
@@ -422,7 +423,7 @@
 <p>MLE is built on a simple yet powerful frequentist principle: <strong>“The best parameters are those under which the observed data is most likely to have occurred.”</strong></p>
 <p>If we have a set of independent and identically distributed (i.i.d.) observations
 <span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>, and a probability model <span class="math notranslate nohighlight">\(P(X|\theta)\)</span>, the likelihood function <span class="math notranslate nohighlight">\(L(\theta)\)</span> is given by:
-$<span class="math notranslate nohighlight">\(L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{N-1} P(x_i \mid \theta).\)</span>$</p>
+$<span class="math notranslate nohighlight">\(L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).\)</span>$</p>
 </section>
 <section id="the-necessity-of-the-log-likelihood">
 <h3>1.2 The Necessity of the Log-Likelihood<a class="headerlink" href="#the-necessity-of-the-log-likelihood" title="Link to this heading">#</a></h3>
@@ -480,26 +481,45 @@ $<span class="math notranslate nohighlight">\(\hat{\sigma}^2_{MLE} = \frac{1}{I}
 </section>
 </section>
 </section>
-<section id="the-breakthrough-expectation-maximization-em-algorithm">
-<h2>2. The Breakthrough: Expectation-Maximization (EM) Algorithm<a class="headerlink" href="#the-breakthrough-expectation-maximization-em-algorithm" title="Link to this heading">#</a></h2>
+<section id="expectation-maximization-em-algorithm">
+<h2>2. Expectation-Maximization (EM) Algorithm<a class="headerlink" href="#expectation-maximization-em-algorithm" title="Link to this heading">#</a></h2>
+<p>In statistics, an expectation–maximization (EM) algorithm is an iterative method to find (local) maximum likelihood or maximum a posteriori (MAP) estimates of parameters in statistical models, where the model depends on unobserved latent variables.</p>
 <section id="the-latent-variable-problem">
 <h3>2.1 The Latent Variable Problem<a class="headerlink" href="#the-latent-variable-problem" title="Link to this heading">#</a></h3>
-<p>MLE fails when our data is “incomplete.” Consider a <strong>Gaussian Mixture Model (GMM)</strong>:</p>
+<p>Maximum Likelihood Estimation (MLE) fails when our data is “incomplete.” Consider a <strong>Gaussian Mixture Model (GMM)</strong>:</p>
 <ul class="simple">
-<li><p>We see the data points <span class="math notranslate nohighlight">\(X\)</span>.</p></li>
-<li><p>We <strong>do not see</strong> which Gaussian component <span class="math notranslate nohighlight">\(Z\)</span> generated each point.
+<li><p>We see the data points <span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>.</p></li>
+<li><p>We <strong>do not see</strong> which Gaussian component <span class="math notranslate nohighlight">\(Z = \{z_0, z_1,  \cdots, z_{I-1}\}\)</span> generated each point.
 If we knew <span class="math notranslate nohighlight">\(Z\)</span>, we could use MLE. If we knew the parameters <span class="math notranslate nohighlight">\(\theta\)</span>, we could guess <span class="math notranslate nohighlight">\(Z\)</span>. This circular dependency is what EM solves.</p></li>
 </ul>
 </section>
 <section id="the-mathematical-mechanism">
 <h3>2.2 The Mathematical Mechanism<a class="headerlink" href="#the-mathematical-mechanism" title="Link to this heading">#</a></h3>
-<p>EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood <span class="math notranslate nohighlight">\(P(X|\theta) = \sum_{Z} P(X, Z | \theta)\)</span>.</p>
+<p>In Maximum Likelihood (ML) framework, the estimated parameter
+<span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is given by the following equation:
+$<span class="math notranslate nohighlight">\(
+    \begin{aligned}
+        \hat{\theta} = \arg \max_{\theta} p(X \mid \theta).
+    \end{aligned}
+\)</span><span class="math notranslate nohighlight">\(
+EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood \)</span>p(X|\theta) = \sum\limits_{Z \in \mathcal{Z}} p\left(X, Z \mid \theta\right)<span class="math notranslate nohighlight">\(. As mentioned in the above section, \)</span>X<span class="math notranslate nohighlight">\( and \)</span>Z<span class="math notranslate nohighlight">\( are observed data and latent data, respectively:
+\)</span><span class="math notranslate nohighlight">\(
+\begin{aligned}
+    X &amp; = \{x_0, x_1,  \cdots, x_{I-1}\}, \\
+    Z &amp; = \{z_0, z_1,  \cdots, z_{I-1}\}
+\end{aligned}
+\)</span><span class="math notranslate nohighlight">\(
+The fundamental assumption is that while the ** complete-data likelihood**  \)</span>p(X, Z \mid \theta) <span class="math notranslate nohighlight">\(
+is defined, \)</span>Z<span class="math notranslate nohighlight">\( is not observed, making direct maximization of 
+\)</span>p(X | \theta)$ difficult.</p>
 <section id="a-the-e-step-expectation">
 <h4>A. The E-Step (Expectation)<a class="headerlink" href="#a-the-e-step-expectation" title="Link to this heading">#</a></h4>
-<p>We don’t know the latent variables <span class="math notranslate nohighlight">\(Z\)</span>, so we calculate the “responsibility” or the posterior probability of <span class="math notranslate nohighlight">\(Z\)</span> given the current parameter estimate <span class="math notranslate nohighlight">\(\theta^{(t)}\)</span>:
-$<span class="math notranslate nohighlight">\(w_{ik} = P(z_i = k | x_i, \theta^{(t)})\)</span><span class="math notranslate nohighlight">\(
+<p>We do not know the latent variables <span class="math notranslate nohighlight">\(Z\)</span>, so we calculate the “responsibility” or the posterior probability of <span class="math notranslate nohighlight">\(Z\)</span> given the current parameter estimate <span class="math notranslate nohighlight">\(\theta^{(t)}\)</span>:
+$<span class="math notranslate nohighlight">\(W = P\left(Z \mid X, \theta^{(t)}\right)\)</span><span class="math notranslate nohighlight">\(
 Then, we define the **Auxiliary Function (Q-function)**:
-\)</span><span class="math notranslate nohighlight">\(Q(\theta | \theta^{(t)}) = \sum_{Z} P(Z|X, \theta^{(t)}) \log P(X, Z | \theta)\)</span>$</p>
+\)</span><span class="math notranslate nohighlight">\(Q(\theta | \theta^{(t)}) = 
+    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
+    \log P\left(X, Z \mid \theta\right), \)</span>$</p>
 </section>
 <section id="b-the-m-step-maximization">
 <h4>B. The M-Step (Maximization)<a class="headerlink" href="#b-the-m-step-maximization" title="Link to this heading">#</a></h4>
@@ -507,11 +527,65 @@ Then, we define the **Auxiliary Function (Q-function)**:
 $<span class="math notranslate nohighlight">\(\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})\)</span>$</p>
 </section>
 </section>
-<section id="why-does-it-work-jensen-s-inequality">
-<h3>2.3 Why Does it Work? (Jensen’s Inequality)<a class="headerlink" href="#why-does-it-work-jensen-s-inequality" title="Link to this heading">#</a></h3>
-<p>The EM algorithm works by creating a lower bound (surrogate function) on the log-likelihood at each step. By maximizing this lower bound, we guarantee that the true log-likelihood <span class="math notranslate nohighlight">\(\ell(\theta)\)</span> never decreases:
-$<span class="math notranslate nohighlight">\(\ell(\theta^{(t+1)}) \geq \ell(\theta^{(t)})\)</span>$
-This property ensures convergence, although it may settle at a <strong>local optimum</strong> rather than the global one.</p>
+<section id="further-modification-of-the-e-step-equation">
+<h3>2.3 Further Modification of the E-Step Equation<a class="headerlink" href="#further-modification-of-the-e-step-equation" title="Link to this heading">#</a></h3>
+<p>Let us modify the <strong>auxilary function</strong> given in the following form:
+$<span class="math notranslate nohighlight">\(
+\begin{aligned}
+Q(\theta | \theta^{(t)}) &amp; = 
+    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
+    \log P\left(X, Z \mid \theta\right), 
+\end{aligned}
+\)</span><span class="math notranslate nohighlight">\(
+Since 
+\)</span>$</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3509eebf-452c-4bda-84c1-3304e1948a1c">
+<span class="eqno">(11)<a class="headerlink" href="#equation-3509eebf-452c-4bda-84c1-3304e1948a1c" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
+        \log p\left(x_i, z_i \mid \theta\right),
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[ the auxiliary function can be written:
+\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-c4a2e131-5e76-4ed5-8ea9-58a0916aa23d">
+<span class="eqno">(12)<a class="headerlink" href="#equation-c4a2e131-5e76-4ed5-8ea9-58a0916aa23d" title="Permalink to this equation">#</a></span>\[\begin{align}
+    Q(\theta | \theta^{(t)}) 
+     &amp; =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+       \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
+    &amp; = 
+       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+        \log p\left(x_i, z_i \mid \theta\right), 
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[
+Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
+\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-0d2b8b6b-4e7e-4bd5-a788-6306f42a2ca8">
+<span class="eqno">(13)<a class="headerlink" href="#equation-0d2b8b6b-4e7e-4bd5-a788-6306f42a2ca8" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
+        = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[
+### 2.4 Why Does it Work? (Jensen's Inequality)
+The EM algorithm works by creating a lower bound (surrogate function) on the log-likelihood at each step. By maximizing this lower bound, we guarantee that the true log-likelihood $\ell(\theta)$ never decreases:
+$$\ell(\theta^{(t+1)}) \geq \ell(\theta^{(t)})\]</div>
+<p>This property ensures convergence, although it may settle at a <strong>local optimum</strong> rather than the global one.</p>
+</section>
+<section id="alternative-representation-of-the-auxiliary-function">
+<h3>2.5 Alternative Representation of the Auxiliary Function<a class="headerlink" href="#alternative-representation-of-the-auxiliary-function" title="Link to this heading">#</a></h3>
+<p>Instead of using <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span>, we may define the complete
+data by:
+$<span class="math notranslate nohighlight">\( k = (X, Z) \)</span><span class="math notranslate nohighlight">\(
+Nothing that \)</span>P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(k \mid X, \theta^{(t)}\right) $, the <strong>Auxiliary Function</strong> can be represented by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}} 
+    P\left(Z \mid X, \theta^{(t)}\right)  \log P(X, Z \mid \theta) \\
+&amp; =   \sum_{k \in \mathcal{K}} P\left(k \mid X, \theta^{(t)}\right)  \log P(k \mid \theta). 
+\end{aligned}
+\end{split}\]</div>
 </section>
 </section>
 <hr class="docutils" />
@@ -648,14 +722,15 @@ This property ensures convergence, although it may settle at a <strong>local opt
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-breakthrough-expectation-maximization-em-algorithm">2. The Breakthrough: Expectation-Maximization (EM) Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-maximization-em-algorithm">2. Expectation-Maximization (EM) Algorithm</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-latent-variable-problem">2.1 The Latent Variable Problem</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathematical-mechanism">2.2 The Mathematical Mechanism</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-the-e-step-expectation">A. The E-Step (Expectation)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-the-m-step-maximization">B. The M-Step (Maximization)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.3 Why Does it Work? (Jensen’s Inequality)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-modification-of-the-e-step-equation">2.3 Further Modification of the E-Step Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-representation-of-the-auxiliary-function">2.5 Alternative Representation of the Auxiliary Function</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-analysis-and-use-cases">3. Comparative Analysis and Use Cases</a><ul class="nav section-nav flex-column">
