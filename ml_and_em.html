@@ -1,0 +1,721 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Maximum Likelihood (ML) and Expectation-Maximization (EM) &#8212; Introduction to Speech and Language Processing using Deep Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"mathjax_path": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js", "tex": {"macros": {"bsf": ["\\mathbb{\\mathsf{#1}}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ml_and_em';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sequence Modeling" href="sequence_modeling.html" />
+    <link rel="prev" title="Neural Network Basics" href="neural_network_basics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/slp_lab.png" class="logo__image only-light" alt="Introduction to Speech and Language Processing using Deep Learning - Home"/>
+    <img src="_static/slp_lab.png" class="logo__image only-dark pst-js-only" alt="Introduction to Speech and Language Processing using Deep Learning - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction to Speech and Language Processing
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="neural_network_basics.html">Neural Network Basics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Maximum Likelihood (ML) and Expectation-Maximization (EM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sequence_modeling.html">Sequence Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language_modeling.html">Language Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="speech_recognition.html">Speech Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="speech_synthesis.html">Speech Synthesis</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fml_and_em.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/ml_and_em.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Maximum Likelihood (ML) and Expectation-Maximization (EM)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-mle-the-foundation">1. Maximum Likelihood Estimation (MLE): The Foundation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophical-underpinning">1.1 Philosophical Underpinning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-analytical-derivation">1.3 Step-by-Step Analytical Derivation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.4 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-estimating-the-mean-mu">A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-standard-deviation-sigma">B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-breakthrough-expectation-maximization-em-algorithm">2. The Breakthrough: Expectation-Maximization (EM) Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-latent-variable-problem">2.1 The Latent Variable Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathematical-mechanism">2.2 The Mathematical Mechanism</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-the-e-step-expectation">A. The E-Step (Expectation)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-the-m-step-maximization">B. The M-Step (Maximization)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.3 Why Does it Work? (Jensen’s Inequality)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-analysis-and-use-cases">3. Comparative Analysis and Use Cases</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-vs-em-a-technical-summary">3.1 MLE vs. EM: A Technical Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-applications">3.2 Real-World Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics-and-limitations">4. Advanced Topics and Limitations</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="maximum-likelihood-ml-and-expectation-maximization-em">
+<h1>Maximum Likelihood (ML) and Expectation-Maximization (EM)<a class="headerlink" href="#maximum-likelihood-ml-and-expectation-maximization-em" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>In the realm of statistical machine learning, we often face the challenge of estimating the parameters of a model that best explains our observed data. This chapter provides an in-depth technical exploration of <strong>Maximum Likelihood Estimation (MLE)</strong>—the gold standard for complete data—and the <strong>Expectation-Maximization (EM) Algorithm</strong>, the essential tool for dealing with latent variables and missing data.</p>
+</section>
+<hr class="docutils" />
+<section id="maximum-likelihood-estimation-mle-the-foundation">
+<h2>1. Maximum Likelihood Estimation (MLE): The Foundation<a class="headerlink" href="#maximum-likelihood-estimation-mle-the-foundation" title="Link to this heading">#</a></h2>
+<section id="philosophical-underpinning">
+<h3>1.1 Philosophical Underpinning<a class="headerlink" href="#philosophical-underpinning" title="Link to this heading">#</a></h3>
+<p>MLE is built on a simple yet powerful frequentist principle: <strong>“The best parameters are those under which the observed data is most likely to have occurred.”</strong></p>
+<p>If we have a set of independent and identically distributed (i.i.d.) observations
+<span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>, and a probability model <span class="math notranslate nohighlight">\(P(X|\theta)\)</span>, the likelihood function <span class="math notranslate nohighlight">\(L(\theta)\)</span> is given by:
+$<span class="math notranslate nohighlight">\(L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{N-1} P(x_i \mid \theta).\)</span>$</p>
+</section>
+<section id="the-necessity-of-the-log-likelihood">
+<h3>1.2 The Necessity of the Log-Likelihood<a class="headerlink" href="#the-necessity-of-the-log-likelihood" title="Link to this heading">#</a></h3>
+<p>Even though the above equation is conceptually useful, in Maximum Likelihood Estimation (MLE),
+we usually use the log likelihood defined by the following equations:
+$<span class="math notranslate nohighlight">\(\ell(\theta) = \sum_{i=0}^{I-1} \log P(x_i | \theta).\)</span>$</p>
+<ul class="simple">
+<li><p><strong>Mathematical and Computational Convenience (Addition)</strong>
+Calculating the gradient of a sum is significantly simpler than using the product rule for a long chain of terms.</p></li>
+<li><p><strong>Prevention of Numerical Underflow (Stability)</strong><br />
+Probabilities are values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, and in fields like Speech Recognition or NLP, we often deal with sequences involving thousands of observations. Multiplying thousands of small probabilities (e.g., <span class="math notranslate nohighlight">\(10^{-5} \times 10^{-7} \dots\)</span>) quickly leads to a value so small that it exceeds the precision limits of floating-point representations (e.g., <code class="docutils literal notranslate"><span class="pre">float32</span></code>). This results in <strong>Numerical Underflow</strong>, where the computer simply rounds the value to zero.<br />
+Logarithms map these tiny probabilities to a manageable range of negative numbers
+(e.g., <span class="math notranslate nohighlight">\(10^{-100}\)</span> becomes <span class="math notranslate nohighlight">\(-100\)</span> in <span class="math notranslate nohighlight">\(\log_{10}\)</span>). This ensures that the gradients
+remain stable and the model continues to learn without losing numerical precision.</p></li>
+</ul>
+<p>Since the logarithm is a monotonically increasing function, the <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes <span class="math notranslate nohighlight">\(\ell(\theta)\)</span> also maximizes <span class="math notranslate nohighlight">\(L(\theta)\)</span>.</p>
+</section>
+<section id="step-by-step-analytical-derivation">
+<h3>1.3 Step-by-Step Analytical Derivation<a class="headerlink" href="#step-by-step-analytical-derivation" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Define the Model:</strong> Choose a distribution (e.g., Gaussian, Bernoulli).</p></li>
+<li><p><strong>Construct the Log-Likelihood:</strong> Sum the logs of individual densities.</p></li>
+<li><p><strong>Compute Derivatives:</strong> Find the score function <span class="math notranslate nohighlight">\(\nabla_{\theta} \ell(\theta)\)</span>.</p></li>
+<li><p><strong>Solve the Score Equation:</strong> Set <span class="math notranslate nohighlight">\(\nabla_{\theta} \ell(\theta) = 0\)</span>.</p></li>
+<li><p><strong>Verify Concavity:</strong> Ensure the Hessian matrix <span class="math notranslate nohighlight">\(H(\theta)\)</span> is negative semi-definite to confirm a maximum, not a minimum.</p></li>
+</ol>
+</section>
+<section id="case-study-parameter-estimation-in-gaussian-models">
+<h3>1.4 Case Study: Parameter Estimation in Gaussian Models<a class="headerlink" href="#case-study-parameter-estimation-in-gaussian-models" title="Link to this heading">#</a></h3>
+<p>To see MLE in action, consider a <strong>Gaussian Model</strong> where we aim to estimate the parameters <span class="math notranslate nohighlight">\(\theta = \{\mu, \sigma\}\)</span> for a dataset <span class="math notranslate nohighlight">\(X = \{x_0, x_1, \dots, x_{I-1}\}\)</span>. For <span class="math notranslate nohighlight">\(I\)</span> independent observations from <span class="math notranslate nohighlight">\(\mathcal{N}(\mu, \sigma^2)\)</span>, the log-likelihood is:</p>
+<div class="math notranslate nohighlight">
+\[\ell(\mu, \sigma) = \sum_{i=0}^{I-1} \left( -\frac{1}{2} \log(2\pi) - \log(\sigma) - \frac{(x_i - \mu)^2}{2\sigma^2} \right)\]</div>
+<section id="a-estimating-the-mean-mu">
+<h4>A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)<a class="headerlink" href="#a-estimating-the-mean-mu" title="Link to this heading">#</a></h4>
+<p>Taking the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\mu\)</span></strong> and setting it to zero:
+$<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \mu} = \sum_{i=0}^{I-1} \frac{(x_i - \mu)}{\sigma^2} = 0 \implies \sum_{i=0}^{I-1} x_i - I\mu = 0\)</span><span class="math notranslate nohighlight">\(
+Solving this yields the maximum likelihood estimator for the mean: 
+\)</span><span class="math notranslate nohighlight">\(\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i\)</span>$</p>
+</section>
+<section id="b-estimating-the-standard-deviation-sigma">
+<h4>B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)<a class="headerlink" href="#b-estimating-the-standard-deviation-sigma" title="Link to this heading">#</a></h4>
+<p>Following the standard derivation, we take the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\sigma\)</span></strong> and set it to zero:
+$<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \sigma} = \sum_{i=0}^{I-1} \left( -\frac{1}{\sigma} + \frac{(x_i - \mu)^2}{\sigma^3} \right) = 0\)</span>$</p>
+<ul class="simple">
+<li><p><strong>Analytical Steps:</strong></p>
+<ol class="arabic simple">
+<li><p>Rearrange the summation: <span class="math notranslate nohighlight">\(-\frac{I}{\sigma} + \frac{1}{\sigma^3} \sum_{i=0}^{I-1} (x_i - \mu)^2 = 0\)</span></p></li>
+<li><p>Multiply both sides by <span class="math notranslate nohighlight">\(\sigma^3\)</span>: <span class="math notranslate nohighlight">\(-I\sigma^2 + \sum_{i=0}^{I-1} (x_i - \mu)^2 = 0\)</span></p></li>
+<li><p>Isolate <span class="math notranslate nohighlight">\(\sigma^2\)</span>: <span class="math notranslate nohighlight">\(I\sigma^2 = \sum_{i=0}^{I-1} (x_i - \mu)^2\)</span></p></li>
+</ol>
+</li>
+</ul>
+<p>Solving this yields the maximum likelihood estimator for the variance:
+$<span class="math notranslate nohighlight">\(\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2\)</span>$</p>
+</section>
+</section>
+</section>
+<section id="the-breakthrough-expectation-maximization-em-algorithm">
+<h2>2. The Breakthrough: Expectation-Maximization (EM) Algorithm<a class="headerlink" href="#the-breakthrough-expectation-maximization-em-algorithm" title="Link to this heading">#</a></h2>
+<section id="the-latent-variable-problem">
+<h3>2.1 The Latent Variable Problem<a class="headerlink" href="#the-latent-variable-problem" title="Link to this heading">#</a></h3>
+<p>MLE fails when our data is “incomplete.” Consider a <strong>Gaussian Mixture Model (GMM)</strong>:</p>
+<ul class="simple">
+<li><p>We see the data points <span class="math notranslate nohighlight">\(X\)</span>.</p></li>
+<li><p>We <strong>do not see</strong> which Gaussian component <span class="math notranslate nohighlight">\(Z\)</span> generated each point.
+If we knew <span class="math notranslate nohighlight">\(Z\)</span>, we could use MLE. If we knew the parameters <span class="math notranslate nohighlight">\(\theta\)</span>, we could guess <span class="math notranslate nohighlight">\(Z\)</span>. This circular dependency is what EM solves.</p></li>
+</ul>
+</section>
+<section id="the-mathematical-mechanism">
+<h3>2.2 The Mathematical Mechanism<a class="headerlink" href="#the-mathematical-mechanism" title="Link to this heading">#</a></h3>
+<p>EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood <span class="math notranslate nohighlight">\(P(X|\theta) = \sum_{Z} P(X, Z | \theta)\)</span>.</p>
+<section id="a-the-e-step-expectation">
+<h4>A. The E-Step (Expectation)<a class="headerlink" href="#a-the-e-step-expectation" title="Link to this heading">#</a></h4>
+<p>We don’t know the latent variables <span class="math notranslate nohighlight">\(Z\)</span>, so we calculate the “responsibility” or the posterior probability of <span class="math notranslate nohighlight">\(Z\)</span> given the current parameter estimate <span class="math notranslate nohighlight">\(\theta^{(t)}\)</span>:
+$<span class="math notranslate nohighlight">\(w_{ik} = P(z_i = k | x_i, \theta^{(t)})\)</span><span class="math notranslate nohighlight">\(
+Then, we define the **Auxiliary Function (Q-function)**:
+\)</span><span class="math notranslate nohighlight">\(Q(\theta | \theta^{(t)}) = \sum_{Z} P(Z|X, \theta^{(t)}) \log P(X, Z | \theta)\)</span>$</p>
+</section>
+<section id="b-the-m-step-maximization">
+<h4>B. The M-Step (Maximization)<a class="headerlink" href="#b-the-m-step-maximization" title="Link to this heading">#</a></h4>
+<p>We update the parameters by maximizing the Q-function:
+$<span class="math notranslate nohighlight">\(\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})\)</span>$</p>
+</section>
+</section>
+<section id="why-does-it-work-jensen-s-inequality">
+<h3>2.3 Why Does it Work? (Jensen’s Inequality)<a class="headerlink" href="#why-does-it-work-jensen-s-inequality" title="Link to this heading">#</a></h3>
+<p>The EM algorithm works by creating a lower bound (surrogate function) on the log-likelihood at each step. By maximizing this lower bound, we guarantee that the true log-likelihood <span class="math notranslate nohighlight">\(\ell(\theta)\)</span> never decreases:
+$<span class="math notranslate nohighlight">\(\ell(\theta^{(t+1)}) \geq \ell(\theta^{(t)})\)</span>$
+This property ensures convergence, although it may settle at a <strong>local optimum</strong> rather than the global one.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="comparative-analysis-and-use-cases">
+<h2>3. Comparative Analysis and Use Cases<a class="headerlink" href="#comparative-analysis-and-use-cases" title="Link to this heading">#</a></h2>
+<section id="mle-vs-em-a-technical-summary">
+<h3>3.1 MLE vs. EM: A Technical Summary<a class="headerlink" href="#mle-vs-em-a-technical-summary" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Criteria</p></th>
+<th class="head text-left"><p>MLE</p></th>
+<th class="head text-left"><p>EM</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Data Nature</strong></p></td>
+<td class="text-left"><p>Fully Observed</p></td>
+<td class="text-left"><p>Partially Observed / Latent</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Optimization</strong></p></td>
+<td class="text-left"><p>Gradient Descent / Analytical</p></td>
+<td class="text-left"><p>Coordinate Ascent on Q-function</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Guarantees</strong></p></td>
+<td class="text-left"><p>Global optimum for convex models</p></td>
+<td class="text-left"><p>Local optimum convergence</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Computational Cost</strong></p></td>
+<td class="text-left"><p>Low to Moderate</p></td>
+<td class="text-left"><p>High (due to iterations)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="real-world-applications">
+<h3>3.2 Real-World Applications<a class="headerlink" href="#real-world-applications" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Gene Sequencing:</strong> Estimating haplotype frequencies (latent variables).</p></li>
+<li><p><strong>Computer Vision:</strong> Image segmentation using GMMs.</p></li>
+<li><p><strong>NLP:</strong> Training Hidden Markov Models (HMM) via the Baum-Welch algorithm (a specific case of EM).</p></li>
+<li><p><strong>Finance:</strong> Estimating volatility in models with regime switching.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="advanced-topics-and-limitations">
+<h2>4. Advanced Topics and Limitations<a class="headerlink" href="#advanced-topics-and-limitations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Initialization Sensitivity:</strong> Since EM converges to local maxima, the choice of <span class="math notranslate nohighlight">\(\theta^{(0)}\)</span> is critical. Techniques like K-means initialization are often used.</p></li>
+<li><p><strong>Convergence Rate:</strong> EM can be slow to converge near the optimum compared to second-order methods like Newton-Raphson.</p></li>
+<li><p><strong>Variational Inference:</strong> For models where the E-step is computationally intractable, we use Variational EM to approximate the posterior.</p></li>
+</ul>
+<hr class="docutils" />
+<p><em>End of Chapter. Created for specialized study on Statistical Inference.</em></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="neural_network_basics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Neural Network Basics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sequence_modeling.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Sequence Modeling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-mle-the-foundation">1. Maximum Likelihood Estimation (MLE): The Foundation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophical-underpinning">1.1 Philosophical Underpinning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-analytical-derivation">1.3 Step-by-Step Analytical Derivation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.4 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-estimating-the-mean-mu">A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-standard-deviation-sigma">B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-breakthrough-expectation-maximization-em-algorithm">2. The Breakthrough: Expectation-Maximization (EM) Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-latent-variable-problem">2.1 The Latent Variable Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathematical-mechanism">2.2 The Mathematical Mechanism</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-the-e-step-expectation">A. The E-Step (Expectation)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-the-m-step-maximization">B. The M-Step (Maximization)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.3 Why Does it Work? (Jensen’s Inequality)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-analysis-and-use-cases">3. Comparative Analysis and Use Cases</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-vs-em-a-technical-summary">3.1 MLE vs. EM: A Technical Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-applications">3.2 Real-World Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics-and-limitations">4. Advanced Topics and Limitations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Chanwoo Kim (chanwcom@gmail.com)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
