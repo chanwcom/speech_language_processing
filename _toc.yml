@@ -10,3 +10,4 @@ chapters:
 - file: language_modeling
 - file: speech_recognition
 - file: speech_synthesis
+- file: exp_env_setup
