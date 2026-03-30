@@ -177,6 +177,7 @@
 <li class="toctree-l1"><a class="reference internal" href="language_modeling.html">Language Modeling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="speech_recognition.html">Speech Recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="speech_synthesis.html">Speech Synthesis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exp_env_setup.html">1. Environment Setup</a></li>
 </ul>
 
     </div>
@@ -539,16 +540,16 @@ Q(\theta | \theta^{(t)}) &amp; =
 \)</span><span class="math notranslate nohighlight">\(
 Since 
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3509eebf-452c-4bda-84c1-3304e1948a1c">
-<span class="eqno">(11)<a class="headerlink" href="#equation-3509eebf-452c-4bda-84c1-3304e1948a1c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0c11f83b-3e44-463a-8245-b14a5c3a0f8e">
+<span class="eqno">(11)<a class="headerlink" href="#equation-0c11f83b-3e44-463a-8245-b14a5c3a0f8e" title="Permalink to this equation">#</a></span>\[\begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[ the auxiliary function can be written:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-c4a2e131-5e76-4ed5-8ea9-58a0916aa23d">
-<span class="eqno">(12)<a class="headerlink" href="#equation-c4a2e131-5e76-4ed5-8ea9-58a0916aa23d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1f28411a-a465-4189-8099-62d3e947ebf6">
+<span class="eqno">(12)<a class="headerlink" href="#equation-1f28411a-a465-4189-8099-62d3e947ebf6" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\theta | \theta^{(t)}) 
      &amp; =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
@@ -560,8 +561,8 @@ Since
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-0d2b8b6b-4e7e-4bd5-a788-6306f42a2ca8">
-<span class="eqno">(13)<a class="headerlink" href="#equation-0d2b8b6b-4e7e-4bd5-a788-6306f42a2ca8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b96ad154-34e7-41e4-86ad-5bb346e66a0d">
+<span class="eqno">(13)<a class="headerlink" href="#equation-b96ad154-34e7-41e4-86ad-5bb346e66a0d" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
