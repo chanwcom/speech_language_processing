@@ -370,9 +370,11 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1. Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-skeleton-code">2. Retrieving Skeleton Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-fine-tuning-dataset">3. Preparing the Fine-Tuning Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-music-part-of-the-stop-training-set">Fine-Tuning on the MUSIC PART of the STOP training set.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-libri-speech-dataset">Fine-Tuning on the Libri-Speech dataset.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-fine-tuning-dataset">3. Preparing the Fine-Tuning Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-music-part-of-the-stop-training-set">3.1 Fine-Tuning on the MUSIC PART of the STOP training set.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-libri-speech-1h-dataset">3.2 Fine-Tuning on the Libri-Speech 1h dataset.</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-fine-tuning">4. Performing Fine-Tuning</a></li>
 </ul>
             </nav>
@@ -392,22 +394,35 @@
 </section>
 <section id="retrieving-skeleton-code">
 <h2>2. Retrieving Skeleton Code<a class="headerlink" href="#retrieving-skeleton-code" title="Link to this heading">#</a></h2>
+<p>You may find the skeleton code at</p>
+<p><a class="github reference external" href="https://github.com/chanwcom/slp_lab/tree/main/codelab/wav2vec_2p0">chanwcom/slp_lab</a></p>
+<p>You may clone the slp_lab git repository by running the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chanwcom</span><span class="o">/</span><span class="n">slp_lab</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>You are supposed to fill out the code marked by TODO.</p>
 </section>
 <section id="preparing-the-fine-tuning-dataset">
 <h2>3. Preparing the Fine-Tuning Dataset<a class="headerlink" href="#preparing-the-fine-tuning-dataset" title="Link to this heading">#</a></h2>
-</section>
 <section id="fine-tuning-on-the-music-part-of-the-stop-training-set">
-<h2>Fine-Tuning on the MUSIC PART of the STOP training set.<a class="headerlink" href="#fine-tuning-on-the-music-part-of-the-stop-training-set" title="Link to this heading">#</a></h2>
+<h3>3.1 Fine-Tuning on the MUSIC PART of the STOP training set.<a class="headerlink" href="#fine-tuning-on-the-music-part-of-the-stop-training-set" title="Link to this heading">#</a></h3>
+<p>We use the music portion of the STOP train set. However, we removed 00011525.wav, since the transcript of it seems to contain an error: “play song TITLE_MEDIA on spotify” You may download the compressed sharded WebDataset from the following directory:</p>
+<p><a class="reference external" href="https://drive.google.com/file/d/1myqysY_FkaynOfkORBA5xyw4FRJ_OxuW/view?usp=drive_link">https://drive.google.com/file/d/1myqysY_FkaynOfkORBA5xyw4FRJ_OxuW/view?usp=drive_link</a></p>
+<p>So the total number of utterances is reduced from 11563 to 11562.</p>
+<p>Please note that you should decompress tar.gz files only once. We will use 10 sharded *.tar file for training and eval.</p>
+<p>For the test set, I randomly chose 300 utterances from test_0/music_test. You may download the compressed sharded WebDataset. <a class="reference external" href="https://drive.google.com/file/d/1j2z8xb4V5zTb6ChJafZZp8Gtt61_ma_1/view?usp=drive_link">https://drive.google.com/file/d/1j2z8xb4V5zTb6ChJafZZp8Gtt61_ma_1/view?usp=drive_link</a></p>
+<p>As before, you should decompress tar.gz files only once. We will use 10 sharded *.tar file for training and eval.</p>
 </section>
-<section id="fine-tuning-on-the-libri-speech-dataset">
-<h2>Fine-Tuning on the Libri-Speech dataset.<a class="headerlink" href="#fine-tuning-on-the-libri-speech-dataset" title="Link to this heading">#</a></h2>
+<section id="fine-tuning-on-the-libri-speech-1h-dataset">
+<h3>3.2 Fine-Tuning on the Libri-Speech 1h dataset.<a class="headerlink" href="#fine-tuning-on-the-libri-speech-1h-dataset" title="Link to this heading">#</a></h3>
+</section>
 </section>
 <section id="performing-fine-tuning">
 <h2>4. Performing Fine-Tuning<a class="headerlink" href="#performing-fine-tuning" title="Link to this heading">#</a></h2>
 <p>If <strong>GPU 0</strong> is available, set the following environment variables before running the scripts:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export NCCL_P2P_DISABLE=1
-export NCCL_IB_DISABLE=1
-export CUDA_VISIBLE_DEVICES=0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">export</span> <span class="n">NCCL_P2P_DISABLE</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">export</span> <span class="n">NCCL_IB_DISABLE</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">export</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
 </div>
 <blockquote>
@@ -492,9 +507,11 @@ For example:</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1. Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-skeleton-code">2. Retrieving Skeleton Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-fine-tuning-dataset">3. Preparing the Fine-Tuning Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-music-part-of-the-stop-training-set">Fine-Tuning on the MUSIC PART of the STOP training set.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-libri-speech-dataset">Fine-Tuning on the Libri-Speech dataset.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-fine-tuning-dataset">3. Preparing the Fine-Tuning Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-music-part-of-the-stop-training-set">3.1 Fine-Tuning on the MUSIC PART of the STOP training set.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-on-the-libri-speech-1h-dataset">3.2 Fine-Tuning on the Libri-Speech 1h dataset.</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-fine-tuning">4. Performing Fine-Tuning</a></li>
 </ul>
   </nav></div>
