@@ -1,17 +1,17 @@
-# 1. Environment Setup
+# PyTorch-HuggingFace Environment Setup
 
 This section describes how to set up the development environment required for running the project.
 
 ---
 
-## 1.1. Create and Activate the Conda Environment
+## 1. Create and Activate the Conda Environment
 
     conda create --name py3_10_hf python=3.10
     conda activate py3_10_hf
 
 ---
 
-## 1.2. Install PyTorch
+## 2. Install PyTorch
 
 Visit the official PyTorch installation page:  
 👉 [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
@@ -31,7 +31,7 @@ Then, install **torchaudio**:
 
 ---
 
-## 1.3. Install Additional Dependencies
+## 3. Install Additional Dependencies
 
 Install `soundfile` to enable reading **FLAC audio files**:
 
@@ -51,7 +51,7 @@ Install evaluation utilities for speech recognition:
 
 ---
 
-## 1.4. References
+## 4. References
 
 - [PyTorch Installation Guide](https://pytorch.org/get-started/locally/)  
 - [Hugging Face Datasets Installation](https://huggingface.co/docs/datasets/installation)
