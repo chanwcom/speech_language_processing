@@ -4,18 +4,34 @@
 
 
 
-## 2. Retrieving Skeleton Code
+## 2. Retrieving Skeleton Code 
+You may find the skeleton code at 
 
+https://github.com/chanwcom/slp_lab/tree/main/codelab/wav2vec_2p0
 
+You may clone the slp_lab git repository by running the following command:
+```
+git clone https://github.com/chanwcom/slp_lab.git
+```
 
-
+You are supposed to fill out the code marked by TODO.
 
 
 ## 3. Preparing the Fine-Tuning Dataset
-## Fine-Tuning on the MUSIC PART of the STOP training set.
+### 3.1 Fine-Tuning on the MUSIC PART of the STOP training set.
+We use the music portion of the STOP train set. However, we removed 00011525.wav, since the transcript of it seems to contain an error: "play song TITLE_MEDIA on spotify" You may download the compressed sharded WebDataset from the following directory:
 
+https://drive.google.com/file/d/1myqysY_FkaynOfkORBA5xyw4FRJ_OxuW/view?usp=drive_link
 
-## Fine-Tuning on the Libri-Speech dataset.
+So the total number of utterances is reduced from 11563 to 11562.
+
+Please note that you should decompress tar.gz files only once. We will use 10 sharded *.tar file for training and eval.
+
+For the test set, I randomly chose 300 utterances from test_0/music_test. You may download the compressed sharded WebDataset. https://drive.google.com/file/d/1j2z8xb4V5zTb6ChJafZZp8Gtt61_ma_1/view?usp=drive_link
+
+As before, you should decompress tar.gz files only once. We will use 10 sharded *.tar file for training and eval.
+
+### 3.2 Fine-Tuning on the Libri-Speech 1h dataset.
 
 
 
@@ -23,9 +39,11 @@
 
 If **GPU 0** is available, set the following environment variables before running the scripts:
 
+```
     export NCCL_P2P_DISABLE=1
     export NCCL_IB_DISABLE=1
     export CUDA_VISIBLE_DEVICES=0
+```
 
 > 💡 **Note:**  
 > If a different GPU is available (for example, GPU 1 or GPU 2),  
