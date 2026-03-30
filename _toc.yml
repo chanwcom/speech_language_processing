@@ -11,4 +11,4 @@ chapters:
 - file: speech_recognition
 - file: speech_synthesis
 - file: exp_env_setup
-- file: wav2vec_2p0_finetuning.md
+- file: slu_stop_music.md
