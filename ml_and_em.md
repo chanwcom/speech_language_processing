@@ -48,7 +48,9 @@ $$\ell(\mu, \sigma) = \sum_{i=0}^{I-1} \left( -\frac{1}{2} \log(2\pi) - \log(\si
 
 #### A. Estimating the Mean ($\mu$)
 Taking the **derivative with respect to $\mu$** and setting it to zero:
+
 $$\frac{\partial \ell}{\partial \mu} = \sum_{i=0}^{I-1} \frac{(x_i - \mu)}{\sigma^2} = 0 \implies \sum_{i=0}^{I-1} x_i - I\mu = 0$$
+
 Solving this yields the maximum likelihood estimator for the mean: 
 $$\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i$$
 
@@ -62,6 +64,7 @@ $$\frac{\partial \ell}{\partial \sigma} = \sum_{i=0}^{I-1} \left( -\frac{1}{\sig
     3.  Isolate $\sigma^2$: $I\sigma^2 = \sum_{i=0}^{I-1} (x_i - \mu)^2$
 
 Solving this yields the maximum likelihood estimator for the variance:
+
 $$\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2$$
 
 
@@ -77,63 +80,75 @@ Maximum Likelihood Estimation (MLE) fails when our data is "incomplete." Conside
 If we knew $Z$, we could use MLE. If we knew the parameters $\theta$, we could guess $Z$. This circular dependency is what EM solves.
 
 ### 2.2 The Mathematical Mechanism
-In Maximum Likelihood (ML) framework, the estimated parameter 
-$\hat{\theta}$ is given by the following equation:
+In Maximum Likelihood (ML) framework, the estimated parameter $\hat{\theta}$ is given by the following equation:
+
 $$
     \begin{aligned}
         \hat{\theta} = \arg \max_{\theta} p(X \mid \theta).
     \end{aligned}
 $$
+
 EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood $p(X|\theta) = \sum\limits_{Z \in \mathcal{Z}} p\left(X, Z \mid \theta\right)$. As mentioned in the above section, $X$ and $Z$ are observed data and latent data, respectively:
+
 $$
 \begin{aligned}
     X & = \{x_0, x_1,  \cdots, x_{I-1}\}, \\
     Z & = \{z_0, z_1,  \cdots, z_{I-1}\}
 \end{aligned}
 $$
-The fundamental assumption is that while the ** complete-data likelihood**  $p(X, Z \mid \theta) $
-is defined, $Z$ is not observed, making direct maximization of 
-$p(X | \theta)$ difficult.
+
+The fundamental assumption is that while the **complete-data likelihood** $p(X, Z \mid \theta)$ is defined, $Z$ is not observed, making direct maximization of $p(X \mid \theta)$ difficult.
 
 #### A. The E-Step (Expectation)
 We do not know the latent variables $Z$, so we calculate the "responsibility" or the posterior probability of $Z$ given the current parameter estimate $\theta^{(t)}$:
 $$W = P\left(Z \mid X, \theta^{(t)}\right)$$
 Then, we define the **Auxiliary Function (Q-function)**:
-$$Q(\theta | \theta^{(t)}) = 
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
-    \log P\left(X, Z \mid \theta\right), $$
+
+$$
+Q(\theta \mid \theta^{(t)}) =
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X,\, \theta^{(t)}\right)
+    \log P\left(X,\, Z \mid \theta\right)
+$$
 
 #### B. The M-Step (Maximization)
 We update the parameters by maximizing the Q-function:
+
 $$\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})$$
 
 ### 2.3 Further Modification of the E-Step Equation
 
 Let us modify the **auxilary function** given in the following form:
+
 $$
 \begin{aligned}
 Q(\theta | \theta^{(t)}) & = 
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right) 
     \log P\left(X, Z \mid \theta\right), 
 \end{aligned}
 $$
+
 Since 
+
 $$
 \begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
 \end{align}
-$$ the auxiliary function can be written:
+$$ 
+
+The auxiliary function can be written:
+
 $$
 \begin{align}
     Q(\theta | \theta^{(t)}) 
-     & =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+     & =   \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
     & = 
-       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         \log p\left(x_i, z_i \mid \theta\right), 
 \end{align}
 $$
+
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 $$
 \begin{align}
