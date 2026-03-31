@@ -77,8 +77,7 @@ Maximum Likelihood Estimation (MLE) fails when our data is "incomplete." Conside
 If we knew $Z$, we could use MLE. If we knew the parameters $\theta$, we could guess $Z$. This circular dependency is what EM solves.
 
 ### 2.2 The Mathematical Mechanism
-In Maximum Likelihood (ML) framework, the estimated parameter 
-$\hat{\theta}$ is given by the following equation:
+In Maximum Likelihood (ML) framework, the estimated parameter $\hat{\theta}$ is given by the following equation:
 $$
     \begin{aligned}
         \hat{\theta} = \arg \max_{\theta} p(X \mid \theta).
@@ -91,17 +90,17 @@ $$
     Z & = \{z_0, z_1,  \cdots, z_{I-1}\}
 \end{aligned}
 $$
-The fundamental assumption is that while the ** complete-data likelihood**  $p(X, Z \mid \theta) $
-is defined, $Z$ is not observed, making direct maximization of 
-$p(X | \theta)$ difficult.
+The fundamental assumption is that while the **complete-data likelihood** $p(X, Z \mid \theta)$ is defined, $Z$ is not observed, making direct maximization of $p(X \mid \theta)$ difficult.
 
 #### A. The E-Step (Expectation)
 We do not know the latent variables $Z$, so we calculate the "responsibility" or the posterior probability of $Z$ given the current parameter estimate $\theta^{(t)}$:
 $$W = P\left(Z \mid X, \theta^{(t)}\right)$$
 Then, we define the **Auxiliary Function (Q-function)**:
-$$Q(\theta | \theta^{(t)}) = 
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
-    \log P\left(X, Z \mid \theta\right), $$
+$$
+Q(\theta \mid \theta^{(t)}) =
+    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right)
+    \log P\left(X, Z \mid \theta\right)
+$$
 
 #### B. The M-Step (Maximization)
 We update the parameters by maximizing the Q-function:

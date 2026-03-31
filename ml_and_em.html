@@ -497,8 +497,7 @@ If we knew <span class="math notranslate nohighlight">\(Z\)</span>, we could use
 </section>
 <section id="the-mathematical-mechanism">
 <h3>2.2 The Mathematical Mechanism<a class="headerlink" href="#the-mathematical-mechanism" title="Link to this heading">#</a></h3>
-<p>In Maximum Likelihood (ML) framework, the estimated parameter
-<span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is given by the following equation:
+<p>In Maximum Likelihood (ML) framework, the estimated parameter <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is given by the following equation:
 $<span class="math notranslate nohighlight">\(
     \begin{aligned}
         \hat{\theta} = \arg \max_{\theta} p(X \mid \theta).
@@ -511,17 +510,17 @@ EM is an iterative optimization strategy that moves toward a local maximum of th
     Z &amp; = \{z_0, z_1,  \cdots, z_{I-1}\}
 \end{aligned}
 \)</span><span class="math notranslate nohighlight">\(
-The fundamental assumption is that while the ** complete-data likelihood**  \)</span>p(X, Z \mid \theta) <span class="math notranslate nohighlight">\(
-is defined, \)</span>Z<span class="math notranslate nohighlight">\( is not observed, making direct maximization of 
-\)</span>p(X | \theta)$ difficult.</p>
+The fundamental assumption is that while the **complete-data likelihood** \)</span>p(X, Z \mid \theta)<span class="math notranslate nohighlight">\( is defined, \)</span>Z<span class="math notranslate nohighlight">\( is not observed, making direct maximization of \)</span>p(X \mid \theta)$ difficult.</p>
 <section id="a-the-e-step-expectation">
 <h4>A. The E-Step (Expectation)<a class="headerlink" href="#a-the-e-step-expectation" title="Link to this heading">#</a></h4>
 <p>We do not know the latent variables <span class="math notranslate nohighlight">\(Z\)</span>, so we calculate the “responsibility” or the posterior probability of <span class="math notranslate nohighlight">\(Z\)</span> given the current parameter estimate <span class="math notranslate nohighlight">\(\theta^{(t)}\)</span>:
 $<span class="math notranslate nohighlight">\(W = P\left(Z \mid X, \theta^{(t)}\right)\)</span><span class="math notranslate nohighlight">\(
 Then, we define the **Auxiliary Function (Q-function)**:
-\)</span><span class="math notranslate nohighlight">\(Q(\theta | \theta^{(t)}) = 
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
-    \log P\left(X, Z \mid \theta\right), \)</span>$</p>
+\)</span><span class="math notranslate nohighlight">\(
+Q(\theta \mid \theta^{(t)}) =
+    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right)
+    \log P\left(X, Z \mid \theta\right)
+\)</span>$</p>
 </section>
 <section id="b-the-m-step-maximization">
 <h4>B. The M-Step (Maximization)<a class="headerlink" href="#b-the-m-step-maximization" title="Link to this heading">#</a></h4>
@@ -541,8 +540,8 @@ Q(\theta | \theta^{(t)}) &amp; =
 \)</span><span class="math notranslate nohighlight">\(
 Since 
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3d3b5b51-5457-4bdf-b248-74686bf17cf1">
-<span class="eqno">(11)<a class="headerlink" href="#equation-3d3b5b51-5457-4bdf-b248-74686bf17cf1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-53c6008a-cf78-4fd8-bc8a-e02e1e57d046">
+<span class="eqno">(11)<a class="headerlink" href="#equation-53c6008a-cf78-4fd8-bc8a-e02e1e57d046" title="Permalink to this equation">#</a></span>\[\begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
 \end{align}\]</div>
@@ -550,8 +549,8 @@ Since
 \[ 
 The auxiliary function can be written:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-e5845583-88a9-46a8-a860-2c5937f44879">
-<span class="eqno">(12)<a class="headerlink" href="#equation-e5845583-88a9-46a8-a860-2c5937f44879" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b9c324af-dd1e-487b-b0ed-47abb6d4e02e">
+<span class="eqno">(12)<a class="headerlink" href="#equation-b9c324af-dd1e-487b-b0ed-47abb6d4e02e" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\theta | \theta^{(t)}) 
      &amp; =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
@@ -563,8 +562,8 @@ The auxiliary function can be written:
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-60b1140d-6d6e-4978-be4c-9b4cd23359e5">
-<span class="eqno">(13)<a class="headerlink" href="#equation-60b1140d-6d6e-4978-be4c-9b4cd23359e5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6e2878a7-0906-47b1-8050-bcde84a82271">
+<span class="eqno">(13)<a class="headerlink" href="#equation-6e2878a7-0906-47b1-8050-bcde84a82271" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
