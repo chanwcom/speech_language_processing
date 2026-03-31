@@ -497,30 +497,33 @@ If we knew <span class="math notranslate nohighlight">\(Z\)</span>, we could use
 </section>
 <section id="the-mathematical-mechanism">
 <h3>2.2 The Mathematical Mechanism<a class="headerlink" href="#the-mathematical-mechanism" title="Link to this heading">#</a></h3>
-<p>In Maximum Likelihood (ML) framework, the estimated parameter <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is given by the following equation:
-$<span class="math notranslate nohighlight">\(
+<p>In Maximum Likelihood (ML) framework, the estimated parameter <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is given by the following equation:</p>
+<div class="math notranslate nohighlight">
+\[
     \begin{aligned}
         \hat{\theta} = \arg \max_{\theta} p(X \mid \theta).
     \end{aligned}
-\)</span><span class="math notranslate nohighlight">\(
-EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood \)</span>p(X|\theta) = \sum\limits_{Z \in \mathcal{Z}} p\left(X, Z \mid \theta\right)<span class="math notranslate nohighlight">\(. As mentioned in the above section, \)</span>X<span class="math notranslate nohighlight">\( and \)</span>Z<span class="math notranslate nohighlight">\( are observed data and latent data, respectively:
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood <span class="math notranslate nohighlight">\(p(X|\theta) = \sum\limits_{Z \in \mathcal{Z}} p\left(X, Z \mid \theta\right)\)</span>. As mentioned in the above section, <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> are observed data and latent data, respectively:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{aligned}
     X &amp; = \{x_0, x_1,  \cdots, x_{I-1}\}, \\
     Z &amp; = \{z_0, z_1,  \cdots, z_{I-1}\}
 \end{aligned}
-\)</span><span class="math notranslate nohighlight">\(
-The fundamental assumption is that while the **complete-data likelihood** \)</span>p(X, Z \mid \theta)<span class="math notranslate nohighlight">\( is defined, \)</span>Z<span class="math notranslate nohighlight">\( is not observed, making direct maximization of \)</span>p(X \mid \theta)$ difficult.</p>
+\end{split}\]</div>
+<p>The fundamental assumption is that while the <strong>complete-data likelihood</strong> <span class="math notranslate nohighlight">\(p(X, Z \mid \theta)\)</span> is defined, <span class="math notranslate nohighlight">\(Z\)</span> is not observed, making direct maximization of <span class="math notranslate nohighlight">\(p(X \mid \theta)\)</span> difficult.</p>
 <section id="a-the-e-step-expectation">
 <h4>A. The E-Step (Expectation)<a class="headerlink" href="#a-the-e-step-expectation" title="Link to this heading">#</a></h4>
 <p>We do not know the latent variables <span class="math notranslate nohighlight">\(Z\)</span>, so we calculate the “responsibility” or the posterior probability of <span class="math notranslate nohighlight">\(Z\)</span> given the current parameter estimate <span class="math notranslate nohighlight">\(\theta^{(t)}\)</span>:
-$<span class="math notranslate nohighlight">\(W = P\left(Z \mid X, \theta^{(t)}\right)\)</span><span class="math notranslate nohighlight">\(
-Then, we define the **Auxiliary Function (Q-function)**:
-\)</span><span class="math notranslate nohighlight">\(
+$<span class="math notranslate nohighlight">\(W = P\left(Z \mid X, \theta^{(t)}\right)\)</span>$
+Then, we define the <strong>Auxiliary Function (Q-function)</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
 Q(\theta \mid \theta^{(t)}) =
     \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right)
     \log P\left(X, Z \mid \theta\right)
-\)</span>$</p>
+\]</div>
 </section>
 <section id="b-the-m-step-maximization">
 <h4>B. The M-Step (Maximization)<a class="headerlink" href="#b-the-m-step-maximization" title="Link to this heading">#</a></h4>
@@ -530,40 +533,39 @@ $<span class="math notranslate nohighlight">\(\theta^{(t+1)} = \arg \max_{\theta
 </section>
 <section id="further-modification-of-the-e-step-equation">
 <h3>2.3 Further Modification of the E-Step Equation<a class="headerlink" href="#further-modification-of-the-e-step-equation" title="Link to this heading">#</a></h3>
-<p>Let us modify the <strong>auxilary function</strong> given in the following form:
-$<span class="math notranslate nohighlight">\(
+<p>Let us modify the <strong>auxilary function</strong> given in the following form:</p>
+<div class="math notranslate nohighlight">
+\[
 \begin{aligned}
 Q(\theta | \theta^{(t)}) &amp; = 
     \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
     \log P\left(X, Z \mid \theta\right), 
 \end{aligned}
-\)</span><span class="math notranslate nohighlight">\(
-Since 
-\)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53c6008a-cf78-4fd8-bc8a-e02e1e57d046">
-<span class="eqno">(11)<a class="headerlink" href="#equation-53c6008a-cf78-4fd8-bc8a-e02e1e57d046" title="Permalink to this equation">#</a></span>\[\begin{align}
+\]</div>
+<p>Since</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
-\end{align}\]</div>
-<div class="math notranslate nohighlight">
-\[ 
-The auxiliary function can be written:
+\end{align}
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-b9c324af-dd1e-487b-b0ed-47abb6d4e02e">
-<span class="eqno">(12)<a class="headerlink" href="#equation-b9c324af-dd1e-487b-b0ed-47abb6d4e02e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p>The auxiliary function can be written:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
     Q(\theta | \theta^{(t)}) 
      &amp; =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
     &amp; = 
        \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
         \log p\left(x_i, z_i \mid \theta\right), 
-\end{align}\]</div>
-<div class="math notranslate nohighlight">
-\[
-Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
-\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-6e2878a7-0906-47b1-8050-bcde84a82271">
-<span class="eqno">(13)<a class="headerlink" href="#equation-6e2878a7-0906-47b1-8050-bcde84a82271" title="Permalink to this equation">#</a></span>\[\begin{align}
+\end{align}
+\end{split}\]</div>
+<p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
+$$</p>
+<div class="amsmath math notranslate nohighlight" id="equation-faeffb67-c45e-4fc8-bc80-fca95ef4c6e9">
+<span class="eqno">(11)<a class="headerlink" href="#equation-faeffb67-c45e-4fc8-bc80-fca95ef4c6e9" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>

@@ -78,24 +78,29 @@ If we knew $Z$, we could use MLE. If we knew the parameters $\theta$, we could g
 
 ### 2.2 The Mathematical Mechanism
 In Maximum Likelihood (ML) framework, the estimated parameter $\hat{\theta}$ is given by the following equation:
+
 $$
     \begin{aligned}
         \hat{\theta} = \arg \max_{\theta} p(X \mid \theta).
     \end{aligned}
 $$
+
 EM is an iterative optimization strategy that moves toward a local maximum of the marginal likelihood $p(X|\theta) = \sum\limits_{Z \in \mathcal{Z}} p\left(X, Z \mid \theta\right)$. As mentioned in the above section, $X$ and $Z$ are observed data and latent data, respectively:
+
 $$
 \begin{aligned}
     X & = \{x_0, x_1,  \cdots, x_{I-1}\}, \\
     Z & = \{z_0, z_1,  \cdots, z_{I-1}\}
 \end{aligned}
 $$
+
 The fundamental assumption is that while the **complete-data likelihood** $p(X, Z \mid \theta)$ is defined, $Z$ is not observed, making direct maximization of $p(X \mid \theta)$ difficult.
 
 #### A. The E-Step (Expectation)
 We do not know the latent variables $Z$, so we calculate the "responsibility" or the posterior probability of $Z$ given the current parameter estimate $\theta^{(t)}$:
 $$W = P\left(Z \mid X, \theta^{(t)}\right)$$
 Then, we define the **Auxiliary Function (Q-function)**:
+
 $$
 Q(\theta \mid \theta^{(t)}) =
     \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right)
@@ -109,6 +114,7 @@ $$\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})$$
 ### 2.3 Further Modification of the E-Step Equation
 
 Let us modify the **auxilary function** given in the following form:
+
 $$
 \begin{aligned}
 Q(\theta | \theta^{(t)}) & = 
@@ -116,14 +122,18 @@ Q(\theta | \theta^{(t)}) & =
     \log P\left(X, Z \mid \theta\right), 
 \end{aligned}
 $$
+
 Since 
+
 $$
 \begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
 \end{align}
 $$ 
+
 The auxiliary function can be written:
+
 $$
 \begin{align}
     Q(\theta | \theta^{(t)}) 
@@ -134,6 +144,7 @@ $$
         \log p\left(x_i, z_i \mid \theta\right), 
 \end{align}
 $$
+
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 $$
 \begin{align}
