@@ -430,8 +430,9 @@ $<span class="math notranslate nohighlight">\(L(\theta) = P(x_0, x_1, \cdots, x_
 <section id="the-necessity-of-the-log-likelihood">
 <h3>1.2 The Necessity of the Log-Likelihood<a class="headerlink" href="#the-necessity-of-the-log-likelihood" title="Link to this heading">#</a></h3>
 <p>Even though the above equation is conceptually useful, in Maximum Likelihood Estimation (MLE),
-we usually use the log likelihood defined by the following equations:
-$<span class="math notranslate nohighlight">\(\ell(\theta) = \sum_{i=0}^{I-1} \log P(x_i | \theta).\)</span>$</p>
+we usually use the log likelihood defined by the following equations:</p>
+<div class="math notranslate nohighlight">
+\[\ell(\theta) = \sum_{i=0}^{I-1} \log P(x_i | \theta).\]</div>
 <ul class="simple">
 <li><p><strong>Mathematical and Computational Convenience (Addition)</strong>
 Calculating the gradient of a sum is significantly simpler than using the product rule for a long chain of terms.</p></li>
@@ -568,8 +569,8 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b208c42b-1691-4d19-a807-287eb88506be">
-<span class="eqno">(11)<a class="headerlink" href="#equation-b208c42b-1691-4d19-a807-287eb88506be" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-88d3cd65-3bbe-4c6f-a25a-0b9568565958">
+<span class="eqno">(11)<a class="headerlink" href="#equation-88d3cd65-3bbe-4c6f-a25a-0b9568565958" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>

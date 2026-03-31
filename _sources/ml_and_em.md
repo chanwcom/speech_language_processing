@@ -20,7 +20,9 @@ $$L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i
 
 Even though the above equation is conceptually useful, in Maximum Likelihood Estimation (MLE), 
 we usually use the log likelihood defined by the following equations:
+
 $$\ell(\theta) = \sum_{i=0}^{I-1} \log P(x_i | \theta).$$
+
 -  **Mathematical and Computational Convenience (Addition)**
     Calculating the gradient of a sum is significantly simpler than using the product rule for a long chain of terms. 
 
