@@ -14,6 +14,7 @@ MLE is built on a simple yet powerful frequentist principle: **"The best paramet
 
 If we have a set of independent and identically distributed (i.i.d.) observations 
 $X = \{x_0, x_1,  \cdots, x_{I-1}\}$, and a probability model $P(X|\theta)$, the likelihood function $L(\theta)$ is given by:
+
 $$L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).$$
 
 ### 1.2 The Necessity of the Log-Likelihood
@@ -54,6 +55,7 @@ Taking the **derivative with respect to $\mu$** and setting it to zero:
 $$\frac{\partial \ell}{\partial \mu} = \sum_{i=0}^{I-1} \frac{(x_i - \mu)}{\sigma^2} = 0 \implies \sum_{i=0}^{I-1} x_i - I\mu = 0$$
 
 Solving this yields the maximum likelihood estimator for the mean: 
+
 $$\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i$$
 
 #### B. Estimating the Standard Deviation ($\sigma$)

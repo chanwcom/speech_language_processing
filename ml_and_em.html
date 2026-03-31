@@ -424,8 +424,9 @@
 <h3>1.1 Philosophical Underpinning<a class="headerlink" href="#philosophical-underpinning" title="Link to this heading">#</a></h3>
 <p>MLE is built on a simple yet powerful frequentist principle: <strong>“The best parameters are those under which the observed data is most likely to have occurred.”</strong></p>
 <p>If we have a set of independent and identically distributed (i.i.d.) observations
-<span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>, and a probability model <span class="math notranslate nohighlight">\(P(X|\theta)\)</span>, the likelihood function <span class="math notranslate nohighlight">\(L(\theta)\)</span> is given by:
-$<span class="math notranslate nohighlight">\(L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).\)</span>$</p>
+<span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>, and a probability model <span class="math notranslate nohighlight">\(P(X|\theta)\)</span>, the likelihood function <span class="math notranslate nohighlight">\(L(\theta)\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).\]</div>
 </section>
 <section id="the-necessity-of-the-log-likelihood">
 <h3>1.2 The Necessity of the Log-Likelihood<a class="headerlink" href="#the-necessity-of-the-log-likelihood" title="Link to this heading">#</a></h3>
@@ -464,8 +465,9 @@ remain stable and the model continues to learn without losing numerical precisio
 <p>Taking the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\mu\)</span></strong> and setting it to zero:</p>
 <div class="math notranslate nohighlight">
 \[\frac{\partial \ell}{\partial \mu} = \sum_{i=0}^{I-1} \frac{(x_i - \mu)}{\sigma^2} = 0 \implies \sum_{i=0}^{I-1} x_i - I\mu = 0\]</div>
-<p>Solving this yields the maximum likelihood estimator for the mean:
-$<span class="math notranslate nohighlight">\(\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i\)</span>$</p>
+<p>Solving this yields the maximum likelihood estimator for the mean:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i\]</div>
 </section>
 <section id="b-estimating-the-standard-deviation-sigma">
 <h4>B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)<a class="headerlink" href="#b-estimating-the-standard-deviation-sigma" title="Link to this heading">#</a></h4>
@@ -569,8 +571,8 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-88d3cd65-3bbe-4c6f-a25a-0b9568565958">
-<span class="eqno">(11)<a class="headerlink" href="#equation-88d3cd65-3bbe-4c6f-a25a-0b9568565958" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c8d35cd7-7062-4115-bfb7-9b4ba00fdeb5">
+<span class="eqno">(11)<a class="headerlink" href="#equation-c8d35cd7-7062-4115-bfb7-9b4ba00fdeb5" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
