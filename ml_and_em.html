@@ -177,7 +177,8 @@
 <li class="toctree-l1"><a class="reference internal" href="language_modeling.html">Language Modeling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="speech_recognition.html">Speech Recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="speech_synthesis.html">Speech Synthesis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exp_env_setup.html">1. Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exp_env_setup.html">PyTorch-HuggingFace Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slu_stop_music.html">Building a Spoken Language Understanding System</a></li>
 </ul>
 
     </div>
@@ -540,16 +541,16 @@ Q(\theta | \theta^{(t)}) &amp; =
 \)</span><span class="math notranslate nohighlight">\(
 Since 
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c11f83b-3e44-463a-8245-b14a5c3a0f8e">
-<span class="eqno">(11)<a class="headerlink" href="#equation-0c11f83b-3e44-463a-8245-b14a5c3a0f8e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6d1bb7e8-f05a-4bdb-b615-4f8e7d3a7cb0">
+<span class="eqno">(11)<a class="headerlink" href="#equation-6d1bb7e8-f05a-4bdb-b615-4f8e7d3a7cb0" title="Permalink to this equation">#</a></span>\[\begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[ the auxiliary function can be written:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-1f28411a-a465-4189-8099-62d3e947ebf6">
-<span class="eqno">(12)<a class="headerlink" href="#equation-1f28411a-a465-4189-8099-62d3e947ebf6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f65d6775-1ea8-445a-8b29-2e66ef686c93">
+<span class="eqno">(12)<a class="headerlink" href="#equation-f65d6775-1ea8-445a-8b29-2e66ef686c93" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\theta | \theta^{(t)}) 
      &amp; =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
@@ -561,8 +562,8 @@ Since
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-b96ad154-34e7-41e4-86ad-5bb346e66a0d">
-<span class="eqno">(13)<a class="headerlink" href="#equation-b96ad154-34e7-41e4-86ad-5bb346e66a0d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-376054f7-c5d3-485c-a624-b1bafd7c62c8">
+<span class="eqno">(13)<a class="headerlink" href="#equation-376054f7-c5d3-485c-a624-b1bafd7c62c8" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
