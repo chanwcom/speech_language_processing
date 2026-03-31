@@ -64,6 +64,7 @@ $$\frac{\partial \ell}{\partial \sigma} = \sum_{i=0}^{I-1} \left( -\frac{1}{\sig
     3.  Isolate $\sigma^2$: $I\sigma^2 = \sum_{i=0}^{I-1} (x_i - \mu)^2$
 
 Solving this yields the maximum likelihood estimator for the variance:
+
 $$\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2$$
 
 
