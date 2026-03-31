@@ -571,8 +571,8 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f798817e-0678-4b1f-8aeb-19380bff9839">
-<span class="eqno">(11)<a class="headerlink" href="#equation-f798817e-0678-4b1f-8aeb-19380bff9839" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4304a635-6e9a-4a5a-bf25-37476af2cc7e">
+<span class="eqno">(11)<a class="headerlink" href="#equation-4304a635-6e9a-4a5a-bf25-37476af2cc7e" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
@@ -588,7 +588,8 @@ $$\ell(\theta^{(t+1)}) \geq \ell(\theta^{(t)})\]</div>
 <p>Instead of using <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Z\)</span>, we may define the complete
 data by:</p>
 <div class="math notranslate nohighlight">
-\[ k = (X, Z) \]</div>
+\[ K = (X, Z), \]</div>
+<p>where <span class="math notranslate nohighlight">\(k_i = (x_i, z_i), \qquad 0 \le i \le I -1 \)</span>.</p>
 <p>Nothing that <span class="math notranslate nohighlight">\(P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(k \mid X, \theta^{(t)}\right) \)</span>, the <strong>Auxiliary Function</strong> can be represented by:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}

@@ -173,7 +173,9 @@ This property ensures convergence, although it may settle at a **local optimum**
 Instead of using $X$ and $Z$, we may define the complete
 data by:
 
-$$ k = (X, Z) $$
+$$ K = (X, Z), $$
+
+where $k_i = (x_i, z_i), \qquad 0 \le i \le I -1 $.
 
 Nothing that $P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(k \mid X, \theta^{(t)}\right) $, the **Auxiliary Function** can be represented by:
 
