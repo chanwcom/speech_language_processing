@@ -112,6 +112,7 @@ $$
 
 #### B. The M-Step (Maximization)
 We update the parameters by maximizing the Q-function:
+
 $$\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})$$
 
 ### 2.3 Further Modification of the E-Step Equation

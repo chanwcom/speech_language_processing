@@ -529,8 +529,9 @@ Q(\theta \mid \theta^{(t)}) =
 </section>
 <section id="b-the-m-step-maximization">
 <h4>B. The M-Step (Maximization)<a class="headerlink" href="#b-the-m-step-maximization" title="Link to this heading">#</a></h4>
-<p>We update the parameters by maximizing the Q-function:
-$<span class="math notranslate nohighlight">\(\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})\)</span>$</p>
+<p>We update the parameters by maximizing the Q-function:</p>
+<div class="math notranslate nohighlight">
+\[\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})\]</div>
 </section>
 </section>
 <section id="further-modification-of-the-e-step-equation">
@@ -566,8 +567,8 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd738f4d-6d8d-4fff-9687-8ae009ab8ec9">
-<span class="eqno">(11)<a class="headerlink" href="#equation-fd738f4d-6d8d-4fff-9687-8ae009ab8ec9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-418a0822-1524-4400-9a29-d12bf4a58f6a">
+<span class="eqno">(11)<a class="headerlink" href="#equation-418a0822-1524-4400-9a29-d12bf4a58f6a" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
