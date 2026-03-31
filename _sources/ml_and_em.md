@@ -56,6 +56,7 @@ $$\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i$$
 
 #### B. Estimating the Standard Deviation ($\sigma$)
 Following the standard derivation, we take the **derivative with respect to $\sigma$** and set it to zero:
+
 $$\frac{\partial \ell}{\partial \sigma} = \sum_{i=0}^{I-1} \left( -\frac{1}{\sigma} + \frac{(x_i - \mu)^2}{\sigma^3} \right) = 0$$
 
 * **Analytical Steps:**
@@ -106,8 +107,8 @@ Then, we define the **Auxiliary Function (Q-function)**:
 
 $$
 Q(\theta \mid \theta^{(t)}) =
-    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right)
-    \log P\left(X, Z \mid \theta\right)
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X,\, \theta^{(t)}\right)
+    \log P\left(X,\, Z \mid \theta\right)
 $$
 
 #### B. The M-Step (Maximization)
@@ -122,7 +123,7 @@ Let us modify the **auxilary function** given in the following form:
 $$
 \begin{aligned}
 Q(\theta | \theta^{(t)}) & = 
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right) 
     \log P\left(X, Z \mid \theta\right), 
 \end{aligned}
 $$
@@ -141,10 +142,10 @@ The auxiliary function can be written:
 $$
 \begin{align}
     Q(\theta | \theta^{(t)}) 
-     & =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+     & =   \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
     & = 
-       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         \log p\left(x_i, z_i \mid \theta\right), 
 \end{align}
 $$

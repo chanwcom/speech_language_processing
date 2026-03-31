@@ -468,8 +468,9 @@ $<span class="math notranslate nohighlight">\(\hat{\mu}_{MLE} = \frac{1}{I} \sum
 </section>
 <section id="b-estimating-the-standard-deviation-sigma">
 <h4>B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)<a class="headerlink" href="#b-estimating-the-standard-deviation-sigma" title="Link to this heading">#</a></h4>
-<p>Following the standard derivation, we take the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\sigma\)</span></strong> and set it to zero:
-$<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \sigma} = \sum_{i=0}^{I-1} \left( -\frac{1}{\sigma} + \frac{(x_i - \mu)^2}{\sigma^3} \right) = 0\)</span>$</p>
+<p>Following the standard derivation, we take the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\sigma\)</span></strong> and set it to zero:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \ell}{\partial \sigma} = \sum_{i=0}^{I-1} \left( -\frac{1}{\sigma} + \frac{(x_i - \mu)^2}{\sigma^3} \right) = 0\]</div>
 <ul class="simple">
 <li><p><strong>Analytical Steps:</strong></p>
 <ol class="arabic simple">
@@ -523,8 +524,8 @@ Then, we define the <strong>Auxiliary Function (Q-function)</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
 Q(\theta \mid \theta^{(t)}) =
-    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right)
-    \log P\left(X, Z \mid \theta\right)
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X,\, \theta^{(t)}\right)
+    \log P\left(X,\, Z \mid \theta\right)
 \]</div>
 </section>
 <section id="b-the-m-step-maximization">
@@ -541,7 +542,7 @@ Q(\theta \mid \theta^{(t)}) =
 \[
 \begin{aligned}
 Q(\theta | \theta^{(t)}) &amp; = 
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right) 
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right) 
     \log P\left(X, Z \mid \theta\right), 
 \end{aligned}
 \]</div>
@@ -558,17 +559,17 @@ Q(\theta | \theta^{(t)}) &amp; =
 \[\begin{split}
 \begin{align}
     Q(\theta | \theta^{(t)}) 
-     &amp; =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+     &amp; =   \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
     &amp; = 
-       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
+       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         \log p\left(x_i, z_i \mid \theta\right), 
 \end{align}
 \end{split}\]</div>
 <p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-418a0822-1524-4400-9a29-d12bf4a58f6a">
-<span class="eqno">(11)<a class="headerlink" href="#equation-418a0822-1524-4400-9a29-d12bf4a58f6a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2e8a80d8-2af9-4d33-a0a2-4fd23e5270ad">
+<span class="eqno">(11)<a class="headerlink" href="#equation-2e8a80d8-2af9-4d33-a0a2-4fd23e5270ad" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
