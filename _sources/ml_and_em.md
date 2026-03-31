@@ -48,7 +48,9 @@ $$\ell(\mu, \sigma) = \sum_{i=0}^{I-1} \left( -\frac{1}{2} \log(2\pi) - \log(\si
 
 #### A. Estimating the Mean ($\mu$)
 Taking the **derivative with respect to $\mu$** and setting it to zero:
+
 $$\frac{\partial \ell}{\partial \mu} = \sum_{i=0}^{I-1} \frac{(x_i - \mu)}{\sigma^2} = 0 \implies \sum_{i=0}^{I-1} x_i - I\mu = 0$$
+
 Solving this yields the maximum likelihood estimator for the mean: 
 $$\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i$$
 
@@ -103,7 +105,7 @@ Then, we define the **Auxiliary Function (Q-function)**:
 
 $$
 Q(\theta \mid \theta^{(t)}) =
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right)
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right)
     \log P\left(X, Z \mid \theta\right)
 $$
 

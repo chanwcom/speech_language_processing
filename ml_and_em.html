@@ -460,10 +460,11 @@ remain stable and the model continues to learn without losing numerical precisio
 \[\ell(\mu, \sigma) = \sum_{i=0}^{I-1} \left( -\frac{1}{2} \log(2\pi) - \log(\sigma) - \frac{(x_i - \mu)^2}{2\sigma^2} \right)\]</div>
 <section id="a-estimating-the-mean-mu">
 <h4>A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)<a class="headerlink" href="#a-estimating-the-mean-mu" title="Link to this heading">#</a></h4>
-<p>Taking the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\mu\)</span></strong> and setting it to zero:
-$<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \mu} = \sum_{i=0}^{I-1} \frac{(x_i - \mu)}{\sigma^2} = 0 \implies \sum_{i=0}^{I-1} x_i - I\mu = 0\)</span><span class="math notranslate nohighlight">\(
-Solving this yields the maximum likelihood estimator for the mean: 
-\)</span><span class="math notranslate nohighlight">\(\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i\)</span>$</p>
+<p>Taking the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\mu\)</span></strong> and setting it to zero:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \ell}{\partial \mu} = \sum_{i=0}^{I-1} \frac{(x_i - \mu)}{\sigma^2} = 0 \implies \sum_{i=0}^{I-1} x_i - I\mu = 0\]</div>
+<p>Solving this yields the maximum likelihood estimator for the mean:
+$<span class="math notranslate nohighlight">\(\hat{\mu}_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} x_i\)</span>$</p>
 </section>
 <section id="b-estimating-the-standard-deviation-sigma">
 <h4>B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)<a class="headerlink" href="#b-estimating-the-standard-deviation-sigma" title="Link to this heading">#</a></h4>
@@ -521,7 +522,7 @@ Then, we define the <strong>Auxiliary Function (Q-function)</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
 Q(\theta \mid \theta^{(t)}) =
-    \sum_{Z \in \mathcal{Z}} P\left(Z \mid X, \theta^{(t)}\right)
+    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right)
     \log P\left(X, Z \mid \theta\right)
 \]</div>
 </section>
@@ -564,8 +565,8 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-faeffb67-c45e-4fc8-bc80-fca95ef4c6e9">
-<span class="eqno">(11)<a class="headerlink" href="#equation-faeffb67-c45e-4fc8-bc80-fca95ef4c6e9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-24b89e73-125b-470c-994a-941d29ddaf18">
+<span class="eqno">(11)<a class="headerlink" href="#equation-24b89e73-125b-470c-994a-941d29ddaf18" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
