@@ -541,16 +541,17 @@ Q(\theta | \theta^{(t)}) &amp; =
 \)</span><span class="math notranslate nohighlight">\(
 Since 
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d1bb7e8-f05a-4bdb-b615-4f8e7d3a7cb0">
-<span class="eqno">(11)<a class="headerlink" href="#equation-6d1bb7e8-f05a-4bdb-b615-4f8e7d3a7cb0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3d3b5b51-5457-4bdf-b248-74686bf17cf1">
+<span class="eqno">(11)<a class="headerlink" href="#equation-3d3b5b51-5457-4bdf-b248-74686bf17cf1" title="Permalink to this equation">#</a></span>\[\begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
-\[ the auxiliary function can be written:
+\[ 
+The auxiliary function can be written:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-f65d6775-1ea8-445a-8b29-2e66ef686c93">
-<span class="eqno">(12)<a class="headerlink" href="#equation-f65d6775-1ea8-445a-8b29-2e66ef686c93" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e5845583-88a9-46a8-a860-2c5937f44879">
+<span class="eqno">(12)<a class="headerlink" href="#equation-e5845583-88a9-46a8-a860-2c5937f44879" title="Permalink to this equation">#</a></span>\[\begin{align}
     Q(\theta | \theta^{(t)}) 
      &amp; =   \sum_{Z \in \mathcal{Z}} p\left(Z \mid X, \theta^{(t)}\right) 
        \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
@@ -562,8 +563,8 @@ Since
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-376054f7-c5d3-485c-a624-b1bafd7c62c8">
-<span class="eqno">(13)<a class="headerlink" href="#equation-376054f7-c5d3-485c-a624-b1bafd7c62c8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-60b1140d-6d6e-4978-be4c-9b4cd23359e5">
+<span class="eqno">(13)<a class="headerlink" href="#equation-60b1140d-6d6e-4978-be4c-9b4cd23359e5" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>

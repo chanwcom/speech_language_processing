@@ -504,8 +504,8 @@ the probabilities corresponding to each class.</p>
 <span class="math notranslate nohighlight">\(\mathsf{w}\)</span>. If we can directly differentiate the loss function <span class="math notranslate nohighlight">\(\mathbb{L}\)</span>,
 we improve the model parameters using the well-known Gradient Descent approach
 as shown below:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8aa2e0ec-d9f5-462b-8e6e-f25fc403de9a">
-<span class="eqno">(9)<a class="headerlink" href="#equation-8aa2e0ec-d9f5-462b-8e6e-f25fc403de9a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b5d89aa9-d77f-4838-8bbe-44db3b0c649a">
+<span class="eqno">(9)<a class="headerlink" href="#equation-b5d89aa9-d77f-4838-8bbe-44db3b0c649a" title="Permalink to this equation">#</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}.
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is a constant called the <em>learning rate</em>.</p>
@@ -528,8 +528,8 @@ set. That is to say, the parameter update is done only once for one <em>epoch</e
 <h2>Stochastic Gradient Descent (SGD)<a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Link to this heading">#</a></h2>
 <p>Unlike the GD approach using the loss from the entire training dataset, in SGD,
 we update the parameter for each training example <span class="math notranslate nohighlight">\((\bsf{x}^{(k)}, \bsf{y}^{(k)})\)</span> iteratively.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14757696-e933-46fe-9395-d5386bbbe57d">
-<span class="eqno">(10)<a class="headerlink" href="#equation-14757696-e933-46fe-9395-d5386bbbe57d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3f43d3ba-fcc4-4ed9-8308-5cc7bc291bbc">
+<span class="eqno">(10)<a class="headerlink" href="#equation-3f43d3ba-fcc4-4ed9-8308-5cc7bc291bbc" title="Permalink to this equation">#</a></span>\[\begin{align}
   \bsf{w} \leftarrow  \bsf{w} - \mu \nabla_{\bsf{w}} \mathbb{L}^{(k)}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{L}^{(k)}\)</span> is the loss value calculated using only a single

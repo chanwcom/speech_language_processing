@@ -123,7 +123,8 @@ $$
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right),
 \end{align}
-$$ the auxiliary function can be written:
+$$ 
+The auxiliary function can be written:
 $$
 \begin{align}
     Q(\theta | \theta^{(t)}) 
