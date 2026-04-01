@@ -549,14 +549,15 @@ Q(\theta | \theta^{(t)}) &amp; =
     \log P\left(X, Z \mid \theta\right), 
 \end{aligned}
 \]</div>
-<p>Since</p>
+<p>From the iid assumption, we have:</p>
 <div class="math notranslate nohighlight">
-\[
+\[\begin{split}
 \begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
-        \log p\left(x_i, z_i \mid \theta\right),
+        \log p\left(x_i, z_i \mid \theta\right), \\
+    xx
 \end{align}
-\]</div>
+\end{split}\]</div>
 <p>The auxiliary function can be written:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -569,10 +570,18 @@ Q(\theta | \theta^{(t)}) &amp; =
         \log p\left(x_i, z_i \mid \theta\right), 
 \end{align}
 \end{split}\]</div>
-<p>Marginalization of <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)}\right)\)</span> over all <span class="math notranslate nohighlight">\(Z = \{z_0, z_1, \cdots z_{I-1} \}\)</span> except the index <span class="math notranslate nohighlight">\(i\)</span> leads to
+<p>Under the independence assumption,
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4304a635-6e9a-4a5a-bf25-37476af2cc7e">
-<span class="eqno">(11)<a class="headerlink" href="#equation-4304a635-6e9a-4a5a-bf25-37476af2cc7e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0e6b7884-cf41-4608-8a8b-32e9db72ef1a">
+<span class="eqno">(11)<a class="headerlink" href="#equation-0e6b7884-cf41-4608-8a8b-32e9db72ef1a" title="Permalink to this equation">#</a></span>\[\begin{align}
+    p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[
+Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
+\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-0df414b3-3078-414f-8635-16973af11c9d">
+<span class="eqno">(12)<a class="headerlink" href="#equation-0df414b3-3078-414f-8635-16973af11c9d" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
@@ -590,13 +599,13 @@ data by:</p>
 <div class="math notranslate nohighlight">
 \[ K = (X, Z), \]</div>
 <p>where <span class="math notranslate nohighlight">\(k_i = (x_i, z_i), \qquad 0 \le i \le I -1 \)</span>.</p>
-<p>Nothing that <span class="math notranslate nohighlight">\(P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(k \mid X, \theta^{(t)}\right) \)</span>, the <strong>Auxiliary Function</strong> can be represented by:</p>
+<p>Noting that <span class="math notranslate nohighlight">\(P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(K \mid X, \theta^{(t)}\right) \)</span>, the <strong>Auxiliary Function</strong> can be represented by:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
-Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}} 
+Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^I} 
     P\left(Z \mid X, \theta^{(t)}\right)  \log P(X, Z \mid \theta) \\
-&amp; =   \sum_{k \in \mathcal{K}} P\left(k \mid X, \theta^{(t)}\right)  \log P(k \mid \theta). 
+&amp; =   \sum_{k \in \mathcal{K}^I} P\left(K \mid X, \theta^{(t)}\right)  \log P(K \mid \theta). 
 \end{aligned}
 \end{split}\]</div>
 </section>

@@ -132,12 +132,13 @@ Q(\theta | \theta^{(t)}) & =
 \end{aligned}
 $$
 
-Since 
+From the iid assumption, we have:
 
 $$
 \begin{align}
     \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
-        \log p\left(x_i, z_i \mid \theta\right),
+        \log p\left(x_i, z_i \mid \theta\right), \\
+    xx
 \end{align}
 $$ 
 
@@ -153,6 +154,13 @@ $$
         \log p\left(x_i, z_i \mid \theta\right), 
 \end{align}
 $$
+Under the independence assumption,
+$$
+\begin{align}
+    p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
+\end{align}
+$$
+
 
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 $$
@@ -177,13 +185,13 @@ $$ K = (X, Z), $$
 
 where $k_i = (x_i, z_i), \qquad 0 \le i \le I -1 $.
 
-Nothing that $P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(k \mid X, \theta^{(t)}\right) $, the **Auxiliary Function** can be represented by:
+Noting that $P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(K \mid X, \theta^{(t)}\right) $, the **Auxiliary Function** can be represented by:
 
 $$
 \begin{aligned}
-Q\left(\theta \mid \theta^{(t)}\right) & = \sum_{Z \in \mathcal{Z}} 
+Q\left(\theta \mid \theta^{(t)}\right) & = \sum_{Z \in \mathcal{Z}^I} 
     P\left(Z \mid X, \theta^{(t)}\right)  \log P(X, Z \mid \theta) \\
-& =   \sum_{k \in \mathcal{K}} P\left(k \mid X, \theta^{(t)}\right)  \log P(k \mid \theta). 
+& =   \sum_{k \in \mathcal{K}^I} P\left(K \mid X, \theta^{(t)}\right)  \log P(K \mid \theta). 
 \end{aligned}
 $$
 
