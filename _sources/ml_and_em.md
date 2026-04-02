@@ -132,13 +132,13 @@ Following the standard derivation, we take the **derivative with respect to $\si
 $$\frac{\partial \ell}{\partial \sigma} = \sum_{i=0}^{I-1} \left( -\frac{1}{\sigma} + \frac{(x_i - \mu)^2}{\sigma^3} \right) = 0$$
 
 * **Analytical Steps:**
-    1.  Rearrange the summation: $-\frac{I}{\sigma} + \frac{1}{\sigma^3} \sum_{i=0}^{I-1} (x_i - \mu)^2 = 0$
-    2.  Multiply both sides by $\sigma^3$: $-I\sigma^2 + \sum_{i=0}^{I-1} (x_i - \mu)^2 = 0$
-    3.  Isolate $\sigma^2$: $I\sigma^2 = \sum_{i=0}^{I-1} (x_i - \mu)^2$
+    1.  Rearrange the summation: $-\frac{I}{\sigma} + \frac{1}{\sigma^3} \sum\limits_{i=0}^{I-1} (x_i - \mu)^2 = 0$
+    2.  Multiply both sides by $\sigma^3$: $-I\sigma^2 + \sum\limits_{i=0}^{I-1} (x_i - \mu)^2 = 0$
+    3.  Isolate $\sigma^2$: $I\sigma^2 = \sum\limits_{i=0}^{I-1} (x_i - \mu)^2$
 
 Solving this yields the maximum likelihood estimator for the variance:
 
-$$\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2$$
+$$\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum\limits_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2$$
 
 
 ## 2. Expectation-Maximization (EM) Algorithm
@@ -204,9 +204,9 @@ From the iid assumption, we have:
 
 $$
 \begin{align}
-    \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
+    p(Z \mid X, \theta^{(t)}) & =  \prod_{i=0}^{I-1} p(z_i \mid x_i, \theta) \\
+    \log p\left(X, Z \mid \theta\right) & = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right), \\
-    xx
 \end{align}
 $$ 
 
@@ -216,27 +216,20 @@ $$
 \begin{align}
     Q(\theta | \theta^{(t)}) 
      & =   \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
-       \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
+       \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right)  \nonumber \\
     & = 
-       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
-        \log p\left(x_i, z_i \mid \theta\right), 
-\end{align}
-$$
-Under the independence assumption,
-$$
-\begin{align}
-    p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
+       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}^I} \prod_{k=0}^{I-1} p\left(z_k \mid x_k, \,\theta^{(t)}\right) 
+        \log p\left(x_i, z_i \mid \theta\right)  \nonumber \\
+  & = \sum_{i=0}^{I-1}  \left[\prod_{\substack{k=0 \\ k \ne i}}^{I-1}  
+            \sum_{z_k \in \mathcal{Z}} 
+        p \left( z_k  \mid x_k, \, \theta^{(t)}  \right) \right] \left[ \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid  x_i, \, \theta^{(t)}\right)
+    \log p\left(x_i, z_i, \mid \theta \right) \right]  \nonumber \\
+ & = \sum_{i=0}^{I-1}   \left[ \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid  x_i, \, \theta^{(t)}\right)
+    \log p\left(x_i, z_i, \mid \theta \right) \right]  
 \end{align}
 $$
 
 
-Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
-$$
-\begin{align}
-    \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
-        = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
-\end{align}
-$$
 
 
 ### 2.4 Why Does it Work? (Jensen's Inequality)

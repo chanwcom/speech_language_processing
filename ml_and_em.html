@@ -392,6 +392,7 @@
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-modification-of-the-e-step-equation">2.3 Further Modification of the E-Step Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.4 Why Does it Work? (Jensen’s Inequality)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-representation-of-the-auxiliary-function">2.5 Alternative Representation of the Auxiliary Function</a></li>
 </ul>
 </li>
@@ -533,15 +534,15 @@ miminization of the Cross Entropy (CE) loss.</p>
 <ul class="simple">
 <li><p><strong>Analytical Steps:</strong></p>
 <ol class="arabic simple">
-<li><p>Rearrange the summation: <span class="math notranslate nohighlight">\(-\frac{I}{\sigma} + \frac{1}{\sigma^3} \sum_{i=0}^{I-1} (x_i - \mu)^2 = 0\)</span></p></li>
-<li><p>Multiply both sides by <span class="math notranslate nohighlight">\(\sigma^3\)</span>: <span class="math notranslate nohighlight">\(-I\sigma^2 + \sum_{i=0}^{I-1} (x_i - \mu)^2 = 0\)</span></p></li>
-<li><p>Isolate <span class="math notranslate nohighlight">\(\sigma^2\)</span>: <span class="math notranslate nohighlight">\(I\sigma^2 = \sum_{i=0}^{I-1} (x_i - \mu)^2\)</span></p></li>
+<li><p>Rearrange the summation: <span class="math notranslate nohighlight">\(-\frac{I}{\sigma} + \frac{1}{\sigma^3} \sum\limits_{i=0}^{I-1} (x_i - \mu)^2 = 0\)</span></p></li>
+<li><p>Multiply both sides by <span class="math notranslate nohighlight">\(\sigma^3\)</span>: <span class="math notranslate nohighlight">\(-I\sigma^2 + \sum\limits_{i=0}^{I-1} (x_i - \mu)^2 = 0\)</span></p></li>
+<li><p>Isolate <span class="math notranslate nohighlight">\(\sigma^2\)</span>: <span class="math notranslate nohighlight">\(I\sigma^2 = \sum\limits_{i=0}^{I-1} (x_i - \mu)^2\)</span></p></li>
 </ol>
 </li>
 </ul>
 <p>Solving this yields the maximum likelihood estimator for the variance:</p>
 <div class="math notranslate nohighlight">
-\[\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2\]</div>
+\[\hat{\sigma}^2_{MLE} = \frac{1}{I} \sum\limits_{i=0}^{I-1} (x_i - \hat{\mu}_{MLE})^2\]</div>
 </section>
 </section>
 </section>
@@ -609,9 +610,9 @@ Q(\theta | \theta^{(t)}) &amp; =
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-    \log p\left(X, Z \mid \theta\right) = \sum_{i=0}^{I-1} 
+    p(Z \mid X, \theta^{(t)}) &amp; =  \prod_{i=0}^{I-1} p(z_i \mid x_i, \theta) \\
+    \log p\left(X, Z \mid \theta\right) &amp; = \sum_{i=0}^{I-1} 
         \log p\left(x_i, z_i \mid \theta\right), \\
-    xx
 \end{align}
 \end{split}\]</div>
 <p>The auxiliary function can be written:</p>
@@ -620,33 +621,24 @@ Q(\theta | \theta^{(t)}) &amp; =
 \begin{align}
     Q(\theta | \theta^{(t)}) 
      &amp; =   \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
-       \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right),  \nonumber \\
+       \sum_{i=0}^{I-1}  \log p\left(x_i, z_i \mid \theta\right)  \nonumber \\
     &amp; = 
-       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
-        \log p\left(x_i, z_i \mid \theta\right), 
+       \sum_{i=0}^{I-1} \sum_{Z \in \mathcal{Z}^I} \prod_{k=0}^{I-1} p\left(z_k \mid x_k, \,\theta^{(t)}\right) 
+        \log p\left(x_i, z_i \mid \theta\right)  \nonumber \\
+  &amp; = \sum_{i=0}^{I-1}  \left[\prod_{\substack{k=0 \\ k \ne i}}^{I-1}  
+            \sum_{z_k \in \mathcal{Z}} 
+        p \left( z_k  \mid x_k, \, \theta^{(t)}  \right) \right] \left[ \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid  x_i, \, \theta^{(t)}\right)
+    \log p\left(x_i, z_i, \mid \theta \right) \right]  \nonumber \\
+ &amp; = \sum_{i=0}^{I-1}   \left[ \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid  x_i, \, \theta^{(t)}\right)
+    \log p\left(x_i, z_i, \mid \theta \right) \right]  
 \end{align}
 \end{split}\]</div>
-<p>Under the independence assumption,
-$$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40f13538-4073-4cc0-8f76-89c7418053d2">
-<span class="eqno">(11)<a class="headerlink" href="#equation-40f13538-4073-4cc0-8f76-89c7418053d2" title="Permalink to this equation">#</a></span>\[\begin{align}
-    p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
-\end{align}\]</div>
-<div class="math notranslate nohighlight">
-\[
-Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
-\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-ed7848bf-2141-45ed-8b95-fded3226f74a">
-<span class="eqno">(12)<a class="headerlink" href="#equation-ed7848bf-2141-45ed-8b95-fded3226f74a" title="Permalink to this equation">#</a></span>\[\begin{align}
-    \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
-        = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
-\end{align}\]</div>
-<div class="math notranslate nohighlight">
-\[
-### 2.4 Why Does it Work? (Jensen's Inequality)
-The EM algorithm works by creating a lower bound (surrogate function) on the log-likelihood at each step. By maximizing this lower bound, we guarantee that the true log-likelihood $\ell(\theta)$ never decreases:
-$$\ell(\theta^{(t+1)}) \geq \ell(\theta^{(t)})\]</div>
-<p>This property ensures convergence, although it may settle at a <strong>local optimum</strong> rather than the global one.</p>
+</section>
+<section id="why-does-it-work-jensen-s-inequality">
+<h3>2.4 Why Does it Work? (Jensen’s Inequality)<a class="headerlink" href="#why-does-it-work-jensen-s-inequality" title="Link to this heading">#</a></h3>
+<p>The EM algorithm works by creating a lower bound (surrogate function) on the log-likelihood at each step. By maximizing this lower bound, we guarantee that the true log-likelihood <span class="math notranslate nohighlight">\(\ell(\theta)\)</span> never decreases:
+$<span class="math notranslate nohighlight">\(\ell(\theta^{(t+1)}) \geq \ell(\theta^{(t)})\)</span>$
+This property ensures convergence, although it may settle at a <strong>local optimum</strong> rather than the global one.</p>
 </section>
 <section id="alternative-representation-of-the-auxiliary-function">
 <h3>2.5 Alternative Representation of the Auxiliary Function<a class="headerlink" href="#alternative-representation-of-the-auxiliary-function" title="Link to this heading">#</a></h3>
@@ -809,6 +801,7 @@ Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^I}
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-modification-of-the-e-step-equation">2.3 Further Modification of the E-Step Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.4 Why Does it Work? (Jensen’s Inequality)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-representation-of-the-auxiliary-function">2.5 Alternative Representation of the Auxiliary Function</a></li>
 </ul>
 </li>
