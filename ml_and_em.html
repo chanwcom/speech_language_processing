@@ -491,22 +491,25 @@ is  given by the following equation in terms of log-likelihood:</p>
   \ell(\theta) = \sum_{i=0}^{I-1} \log \hat{p}(x_i | \theta).
 \end{align}
 \]</div>
+<p>Note that we use the symbol <span class="math notranslate nohighlight">\(\hat{p}\)</span> instead of <span class="math notranslate nohighlight">\(p\)</span>.</p>
 <p>We may model the distribution of <span class="math notranslate nohighlight">\(x\)</span> in the training database
 using the Probability Mass Function (PMF) <span class="math notranslate nohighlight">\(p(x)\)</span>.
 Then the above equation can be expressed in the following form:</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{align}
-  \ell(\theta) = \sum_{x \in \mathcal{X}} \log \hat{p}(x_i | \theta).
+  \ell(\theta) = \sum_{x \in \mathcal{X}} p(x) \log \hat{p}(x \mid \theta).
 \end{align}
 \]</div>
 <p>Recall that the Cross-Entropy (CE) loss is given by the following equation:</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{align}
-    \mathcal{L} = - \sum_{X \in \mathcal{X}^I} p(X)  \log  \hat{p} \left(X   \mid  \theta \right)
+    \mathcal{L} = - \sum_{x \in \mathcal{X}} p(x)  \log  \hat{p} \left(x   \mid  \theta \right).
 \end{align}
 \]</div>
+<p>Thus, finding a parameter using the Maximum Likelihood Estimation (MLE) is equivalent to
+miminization of the Cross Entropy (CE) loss.</p>
 </section>
 <section id="case-study-parameter-estimation-in-gaussian-models">
 <h3>1.5 Case Study: Parameter Estimation in Gaussian Models<a class="headerlink" href="#case-study-parameter-estimation-in-gaussian-models" title="Link to this heading">#</a></h3>
@@ -625,16 +628,16 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Under the independence assumption,
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee74a041-9a89-4805-8591-d76b560da369">
-<span class="eqno">(11)<a class="headerlink" href="#equation-ee74a041-9a89-4805-8591-d76b560da369" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-40f13538-4073-4cc0-8f76-89c7418053d2">
+<span class="eqno">(11)<a class="headerlink" href="#equation-40f13538-4073-4cc0-8f76-89c7418053d2" title="Permalink to this equation">#</a></span>\[\begin{align}
     p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-8199fe2f-5813-4e2c-9ea7-8186c7080762">
-<span class="eqno">(12)<a class="headerlink" href="#equation-8199fe2f-5813-4e2c-9ea7-8186c7080762" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ed7848bf-2141-45ed-8b95-fded3226f74a">
+<span class="eqno">(12)<a class="headerlink" href="#equation-ed7848bf-2141-45ed-8b95-fded3226f74a" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>

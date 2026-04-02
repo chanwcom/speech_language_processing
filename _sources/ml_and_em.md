@@ -86,13 +86,15 @@ $$
 \end{align}
 $$
 
+Note that we use the symbol $\hat{p}$ instead of $p$.
+
 We may model the distribution of $x$ in the training database
 using the Probability Mass Function (PMF) $p(x)$.
 Then the above equation can be expressed in the following form:
 
 $$
 \begin{align}
-  \ell(\theta) = \sum_{x \in \mathcal{X}} \log \hat{p}(x_i | \theta).
+  \ell(\theta) = \sum_{x \in \mathcal{X}} p(x) \log \hat{p}(x \mid \theta).
 \end{align}
 $$
 
@@ -101,9 +103,13 @@ Recall that the Cross-Entropy (CE) loss is given by the following equation:
 
 $$
 \begin{align}
-    \mathcal{L} = - \sum_{X \in \mathcal{X}^I} p(X)  \log  \hat{p} \left(X   \mid  \theta \right)
+    \mathcal{L} = - \sum_{x \in \mathcal{X}} p(x)  \log  \hat{p} \left(x   \mid  \theta \right).
 \end{align}
 $$
+
+Thus, finding a parameter using the Maximum Likelihood Estimation (MLE) is equivalent to 
+miminization of the Cross Entropy (CE) loss.
+
 
 ### 1.5 Case Study: Parameter Estimation in Gaussian Models
 
