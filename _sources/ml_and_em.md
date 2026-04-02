@@ -48,7 +48,7 @@ Since log function is a monotonic function, the Maximum Likelihood Estimation (M
 is  given by the following equation in terms of log-likelihood:
 $$ 
 \begin{align}
-    \hat{\theta} = \arg \max_{\theta} i(\theta).
+    \hat{\theta} = \arg \max_{\theta} \ell(\theta).
 \end{align}
 $$
 
