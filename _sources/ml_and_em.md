@@ -38,7 +38,6 @@ we usually use the log likelihood defined by the following equations:
 
 $$
 \begin{align}
-
 \ell(\theta) & = \log p(X \mid \theta) \nonumber \\
             & = \log  p(x_0, x_1, \cdots, x_{I-1} \mid \theta)  \nonumber \\
             & = \log \prod_{i=0}^{I-1} p(x_i \mid \theta) \nonumber \\
