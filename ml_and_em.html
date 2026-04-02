@@ -376,7 +376,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophical-underpinning">1.1 Philosophical Underpinning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-analytical-derivation">1.3 Step-by-Step Analytical Derivation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.4 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-with-a-cross-entropy-loss">1.4 Relation with a Cross-Entropy Loss</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.5 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-estimating-the-mean-mu">A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-standard-deviation-sigma">B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
 </ul>
@@ -424,9 +425,15 @@
 <h3>1.1 Philosophical Underpinning<a class="headerlink" href="#philosophical-underpinning" title="Link to this heading">#</a></h3>
 <p>MLE is built on a simple yet powerful frequentist principle: <strong>“The best parameters are those under which the observed data is most likely to have occurred.”</strong></p>
 <p>If we have a set of independent and identically distributed (i.i.d.) observations
-<span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>, and a probability model <span class="math notranslate nohighlight">\(P(X|\theta)\)</span>, the likelihood function <span class="math notranslate nohighlight">\(L(\theta)\)</span> is given by:</p>
+<span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>, and a probability model <span class="math notranslate nohighlight">\(p(X|\theta)\)</span>, the likelihood function <span class="math notranslate nohighlight">\(L(\theta)\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
-\[L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).\]</div>
+\[\begin{split}
+\begin{align}
+L(\theta) = &amp; p(X \mid \theta) \nonumber \\ 
+          = &amp;  p(x_0, x_1, \cdots, x_{I-1} \mid \theta) \nonumber \\ 
+          = &amp; \prod_{i=0}^{I-1} p(x_i \mid \theta).
+\end{align}
+\end{split}\]</div>
 <p>The Maximum Likelihood Estimation (MLE) is given by the following equation:</p>
 <div class="math notranslate nohighlight">
 \[ 
@@ -440,7 +447,12 @@
 <p>Even though the above equation is conceptually useful, in Maximum Likelihood Estimation (MLE),
 we usually use the log likelihood defined by the following equations:</p>
 <div class="math notranslate nohighlight">
-\[\ell(\theta) = \sum_{i=0}^{I-1} \log P(x_i | \theta).\]</div>
+\[ \begin{align}\begin{aligned}
+\begin{align}\\\begin{split}\ell(\theta) &amp; = \log p(X \mid \theta) \nonumber \\
+            &amp; = \log  p(x_0, x_1, \cdots, x_{I-1} \mid \theta)  \nonumber \\
+            &amp; = \log \prod_{i=0}^{I-1} p(x_i \mid \theta) \nonumber \\
+            &amp; =  \sum_{i=0}^{I-1} \log p(x_i | \theta).\end{split}\\\end{align}
+\end{aligned}\end{align} \]</div>
 <ul class="simple">
 <li><p><strong>Mathematical and Computational Convenience (Addition)</strong>
 Calculating the gradient of a sum is significantly simpler than using the product rule for a long chain of terms.</p></li>
@@ -470,8 +482,34 @@ is  given by the following equation in terms of log-likelihood:</p>
 <li><p><strong>Verify Concavity:</strong> Ensure the Hessian matrix <span class="math notranslate nohighlight">\(H(\theta)\)</span> is negative semi-definite to confirm a maximum, not a minimum.</p></li>
 </ol>
 </section>
+<section id="relation-with-a-cross-entropy-loss">
+<h3>1.4 Relation with a Cross-Entropy Loss<a class="headerlink" href="#relation-with-a-cross-entropy-loss" title="Link to this heading">#</a></h3>
+<p>We studied that the log likelihood is given by the following equation:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+  \ell(\theta) = \sum_{i=0}^{I-1} \log \hat{p}(x_i | \theta).
+\end{align}
+\]</div>
+<p>We may model the distribution of <span class="math notranslate nohighlight">\(x\)</span> in the training database
+using the Probability Mass Function (PMF) <span class="math notranslate nohighlight">\(p(x)\)</span>.
+Then the above equation can be expressed in the following form:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+  \ell(\theta) = \sum_{x \in \mathcal{X}} \log \hat{p}(x_i | \theta).
+\end{align}
+\]</div>
+<p>Recall that the Cross-Entropy (CE) loss is given by the following equation:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+    \mathcal{L} = - \sum_{X \in \mathcal{X}^I} p(X)  \log  \hat{p} \left(X   \mid  \theta \right)
+\end{align}
+\]</div>
+</section>
 <section id="case-study-parameter-estimation-in-gaussian-models">
-<h3>1.4 Case Study: Parameter Estimation in Gaussian Models<a class="headerlink" href="#case-study-parameter-estimation-in-gaussian-models" title="Link to this heading">#</a></h3>
+<h3>1.5 Case Study: Parameter Estimation in Gaussian Models<a class="headerlink" href="#case-study-parameter-estimation-in-gaussian-models" title="Link to this heading">#</a></h3>
 <p>To see MLE in action, consider a <strong>Gaussian Model</strong> where we aim to estimate the parameters <span class="math notranslate nohighlight">\(\theta = \{\mu, \sigma\}\)</span> for a dataset <span class="math notranslate nohighlight">\(X = \{x_0, x_1, \dots, x_{I-1}\}\)</span>. For <span class="math notranslate nohighlight">\(I\)</span> independent observations from <span class="math notranslate nohighlight">\(\mathcal{N}(\mu, \sigma^2)\)</span>, the log-likelihood is:</p>
 <div class="math notranslate nohighlight">
 \[\ell(\mu, \sigma) = \sum_{i=0}^{I-1} \left( -\frac{1}{2} \log(2\pi) - \log(\sigma) - \frac{(x_i - \mu)^2}{2\sigma^2} \right)\]</div>
@@ -537,13 +575,13 @@ If we knew <span class="math notranslate nohighlight">\(Z\)</span>, we could use
 <section id="a-the-e-step-expectation">
 <h4>A. The E-Step (Expectation)<a class="headerlink" href="#a-the-e-step-expectation" title="Link to this heading">#</a></h4>
 <p>We do not know the latent variables <span class="math notranslate nohighlight">\(Z\)</span>, so we calculate the “responsibility” or the posterior probability of <span class="math notranslate nohighlight">\(Z\)</span> given the current parameter estimate <span class="math notranslate nohighlight">\(\theta^{(t)}\)</span>:
-$<span class="math notranslate nohighlight">\(W = P\left(Z \mid X, \theta^{(t)}\right)\)</span>$
+$<span class="math notranslate nohighlight">\(W = p\left(Z \mid X, \theta^{(t)}\right)\)</span>$
 Then, we define the <strong>Auxiliary Function (Q-function)</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
 Q(\theta \mid \theta^{(t)}) =
-    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X,\, \theta^{(t)}\right)
-    \log P\left(X,\, Z \mid \theta\right)
+    \sum_{Z \in \mathcal{Z}^{I}} p\left(Z \mid X,\, \theta^{(t)}\right)
+    \log p\left(X,\, Z \mid \theta\right)
 \]</div>
 </section>
 <section id="b-the-m-step-maximization">
@@ -560,8 +598,8 @@ Q(\theta \mid \theta^{(t)}) =
 \[
 \begin{aligned}
 Q(\theta | \theta^{(t)}) &amp; = 
-    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right) 
-    \log P\left(X, Z \mid \theta\right), 
+    \sum_{Z \in \mathcal{Z}^{I}} p\left(Z \mid X, \theta^{(t)}\right) 
+    \log p\left(X, Z \mid \theta\right), 
 \end{aligned}
 \]</div>
 <p>From the iid assumption, we have:</p>
@@ -587,16 +625,16 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Under the independence assumption,
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0eb9d393-af02-4f70-ae72-00b8432065be">
-<span class="eqno">(11)<a class="headerlink" href="#equation-0eb9d393-af02-4f70-ae72-00b8432065be" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ee74a041-9a89-4805-8591-d76b560da369">
+<span class="eqno">(11)<a class="headerlink" href="#equation-ee74a041-9a89-4805-8591-d76b560da369" title="Permalink to this equation">#</a></span>\[\begin{align}
     p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-d07bf183-4df7-4c82-a474-6cff89c7147c">
-<span class="eqno">(12)<a class="headerlink" href="#equation-d07bf183-4df7-4c82-a474-6cff89c7147c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8199fe2f-5813-4e2c-9ea7-8186c7080762">
+<span class="eqno">(12)<a class="headerlink" href="#equation-8199fe2f-5813-4e2c-9ea7-8186c7080762" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
@@ -614,13 +652,13 @@ data by:</p>
 <div class="math notranslate nohighlight">
 \[ K = (X, Z), \]</div>
 <p>where <span class="math notranslate nohighlight">\(k_i = (x_i, z_i), \qquad 0 \le i \le I -1 \)</span>.</p>
-<p>Noting that <span class="math notranslate nohighlight">\(P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(K \mid X, \theta^{(t)}\right) \)</span>, the <strong>Auxiliary Function</strong> can be represented by:</p>
+<p>Noting that <span class="math notranslate nohighlight">\(p\left(Z \mid X, \theta^{(t)} \right) = p(X, Z \mid X, \theta^{(t)} ) = p\left(K \mid X, \theta^{(t)}\right) \)</span>, the <strong>Auxiliary Function</strong> can be represented by:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
 Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^I} 
-    P\left(Z \mid X, \theta^{(t)}\right)  \log P(X, Z \mid \theta) \\
-&amp; =   \sum_{k \in \mathcal{K}^I} P\left(K \mid X, \theta^{(t)}\right)  \log P(K \mid \theta). 
+    p\left(Z \mid X, \theta^{(t)}\right)  \log p(X, Z \mid \theta) \\
+&amp; =   \sum_{k \in \mathcal{K}^I} p\left(K \mid X, \theta^{(t)}\right)  \log p(K \mid \theta). 
 \end{aligned}
 \end{split}\]</div>
 </section>
@@ -752,7 +790,8 @@ Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^I}
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophical-underpinning">1.1 Philosophical Underpinning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-analytical-derivation">1.3 Step-by-Step Analytical Derivation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.4 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-with-a-cross-entropy-loss">1.4 Relation with a Cross-Entropy Loss</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.5 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-estimating-the-mean-mu">A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-standard-deviation-sigma">B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
 </ul>

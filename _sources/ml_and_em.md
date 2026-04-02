@@ -13,9 +13,15 @@ In the realm of statistical machine learning, we often face the challenge of est
 MLE is built on a simple yet powerful frequentist principle: **"The best parameters are those under which the observed data is most likely to have occurred."**
 
 If we have a set of independent and identically distributed (i.i.d.) observations 
-$X = \{x_0, x_1,  \cdots, x_{I-1}\}$, and a probability model $P(X|\theta)$, the likelihood function $L(\theta)$ is given by:
+$X = \{x_0, x_1,  \cdots, x_{I-1}\}$, and a probability model $p(X|\theta)$, the likelihood function $L(\theta)$ is given by:
 
-$$L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).$$
+$$
+\begin{align}
+L(\theta) = & p(X \mid \theta) \nonumber \\ 
+          = &  p(x_0, x_1, \cdots, x_{I-1} \mid \theta) \nonumber \\ 
+          = & \prod_{i=0}^{I-1} p(x_i \mid \theta).
+\end{align}
+$$
 
 The Maximum Likelihood Estimation (MLE) is given by the following equation:
 
@@ -30,7 +36,16 @@ $$
 Even though the above equation is conceptually useful, in Maximum Likelihood Estimation (MLE), 
 we usually use the log likelihood defined by the following equations:
 
-$$\ell(\theta) = \sum_{i=0}^{I-1} \log P(x_i | \theta).$$
+$$
+\begin{align}
+
+\ell(\theta) & = \log p(X \mid \theta) \nonumber \\
+            & = \log  p(x_0, x_1, \cdots, x_{I-1} \mid \theta)  \nonumber \\
+            & = \log \prod_{i=0}^{I-1} p(x_i \mid \theta) \nonumber \\
+            & =  \sum_{i=0}^{I-1} \log p(x_i | \theta).
+
+\end{align}
+$$
 
 -  **Mathematical and Computational Convenience (Addition)**
     Calculating the gradient of a sum is significantly simpler than using the product rule for a long chain of terms. 
@@ -60,7 +75,37 @@ $$
 4. **Solve the Equation:** Set $ \dfrac{\partial \ell(\theta) }{\partial \theta \ \hspace{4mm} } = 0$.
 5. **Verify Concavity:** Ensure the Hessian matrix $H(\theta)$ is negative semi-definite to confirm a maximum, not a minimum.
 
-### 1.4 Case Study: Parameter Estimation in Gaussian Models
+
+### 1.4 Relation with a Cross-Entropy Loss
+
+We studied that the log likelihood is given by the following equation: 
+
+$$
+\begin{align}
+  \ell(\theta) = \sum_{i=0}^{I-1} \log \hat{p}(x_i | \theta).
+\end{align}
+$$
+
+We may model the distribution of $x$ in the training database
+using the Probability Mass Function (PMF) $p(x)$.
+Then the above equation can be expressed in the following form:
+
+$$
+\begin{align}
+  \ell(\theta) = \sum_{x \in \mathcal{X}} \log \hat{p}(x_i | \theta).
+\end{align}
+$$
+
+
+Recall that the Cross-Entropy (CE) loss is given by the following equation:
+
+$$
+\begin{align}
+    \mathcal{L} = - \sum_{X \in \mathcal{X}^I} p(X)  \log  \hat{p} \left(X   \mid  \theta \right)
+\end{align}
+$$
+
+### 1.5 Case Study: Parameter Estimation in Gaussian Models
 
 To see MLE in action, consider a **Gaussian Model** where we aim to estimate the parameters $\theta = \{\mu, \sigma\}$ for a dataset $X = \{x_0, x_1, \dots, x_{I-1}\}$. For $I$ independent observations from $\mathcal{N}(\mu, \sigma^2)$, the log-likelihood is:
 
@@ -123,13 +168,13 @@ The fundamental assumption is that while the **complete-data likelihood** $p(X, 
 
 #### A. The E-Step (Expectation)
 We do not know the latent variables $Z$, so we calculate the "responsibility" or the posterior probability of $Z$ given the current parameter estimate $\theta^{(t)}$:
-$$W = P\left(Z \mid X, \theta^{(t)}\right)$$
+$$W = p\left(Z \mid X, \theta^{(t)}\right)$$
 Then, we define the **Auxiliary Function (Q-function)**:
 
 $$
 Q(\theta \mid \theta^{(t)}) =
-    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X,\, \theta^{(t)}\right)
-    \log P\left(X,\, Z \mid \theta\right)
+    \sum_{Z \in \mathcal{Z}^{I}} p\left(Z \mid X,\, \theta^{(t)}\right)
+    \log p\left(X,\, Z \mid \theta\right)
 $$
 
 #### B. The M-Step (Maximization)
@@ -144,8 +189,8 @@ Let us modify the **auxilary function** given in the following form:
 $$
 \begin{aligned}
 Q(\theta | \theta^{(t)}) & = 
-    \sum_{Z \in \mathcal{Z}^{I}} P\left(Z \mid X, \theta^{(t)}\right) 
-    \log P\left(X, Z \mid \theta\right), 
+    \sum_{Z \in \mathcal{Z}^{I}} p\left(Z \mid X, \theta^{(t)}\right) 
+    \log p\left(X, Z \mid \theta\right), 
 \end{aligned}
 $$
 
@@ -202,13 +247,13 @@ $$ K = (X, Z), $$
 
 where $k_i = (x_i, z_i), \qquad 0 \le i \le I -1 $.
 
-Noting that $P\left(Z \mid X, \theta^{(t)} \right) = P(X, Z \mid X, \theta^{(t)} ) = P\left(K \mid X, \theta^{(t)}\right) $, the **Auxiliary Function** can be represented by:
+Noting that $p\left(Z \mid X, \theta^{(t)} \right) = p(X, Z \mid X, \theta^{(t)} ) = p\left(K \mid X, \theta^{(t)}\right) $, the **Auxiliary Function** can be represented by:
 
 $$
 \begin{aligned}
 Q\left(\theta \mid \theta^{(t)}\right) & = \sum_{Z \in \mathcal{Z}^I} 
-    P\left(Z \mid X, \theta^{(t)}\right)  \log P(X, Z \mid \theta) \\
-& =   \sum_{k \in \mathcal{K}^I} P\left(K \mid X, \theta^{(t)}\right)  \log P(K \mid \theta). 
+    p\left(Z \mid X, \theta^{(t)}\right)  \log p(X, Z \mid \theta) \\
+& =   \sum_{k \in \mathcal{K}^I} p\left(K \mid X, \theta^{(t)}\right)  \log p(K \mid \theta). 
 \end{aligned}
 $$
 
