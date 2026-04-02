@@ -46,6 +46,7 @@ Since the logarithm is a monotonically increasing function, the $\theta$ that ma
 
 Since log function is a monotonic function, the Maximum Likelihood Estimation (MLE)
 is  given by the following equation in terms of log-likelihood:
+
 $$ 
 \begin{align}
     \hat{\theta} = \arg \max_{\theta} \ell(\theta).
