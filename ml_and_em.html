@@ -374,9 +374,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-mle-the-foundation">1. Maximum Likelihood Estimation (MLE): The Foundation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophical-underpinning">1.1 Philosophical Underpinning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-analytical-derivation">1.3 Step-by-Step Analytical Derivation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.4 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-estimating-the-mean-mu">A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-standard-deviation-sigma">B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
 </ul>
@@ -427,6 +425,13 @@
 <span class="math notranslate nohighlight">\(X = \{x_0, x_1,  \cdots, x_{I-1}\}\)</span>, and a probability model <span class="math notranslate nohighlight">\(P(X|\theta)\)</span>, the likelihood function <span class="math notranslate nohighlight">\(L(\theta)\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).\]</div>
+<p>The Maximum Likelihood Estimation (MLE) is given by the following equation:</p>
+<div class="math notranslate nohighlight">
+\[ 
+\begin{align}
+    \hat{\theta} = \arg \max_{\theta} L(\theta)
+\end{align}
+\]</div>
 </section>
 <section id="the-necessity-of-the-log-likelihood">
 <h3>1.2 The Necessity of the Log-Likelihood<a class="headerlink" href="#the-necessity-of-the-log-likelihood" title="Link to this heading">#</a></h3>
@@ -444,22 +449,20 @@ Logarithms map these tiny probabilities to a manageable range of negative number
 remain stable and the model continues to learn without losing numerical precision.</p></li>
 </ul>
 <p>Since the logarithm is a monotonically increasing function, the <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes <span class="math notranslate nohighlight">\(\ell(\theta)\)</span> also maximizes <span class="math notranslate nohighlight">\(L(\theta)\)</span>.</p>
-</section>
-<section id="step-by-step-analytical-derivation">
-<h3>1.3 Step-by-Step Analytical Derivation<a class="headerlink" href="#step-by-step-analytical-derivation" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
-<li><p><strong>Define the Model:</strong> Choose a distribution (e.g., Gaussian, Bernoulli).</p></li>
-<li><p><strong>Construct the Log-Likelihood:</strong> Sum the logs of individual densities.</p></li>
-<li><p><strong>Compute Derivatives:</strong> Find the score function <span class="math notranslate nohighlight">\(\nabla_{\theta} \ell(\theta)\)</span>.</p></li>
-<li><p><strong>Solve the Score Equation:</strong> Set <span class="math notranslate nohighlight">\(\nabla_{\theta} \ell(\theta) = 0\)</span>.</p></li>
-<li><p><strong>Verify Concavity:</strong> Ensure the Hessian matrix <span class="math notranslate nohighlight">\(H(\theta)\)</span> is negative semi-definite to confirm a maximum, not a minimum.</p></li>
-</ol>
-</section>
-<section id="case-study-parameter-estimation-in-gaussian-models">
-<h3>1.4 Case Study: Parameter Estimation in Gaussian Models<a class="headerlink" href="#case-study-parameter-estimation-in-gaussian-models" title="Link to this heading">#</a></h3>
-<p>To see MLE in action, consider a <strong>Gaussian Model</strong> where we aim to estimate the parameters <span class="math notranslate nohighlight">\(\theta = \{\mu, \sigma\}\)</span> for a dataset <span class="math notranslate nohighlight">\(X = \{x_0, x_1, \dots, x_{I-1}\}\)</span>. For <span class="math notranslate nohighlight">\(I\)</span> independent observations from <span class="math notranslate nohighlight">\(\mathcal{N}(\mu, \sigma^2)\)</span>, the log-likelihood is:</p>
+<p>Since log function is a monotonic function, the Maximum Likelihood Estimation (MLE)
+is  given by the following equation in terms of log-likelihood:
+$$</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d5e0eb01-b00a-4f3a-b815-ad3ca3d4e7a8">
+<span class="eqno">(11)<a class="headerlink" href="#equation-d5e0eb01-b00a-4f3a-b815-ad3ca3d4e7a8" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \hat{\theta} = \arg \max_{\theta} i(\theta).
+\end{align}\]</div>
 <div class="math notranslate nohighlight">
-\[\ell(\mu, \sigma) = \sum_{i=0}^{I-1} \left( -\frac{1}{2} \log(2\pi) - \log(\sigma) - \frac{(x_i - \mu)^2}{2\sigma^2} \right)\]</div>
+\[ \begin{align}\begin{aligned}### 1.3 Step-by-Step Analytical Derivation
+1. **Define the Model:** Choose a distribution (e.g., Gaussian, Bernoulli).
+2. **Construct the Log-Likelihood:** Sum the logs of individual densities.
+3. **Compute Derivatives:** Find the score function $ \frac{\partial \ell(\theta) }{\partial \theta \hfill }$.
+4. **Solve the Equation:** Set $ \nabla_{\theta} \ell(\theta) = 0$.
+5. **Verify Concavity:** Ensure the Hessian matrix $H(\theta)$ is negative semi-definite to confirm a maximum, not a minimum.\\### 1.4 Case Study: Parameter Estimation in Gaussian Models\\To see MLE in action, consider a **Gaussian Model** where we aim to estimate the parameters $\theta = \{\mu, \sigma\}$ for a dataset $X = \{x_0, x_1, \dots, x_{I-1}\}$. For $I$ independent observations from $\mathcal{N}(\mu, \sigma^2)$, the log-likelihood is:\\$$\ell(\mu, \sigma) = \sum_{i=0}^{I-1} \left( -\frac{1}{2} \log(2\pi) - \log(\sigma) - \frac{(x_i - \mu)^2}{2\sigma^2} \right)\end{aligned}\end{align} \]</div>
 <section id="a-estimating-the-mean-mu">
 <h4>A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)<a class="headerlink" href="#a-estimating-the-mean-mu" title="Link to this heading">#</a></h4>
 <p>Taking the <strong>derivative with respect to <span class="math notranslate nohighlight">\(\mu\)</span></strong> and setting it to zero:</p>
@@ -572,16 +575,16 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Under the independence assumption,
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e6b7884-cf41-4608-8a8b-32e9db72ef1a">
-<span class="eqno">(11)<a class="headerlink" href="#equation-0e6b7884-cf41-4608-8a8b-32e9db72ef1a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-092c1b99-6374-4e5c-9bd1-820de1dfae4b">
+<span class="eqno">(12)<a class="headerlink" href="#equation-092c1b99-6374-4e5c-9bd1-820de1dfae4b" title="Permalink to this equation">#</a></span>\[\begin{align}
     p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-0df414b3-3078-414f-8635-16973af11c9d">
-<span class="eqno">(12)<a class="headerlink" href="#equation-0df414b3-3078-414f-8635-16973af11c9d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-72b3cfd4-394b-49ba-9035-565bc59b0992">
+<span class="eqno">(13)<a class="headerlink" href="#equation-72b3cfd4-394b-49ba-9035-565bc59b0992" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>
@@ -735,9 +738,7 @@ Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^I}
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-mle-the-foundation">1. Maximum Likelihood Estimation (MLE): The Foundation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#philosophical-underpinning">1.1 Philosophical Underpinning</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-analytical-derivation">1.3 Step-by-Step Analytical Derivation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-parameter-estimation-in-gaussian-models">1.4 Case Study: Parameter Estimation in Gaussian Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-necessity-of-the-log-likelihood">1.2 The Necessity of the Log-Likelihood</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-estimating-the-mean-mu">A. Estimating the Mean (<span class="math notranslate nohighlight">\(\mu\)</span>)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-estimating-the-standard-deviation-sigma">B. Estimating the Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)</a></li>
 </ul>

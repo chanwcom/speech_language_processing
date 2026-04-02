@@ -17,6 +17,14 @@ $X = \{x_0, x_1,  \cdots, x_{I-1}\}$, and a probability model $P(X|\theta)$, the
 
 $$L(\theta) = P(x_0, x_1, \cdots, x_{I-1} \mid \theta) = \prod_{i=0}^{I-1} P(x_i \mid \theta).$$
 
+The Maximum Likelihood Estimation (MLE) is given by the following equation:
+
+$$ 
+\begin{align}
+    \hat{\theta} = \arg \max_{\theta} L(\theta)
+\end{align}
+$$
+
 ### 1.2 The Necessity of the Log-Likelihood
 
 Even though the above equation is conceptually useful, in Maximum Likelihood Estimation (MLE), 
@@ -36,11 +44,19 @@ $$\ell(\theta) = \sum_{i=0}^{I-1} \log P(x_i | \theta).$$
 
 Since the logarithm is a monotonically increasing function, the $\theta$ that maximizes $\ell(\theta)$ also maximizes $L(\theta)$.
 
+Since log function is a monotonic function, the Maximum Likelihood Estimation (MLE)
+is  given by the following equation in terms of log-likelihood:
+$$ 
+\begin{align}
+    \hat{\theta} = \arg \max_{\theta} i(\theta).
+\end{align}
+$$
+
 ### 1.3 Step-by-Step Analytical Derivation
 1. **Define the Model:** Choose a distribution (e.g., Gaussian, Bernoulli).
 2. **Construct the Log-Likelihood:** Sum the logs of individual densities.
-3. **Compute Derivatives:** Find the score function $\nabla_{\theta} \ell(\theta)$.
-4. **Solve the Score Equation:** Set $\nabla_{\theta} \ell(\theta) = 0$.
+3. **Compute Derivatives:** Find the score function $ \frac{\partial \ell(\theta) }{\partial \theta \hfill }$.
+4. **Solve the Equation:** Set $ \nabla_{\theta} \ell(\theta) = 0$.
 5. **Verify Concavity:** Ensure the Hessian matrix $H(\theta)$ is negative semi-definite to confirm a maximum, not a minimum.
 
 ### 1.4 Case Study: Parameter Estimation in Gaussian Models
