@@ -465,7 +465,7 @@ is  given by the following equation in terms of log-likelihood:</p>
 <ol class="arabic simple">
 <li><p><strong>Define the Model:</strong> Choose a distribution (e.g., Gaussian, Bernoulli).</p></li>
 <li><p><strong>Construct the Log-Likelihood:</strong> Sum the logs of individual densities.</p></li>
-<li><p><strong>Compute Derivatives:</strong> Find the score function <span class="math notranslate nohighlight">\( \frac{\partial \ell(\theta) }{\partial \theta \hfill }\)</span>.</p></li>
+<li><p><strong>Compute Derivatives:</strong> Find the score function <span class="math notranslate nohighlight">\( \dfrac{\partial \ell(\theta) }{\partial \theta \ \hspace{3mm} }\)</span>.</p></li>
 <li><p><strong>Solve the Equation:</strong> Set <span class="math notranslate nohighlight">\( \nabla_{\theta} \ell(\theta) = 0\)</span>.</p></li>
 <li><p><strong>Verify Concavity:</strong> Ensure the Hessian matrix <span class="math notranslate nohighlight">\(H(\theta)\)</span> is negative semi-definite to confirm a maximum, not a minimum.</p></li>
 </ol>
@@ -587,16 +587,16 @@ Q(\theta | \theta^{(t)}) &amp; =
 \end{split}\]</div>
 <p>Under the independence assumption,
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3411d696-dfd5-4704-a570-2b3ac9d5a6a9">
-<span class="eqno">(11)<a class="headerlink" href="#equation-3411d696-dfd5-4704-a570-2b3ac9d5a6a9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-af396b32-26cd-4107-9e97-d5317bd67ec4">
+<span class="eqno">(11)<a class="headerlink" href="#equation-af396b32-26cd-4107-9e97-d5317bd67ec4" title="Permalink to this equation">#</a></span>\[\begin{align}
     p\left(Z \mid X, \theta^{(t)}\right)  = p(Z_{\\i})
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[
 Marginalization of $p\left(Z \mid X, \theta^{(t)}\right)$ over all $Z = \{z_0, z_1, \cdots z_{I-1} \}$ except the index $i$ leads to
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-fe2446f1-e331-4534-a8a5-cf07601b4a07">
-<span class="eqno">(12)<a class="headerlink" href="#equation-fe2446f1-e331-4534-a8a5-cf07601b4a07" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-70a149c3-1c1d-431f-b25b-cfe0ace3a7e7">
+<span class="eqno">(12)<a class="headerlink" href="#equation-70a149c3-1c1d-431f-b25b-cfe0ace3a7e7" title="Permalink to this equation">#</a></span>\[\begin{align}
     \sum_{Z \in \mathcal{Z}^I} p\left(Z \mid X, \theta^{(t)}\right) 
         = \sum_{z_i \in \mathcal{Z}} p\left(z_i \mid X, \theta^{(t)}\right) 
 \end{align}\]</div>

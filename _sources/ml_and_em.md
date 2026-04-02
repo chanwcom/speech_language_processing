@@ -56,7 +56,7 @@ $$
 ### 1.3 Step-by-Step Analytical Derivation
 1. **Define the Model:** Choose a distribution (e.g., Gaussian, Bernoulli).
 2. **Construct the Log-Likelihood:** Sum the logs of individual densities.
-3. **Compute Derivatives:** Find the score function $ \frac{\partial \ell(\theta) }{\partial \theta \hfill }$.
+3. **Compute Derivatives:** Find the score function $ \dfrac{\partial \ell(\theta) }{\partial \theta \ \hspace{3mm} }$.
 4. **Solve the Equation:** Set $ \nabla_{\theta} \ell(\theta) = 0$.
 5. **Verify Concavity:** Ensure the Hessian matrix $H(\theta)$ is negative semi-definite to confirm a maximum, not a minimum.
 
