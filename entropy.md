@@ -80,7 +80,7 @@ $$
 
 $$
 \begin{align}
-    \mathcal{L} 
+    H\big(p(X),\, \hat{p}(X \mid \theta) \big)
         & = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
 \nonumber \\
         & =  - \sum_{X \in \mathcal{X}^L} p(X) \log \hat{p}(X \mid \theta) \nonumber \\
@@ -97,7 +97,19 @@ $$
         & = - \sum_{l=0}^{L-1} \sum_{X_{0:l+1} \in \mathcal{X}^{l+1}}
             p \left(X_{0:l+1} \right)
             \log \hat{p} \left( x_l \mid X_{0:l},\, \theta  \right)   \nonumber \\
-       & = - \sum_{l=0}^{L-1} \mathbb{E}_{X_{0:l+1} \sim p} \Big[\log \hat{p} \left( x_l \mid X_{0:l},\, \theta  \right)  \Big]
+        & =  - \sum_{l=0}^{L-1} \sum_{X_{0:l} \in \mathcal{X}^{l}}
+              p\left(X_{0:l}\right) 
+              \underbrace{  
+                \sum_{x_l \in \mathcal{X}} p \left( x_l \mid X_{0:l} \right)
+            \log \hat{p} \left( x_l \mid X_{0:l},\, \theta  \right)}_{
+                    - H \left(
+                        p \left(x_l \mid X_{0:l} \right), \,
+                        \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \right) 
+                        }   \nonumber \\
+       & = - \sum_{l=0}^{L-1} \mathbb{E}_{X_{0:l} \sim p} 
+            \left[H \Big(
+                p \big(x_l \mid X_{0:l} \big), \,
+                \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \Big)    \right] 
 \end{align}
 $$
 
