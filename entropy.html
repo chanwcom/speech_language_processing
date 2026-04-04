@@ -65,6 +65,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'entropy';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Maximum Likelihood (ML) and Expectation-Maximization (EM)" href="ml_and_em.html" />
+    <link rel="prev" title="Neural Network Basics" href="neural_network_basics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -115,8 +117,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
@@ -170,8 +170,11 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="neural_network_basics.html">Neural Network Basics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Entropy</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="ml_and_em.html">Maximum Likelihood (ML) and Expectation-Maximization (EM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sequence_modeling.html">Sequence Modeling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="language_modeling.html">Language Modeling</a></li>
@@ -405,8 +408,8 @@ speech recognition), we consider the following seqeunce:</p>
 <p>Using the definition of Cross-Entropy (CE), the CE
 for this sequence is given as follows:
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-00163d82-18d2-40fb-b01b-143ac1fa85c5">
-<span class="eqno">()<a class="headerlink" href="#equation-00163d82-18d2-40fb-b01b-143ac1fa85c5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4fa719f7-0d55-475e-9ea2-fb3c65663b93">
+<span class="eqno">(11)<a class="headerlink" href="#equation-4fa719f7-0d55-475e-9ea2-fb3c65663b93" title="Permalink to this equation">#</a></span>\[\begin{align}
     H(p, \hat{p}) &amp; = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
            \nonumber \\ 
            &amp; =  - \sum _{X \in \mathcal{X}^L } p(X) \log \hat{p}\left(X \;|\; \theta \right)
@@ -414,16 +417,16 @@ $$</p>
 <div class="math notranslate nohighlight">
 \[Before having further discussion, let us define the partial sequence as follows:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-8b2c945e-2742-4dae-9dc6-1a88e78cb2b5">
-<span class="eqno">()<a class="headerlink" href="#equation-8b2c945e-2742-4dae-9dc6-1a88e78cb2b5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-032a10ce-0a21-4467-ae1d-850a691bc7df">
+<span class="eqno">(12)<a class="headerlink" href="#equation-032a10ce-0a21-4467-ae1d-850a691bc7df" title="Permalink to this equation">#</a></span>\[\begin{align}
     X_{a:b} &amp; = [x_a\,, x_{a+1}\,, \cdots ,\,x_{b-1}],\\
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[Using the definition of conditional probability, $\hat{p}(X \mid \theta)$ can be
 expressed as:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-3dd1bcc7-0e06-488b-aeb7-e22d1482c9ec">
-<span class="eqno">()<a class="headerlink" href="#equation-3dd1bcc7-0e06-488b-aeb7-e22d1482c9ec" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8bde80c5-2346-4729-97e9-1e40afd40947">
+<span class="eqno">(13)<a class="headerlink" href="#equation-8bde80c5-2346-4729-97e9-1e40afd40947" title="Permalink to this equation">#</a></span>\[\begin{align}
     \hat{p}(X \mid \theta) &amp; = 
         \hat{p}(x_{L-1},\,\underbrace{x_{L-2}, \cdots ,\,x_0}_{X_{0:L-1}} \mid \theta) \nonumber \\
          &amp; = \hat{p}\left(x_{L-1} \mid  X_{0:L-1},\,\theta \right) 
@@ -445,21 +448,21 @@ expressed as:
 <div class="math notranslate nohighlight">
 \[(3) can be represented by:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-2b2caa6f-a57c-4ee8-a970-0591e4a21417">
-<span class="eqno">()<a class="headerlink" href="#equation-2b2caa6f-a57c-4ee8-a970-0591e4a21417" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b6481be8-8019-4e62-84fb-0414bc53bf54">
+<span class="eqno">(14)<a class="headerlink" href="#equation-b6481be8-8019-4e62-84fb-0414bc53bf54" title="Permalink to this equation">#</a></span>\[\begin{align}
     \hat{p}(X) = \prod_{l=0}^{L-1} \hat{p}(x_l \mid X_{0:l},\,\theta).
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[Thus, we obtain:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-19fd7f96-e3e6-423e-965a-47b8c37805de">
-<span class="eqno">()<a class="headerlink" href="#equation-19fd7f96-e3e6-423e-965a-47b8c37805de" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9e45b8c-76a2-4d48-8c27-b4d425fc48df">
+<span class="eqno">(15)<a class="headerlink" href="#equation-f9e45b8c-76a2-4d48-8c27-b4d425fc48df" title="Permalink to this equation">#</a></span>\[\begin{align}
     \log \hat{p} \left(X  \mid \theta \right) = \sum\limits_{l=0}^{L-1} \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right)
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-c74379d1-c482-4451-addb-85c483821256">
-<span class="eqno">()<a class="headerlink" href="#equation-c74379d1-c482-4451-addb-85c483821256" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f3f4e562-568f-4015-b2ce-f4d813b4dcec">
+<span class="eqno">(16)<a class="headerlink" href="#equation-f3f4e562-568f-4015-b2ce-f4d813b4dcec" title="Permalink to this equation">#</a></span>\[\begin{align}
     H\big(p(X),\, \hat{p}(X \mid \theta) \big)
         &amp; = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
 \nonumber \\
@@ -524,6 +527,24 @@ expressed as:
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="neural_network_basics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Neural Network Basics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ml_and_em.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Maximum Likelihood (ML) and Expectation-Maximization (EM)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
