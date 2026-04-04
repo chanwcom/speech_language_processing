@@ -32,7 +32,7 @@ Using the definition of conditional probability, $p(X)$ can be
 expressed as:
 $$
 \begin{align}
-    p(X) = p(x_{L-1},\,x_{L-2}, \cdots, ,x_0)
+    p(X) = p(x_{L-1},\,x_{L-2}, \cdots ,x_0)
 \end{align}
 $$
 
