@@ -23,6 +23,7 @@ $$
 
 Using the definition of Cross-Entropy (CE), the CE 
 for this sequence is given as follows:
+
 $$
 \begin{align}
     H(p, \hat{p}) & = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
@@ -32,6 +33,7 @@ $$
 $$
 
 Before having further discussion, let us define the partial sequence as follows:
+
 $$
 \begin{align}
     X_{a:b} & = [x_a\,, x_{a+1}\,, \cdots ,\,x_{b-1}],\\
