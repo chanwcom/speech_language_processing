@@ -395,14 +395,27 @@
 <section class="tex2jax_ignore mathjax_ignore" id="sequence-cross-entropy">
 <h1>Sequence Cross-Entropy<a class="headerlink" href="#sequence-cross-entropy" title="Link to this heading">#</a></h1>
 <p>In sequence-to-sequence tasks (like machine translation, text generation, and
-speech recognition), we consider the following seqeunces:</p>
+speech recognition), we consider the following seqeunce:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-    X = [x_0\,, x_1\,, \cdots ,\,x_{L-1}]\\
-    Y = [ ] 
+    X &amp; = [x_0\,, x_1\,, \cdots ,\,x_{L-1}],\\
 \end{align}
 \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+    \mathcal{L} = - \sum _{X \in \mathcal{X}^L } p(X) \log \hat{p}\left(X \;|\; \theta \right)
+\end{align}
+\]</div>
+<p>Using the definition of conditional probability, <span class="math notranslate nohighlight">\(p(X)\)</span> can be
+expressed as:
+$$</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c9080998-e9e8-4bde-9471-56fa770a5bf2">
+<span class="eqno">()<a class="headerlink" href="#equation-c9080998-e9e8-4bde-9471-56fa770a5bf2" title="Permalink to this equation">#</a></span>\[\begin{align}
+    p(X) = p(x_{L-1},\,x_{L-2}, \cdots, ,x_0)
+\end{align}\]</div>
+<p>$$</p>
 </section>
 
     <script type="text/x-thebe-config">
