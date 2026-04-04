@@ -402,18 +402,82 @@ speech recognition), we consider the following seqeunce:</p>
     X &amp; = [x_0\,, x_1\,, \cdots ,\,x_{L-1}],\\
 \end{align}
 \end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[
-\begin{align}
-    \mathcal{L} = - \sum _{X \in \mathcal{X}^L } p(X) \log \hat{p}\left(X \;|\; \theta \right)
-\end{align}
-\]</div>
-<p>Using the definition of conditional probability, <span class="math notranslate nohighlight">\(p(X)\)</span> can be
-expressed as:
+<p>Using the definition of Cross-Entropy (CE), the CE
+for this sequence is given as follows:
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-29ad42fa-79c1-4151-a820-1f1d8319050c">
-<span class="eqno">()<a class="headerlink" href="#equation-29ad42fa-79c1-4151-a820-1f1d8319050c" title="Permalink to this equation">#</a></span>\[\begin{align}
-    p(X) = p(x_{L-1},\,x_{L-2}, \cdots ,x_0)
+<div class="amsmath math notranslate nohighlight" id="equation-96c5a541-bdeb-4c58-95cc-d0831f6ece92">
+<span class="eqno">()<a class="headerlink" href="#equation-96c5a541-bdeb-4c58-95cc-d0831f6ece92" title="Permalink to this equation">#</a></span>\[\begin{align}
+    H(p, \hat{p}) &amp; = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
+           \nonumber \\ 
+           &amp; =  - \sum _{X \in \mathcal{X}^L } p(X) \log \hat{p}\left(X \;|\; \theta \right)
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[Before having further discussion, let us define the partial sequence as follows:
+\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-43c0f9d1-d984-43af-b108-81fa1706eb46">
+<span class="eqno">()<a class="headerlink" href="#equation-43c0f9d1-d984-43af-b108-81fa1706eb46" title="Permalink to this equation">#</a></span>\[\begin{align}
+    X_{a:b} &amp; = [x_a\,, x_{a+1}\,, \cdots ,\,x_{b-1}],\\
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[Using the definition of conditional probability, $\hat{p}(X \mid \theta)$ can be
+expressed as:
+\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-a10318c7-a1e3-425d-b907-bcd30677c9ed">
+<span class="eqno">()<a class="headerlink" href="#equation-a10318c7-a1e3-425d-b907-bcd30677c9ed" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \hat{p}(X \mid \theta) &amp; = 
+        \hat{p}(x_{L-1},\,\underbrace{x_{L-2}, \cdots ,\,x_0}_{X_{0:L-1}} \mid \theta) \nonumber \\
+         &amp; = \hat{p}\left(x_{L-1} \mid  X_{0:L-1},\,\theta \right) 
+            \hat{p}\left(x_{0:L-1},\, \theta \right)  \nonumber \\
+         &amp; = \hat{p}\left(x_{L-1} \mid  X_{0:L-1},\, \theta \right) 
+            \hat{p}\left(x_{L-2} \mid  X_{0:L-2},\, \theta \right) 
+                \hat{p}(x_{0:L-2} \mid \theta ) \nonumber \\
+         &amp;   \hspace{30mm}           \vdots \nonumber \\
+        &amp; = \prod_{l=1}^{L-1} \hat{p}\left(x_l \mid X_{0:l},\, \theta \right) \hat{p}(x_0 \mid \theta).
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[Let us define $p(x_0 \mid x_{0:0})$
+\]</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>\begin{align}
+    \hat{p}(x_0 \mid X_{0:0},\,\theta) \coloneqq \hat{p}(x_0 \mid \theta),
+\end{align}
+</pre></div>
+</div>
+<div class="math notranslate nohighlight">
+\[(3) can be represented by:
+\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-51062474-996d-42c0-9a49-3d76de154641">
+<span class="eqno">()<a class="headerlink" href="#equation-51062474-996d-42c0-9a49-3d76de154641" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \hat{p}(X) = \prod_{l=0}^{L-1} \hat{p}(x_l \mid X_{0:l},\,\theta).
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[Thus, we obtain:
+\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-5c0d642c-0c90-40ed-a6b8-ec90dc80d7d3">
+<span class="eqno">()<a class="headerlink" href="#equation-5c0d642c-0c90-40ed-a6b8-ec90dc80d7d3" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \log \hat{p} \left(X  \mid \theta \right) = \sum\limits_{l=0}^{L-1} \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right)
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-af38b275-3902-47ec-9307-3b81a715b6bf">
+<span class="eqno">()<a class="headerlink" href="#equation-af38b275-3902-47ec-9307-3b81a715b6bf" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \mathcal{L} 
+        &amp; = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
+\nonumber \\
+        &amp; =  - \sum_{X \in \mathcal{X}^L} p(X) \log \hat{p}(X \mid \theta) \nonumber \\
+        &amp; = - \sum_{X \in \mathcal{X}^L}
+            p(X)
+             \sum\limits_{l=0}^{L-1} \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right) \nonumber \\ 
+        &amp; = - \sum_{l=0}^{L-1}  \sum_{X \in \mathcal{X}^L}
+            p(X)
+                \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right) \nonumber \\
+        &amp; = - \sum_{l=0}^{L-1} \sum_{X_{0:l+1} \in \mathcal{X}^{l+1}}
+           \underbrace{\left( \sum_{X_{l+1:L} \in \mathcal{X}^{L-l-1}}
+                p(x_0,\, \cdots,\, x_{L-1} )     \right)    }_{\text{Marginalization}}
+                \log \hat{p} \left( x_l \mid X_{0:l},\, \theta  \right)  \nonumber \\
+        &amp; = - \sum_{l=0}^{L-1} \sum_{X_{0:l+1} \in \mathcal{X}^{l+1}}
+            p \left(X_{0:l+1} \right)
+            \log \hat{p} \left( x_l \mid X_{0:l},\, \theta  \right)   \nonumber \\
+       &amp; = - \sum_{l=0}^{L-1} \mathbb{E}_{X_{0:l+1} \sim p} \Big[\log \hat{p} \left( x_l \mid X_{0:l},\, \theta  \right)  \Big]
 \end{align}\]</div>
 <p>$$</p>
 </section>
