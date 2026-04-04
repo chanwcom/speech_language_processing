@@ -5,6 +5,7 @@ format: jb-book
 root: intro
 chapters:
 - file: neural_network_basics
+- file: entropy
 - file: ml_and_em 
 - file: sequence_modeling
 - file: language_modeling
