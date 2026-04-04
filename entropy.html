@@ -408,8 +408,8 @@ speech recognition), we consider the following seqeunce:</p>
 <p>Using the definition of Cross-Entropy (CE), the CE
 for this sequence is given as follows:
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4fa719f7-0d55-475e-9ea2-fb3c65663b93">
-<span class="eqno">(11)<a class="headerlink" href="#equation-4fa719f7-0d55-475e-9ea2-fb3c65663b93" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6fce1937-7ee2-499f-9911-d58de8d8916a">
+<span class="eqno">(11)<a class="headerlink" href="#equation-6fce1937-7ee2-499f-9911-d58de8d8916a" title="Permalink to this equation">#</a></span>\[\begin{align}
     H(p, \hat{p}) &amp; = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
            \nonumber \\ 
            &amp; =  - \sum _{X \in \mathcal{X}^L } p(X) \log \hat{p}\left(X \;|\; \theta \right)
@@ -417,16 +417,15 @@ $$</p>
 <div class="math notranslate nohighlight">
 \[Before having further discussion, let us define the partial sequence as follows:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-032a10ce-0a21-4467-ae1d-850a691bc7df">
-<span class="eqno">(12)<a class="headerlink" href="#equation-032a10ce-0a21-4467-ae1d-850a691bc7df" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f67be561-8737-4416-8f40-c0021d98c387">
+<span class="eqno">(12)<a class="headerlink" href="#equation-f67be561-8737-4416-8f40-c0021d98c387" title="Permalink to this equation">#</a></span>\[\begin{align}
     X_{a:b} &amp; = [x_a\,, x_{a+1}\,, \cdots ,\,x_{b-1}],\\
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[Using the definition of conditional probability, $\hat{p}(X \mid \theta)$ can be
-expressed as:
-\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-8bde80c5-2346-4729-97e9-1e40afd40947">
-<span class="eqno">(13)<a class="headerlink" href="#equation-8bde80c5-2346-4729-97e9-1e40afd40947" title="Permalink to this equation">#</a></span>\[\begin{align}
+expressed as:\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-897d1f1b-9858-42bb-a7bf-429f8fe092a4">
+<span class="eqno">(13)<a class="headerlink" href="#equation-897d1f1b-9858-42bb-a7bf-429f8fe092a4" title="Permalink to this equation">#</a></span>\[\begin{align}
     \hat{p}(X \mid \theta) &amp; = 
         \hat{p}(x_{L-1},\,\underbrace{x_{L-2}, \cdots ,\,x_0}_{X_{0:L-1}} \mid \theta) \nonumber \\
          &amp; = \hat{p}\left(x_{L-1} \mid  X_{0:L-1},\,\theta \right) 
@@ -438,31 +437,30 @@ expressed as:
         &amp; = \prod_{l=1}^{L-1} \hat{p}\left(x_l \mid X_{0:l},\, \theta \right) \hat{p}(x_0 \mid \theta).
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
-\[Let us define $p(x_0 \mid x_{0:0})$
-\]</div>
+\[Let us define $p(x_0 \mid x_{0:0})$\]</div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>\begin{align}
     \hat{p}(x_0 \mid X_{0:0},\,\theta) \coloneqq \hat{p}(x_0 \mid \theta),
 \end{align}
 </pre></div>
 </div>
 <div class="math notranslate nohighlight">
-\[(3) can be represented by:
-\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-b6481be8-8019-4e62-84fb-0414bc53bf54">
-<span class="eqno">(14)<a class="headerlink" href="#equation-b6481be8-8019-4e62-84fb-0414bc53bf54" title="Permalink to this equation">#</a></span>\[\begin{align}
+\[(3) can be represented by:\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-d5defb85-e9c3-4c03-a688-3d6d21fdfd10">
+<span class="eqno">(14)<a class="headerlink" href="#equation-d5defb85-e9c3-4c03-a688-3d6d21fdfd10" title="Permalink to this equation">#</a></span>\[\begin{align}
     \hat{p}(X) = \prod_{l=0}^{L-1} \hat{p}(x_l \mid X_{0:l},\,\theta).
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
-\[Thus, we obtain:
+\[
+Thus, we obtain:
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-f9e45b8c-76a2-4d48-8c27-b4d425fc48df">
-<span class="eqno">(15)<a class="headerlink" href="#equation-f9e45b8c-76a2-4d48-8c27-b4d425fc48df" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-392326da-e474-48a1-9a91-17a4853f2a9d">
+<span class="eqno">(15)<a class="headerlink" href="#equation-392326da-e474-48a1-9a91-17a4853f2a9d" title="Permalink to this equation">#</a></span>\[\begin{align}
     \log \hat{p} \left(X  \mid \theta \right) = \sum\limits_{l=0}^{L-1} \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right)
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-f3f4e562-568f-4015-b2ce-f4d813b4dcec">
-<span class="eqno">(16)<a class="headerlink" href="#equation-f3f4e562-568f-4015-b2ce-f4d813b4dcec" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-647eda85-d85c-4ee2-b5e3-fb3ebe341950">
+<span class="eqno">(16)<a class="headerlink" href="#equation-647eda85-d85c-4ee2-b5e3-fb3ebe341950" title="Permalink to this equation">#</a></span>\[\begin{align}
     H\big(p(X),\, \hat{p}(X \mid \theta) \big)
         &amp; = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
 \nonumber \\
