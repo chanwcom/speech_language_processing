@@ -42,6 +42,7 @@ $$
 
 Using the definition of conditional probability, $\hat{p}(X \mid \theta)$ can be
 expressed as:
+
 $$
 \begin{align}
     \hat{p}(X \mid \theta) & = 
@@ -57,6 +58,7 @@ $$
 $$
 
 Let us define $p(x_0 \mid x_{0:0})$
+
 $$
     \begin{align}
         \hat{p}(x_0 \mid X_{0:0},\,\theta) \coloneqq \hat{p}(x_0 \mid \theta),
@@ -64,11 +66,13 @@ $$
 $$
 
 (3) can be represented by:
+
 $$
 \begin{align}
     \hat{p}(X) = \prod_{l=0}^{L-1} \hat{p}(x_l \mid X_{0:l},\,\theta).
 \end{align}
 $$
+
 
 Thus, we obtain:
 $$
