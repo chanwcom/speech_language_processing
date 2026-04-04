@@ -77,6 +77,7 @@ $$
 
 
 Thus, we obtain:
+
 $$
 \begin{align}
     \log \hat{p} \left(X  \mid \theta \right) = \sum\limits_{l=0}^{L-1} \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right)
@@ -118,4 +119,3 @@ $$
                 \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \Big)    \right] 
 \end{align}
 $$
-

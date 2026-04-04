@@ -452,16 +452,16 @@ expressed as:</p>
     \hat{p}(X) = \prod_{l=0}^{L-1} \hat{p}(x_l \mid X_{0:l},\,\theta).
 \end{align}
 \]</div>
-<p>Thus, we obtain:
-$$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8ada4dc-04d4-48e4-9fa1-3d0f5f0dd939">
-<span class="eqno">(11)<a class="headerlink" href="#equation-d8ada4dc-04d4-48e4-9fa1-3d0f5f0dd939" title="Permalink to this equation">#</a></span>\[\begin{align}
-    \log \hat{p} \left(X  \mid \theta \right) = \sum\limits_{l=0}^{L-1} \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right)
-\end{align}\]</div>
+<p>Thus, we obtain:</p>
 <div class="math notranslate nohighlight">
-\[\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-475204be-1d9d-41d6-8d1c-a9e6fb3e172d">
-<span class="eqno">(12)<a class="headerlink" href="#equation-475204be-1d9d-41d6-8d1c-a9e6fb3e172d" title="Permalink to this equation">#</a></span>\[\begin{align}
+\[
+\begin{align}
+    \log \hat{p} \left(X  \mid \theta \right) = \sum\limits_{l=0}^{L-1} \log \hat{p} \left(x_l \mid X_{0:l},\, \theta \right)
+\end{align}
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
     H\big(p(X),\, \hat{p}(X \mid \theta) \big)
         &amp; = -\mathbb{E}_{X \sim p} \Big[ \log \hat{p} \left( X \mid  \theta  \right)  \Big]
 \nonumber \\
@@ -492,8 +492,8 @@ $$</p>
             \left[H \Big(
                 p \big(x_l \mid X_{0:l} \big), \,
                 \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \Big)    \right] 
-\end{align}\]</div>
-<p>$$</p>
+\end{align}
+\end{split}\]</div>
 </section>
 
     <script type="text/x-thebe-config">
