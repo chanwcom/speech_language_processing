@@ -194,7 +194,7 @@ Let us define $p(x_0 \mid x_{0:0})$
 
 $$
     \begin{align}
-        \hat{p}(x_0 \mid X_{0:0},\,\theta) \coloneqq \hat{p}(x_0 \mid \theta),
+        \hat{p}(x_0 \mid X_{0:0},\,\theta) := \hat{p}(x_0 \mid \theta),
     \end{align}
 $$
 
