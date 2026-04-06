@@ -53,6 +53,7 @@ $$
 $$
 
 Under this assumption:
+
 $$
 \begin{align}
     Q\left(\theta \mid \theta^{(t)}\right) 
@@ -67,6 +68,7 @@ $$
 $$
 
 Let us define the estimated target (ET) $\mathbf{z}_l$ as
+
 $$
     \begin{align}
     (\mathbf{z}_l)_j = \hat{p}\left(j \mid X,\, \theta^{(t)}\right) 

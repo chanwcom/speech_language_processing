@@ -427,10 +427,10 @@ Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^L}
             = \log \hat{p} \left(k_l  \mid \theta \right) 
     \end{align}
 \]</div>
-<p>Under this assumption:
-$$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-87904159-6f1a-43e7-a47f-f21e8e8c0e12">
-<span class="eqno">(17)<a class="headerlink" href="#equation-87904159-6f1a-43e7-a47f-f21e8e8c0e12" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p>Under this assumption:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
     Q\left(\theta \mid \theta^{(t)}\right) 
         &amp; = \sum\limits_{k=0}^{L-1} \underbrace{ \sum_{K_{0:l+1} \in \mathcal{K}^{l}}  
             \hat{p} \left(K_{0:l}  \mid X,\,\theta^{(t)}\right)}_{\text{Marginalization}} \sum_{k_{l} \in \mathcal{K}} 
@@ -439,16 +439,15 @@ $$</p>
         &amp; = \sum_{k=0}^{L-1} \sum_{k_l \in \mathcal{K}} 
             \hat{p}\left(k_l \mid X,\, \theta^{(t)}\right)  
                 \log \hat{p} \left(k_l  \mid \theta \right) 
-\end{align}\]</div>
-<div class="math notranslate nohighlight">
-\[Let us define the estimated target (ET) $\mathbf{z}_l$ as
-\]</div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>\begin{align}
-(\mathbf{z}_l)_j = \hat{p}\left(j \mid X,\, \theta^{(t)}\right) 
 \end{align}
-</pre></div>
-</div>
-<p>$$</p>
+\end{split}\]</div>
+<p>Let us define the estimated target (ET) <span class="math notranslate nohighlight">\(\mathbf{z}_l\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+    (\mathbf{z}_l)_j = \hat{p}\left(j \mid X,\, \theta^{(t)}\right) 
+    \end{align}
+\]</div>
 </section>
 
     <script type="text/x-thebe-config">
