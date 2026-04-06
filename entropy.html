@@ -409,24 +409,26 @@
 respect to the logit <span class="math notranslate nohighlight">\(\mathbf{h}^{\text{(logit)}}\)</span>,
 we typically look at a single data point in a multi-class
 classification setting.</p>
-<p>The cross-entropy loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is given by the following equation:
-$<span class="math notranslate nohighlight">\(
+<p>The cross-entropy loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is given by the following equation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
     \begin{align}
         \mathcal{L} &amp; = - \mathbf{y}^{\intercal} \log(\mathbf{\hat{y}}) \nonumber \\
                     &amp; = - \sum_{j=0}^{C-1} p(j) \log \hat{p}(j),
     \end{align}
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span>p<span class="math notranslate nohighlight">\( and \)</span>\hat{p}$ are ground-truth and model-prediction proabibilities
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(\hat{p}\)</span> are ground-truth and model-prediction proabibilities
 respectively.</p>
-<p>The softmax layer is characterized by the following equation:
-$<span class="math notranslate nohighlight">\(
+<p>The softmax layer is characterized by the following equation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
     \begin{align}
         \hat{y}_j &amp;  = \sigma \left(h^{\text{(logit)}}_j \right) \nonumber \\  
                   &amp;  =  \dfrac{\exp\left(h^{\text{(logit)}}_j\right)  }
                     { \sum\limits_{k=0}^{C-1} \exp \left( h^{\text{(logit)}}_k\right) } ,
     \end{align}
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\mathbf{\hat{y}}$ is the softmax output, which is also the model output.</p>
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{\hat{y}}\)</span> is the softmax output, which is also the model output.</p>
 <p>From the Chain Rule, we obtian the following relationship:</p>
 <div class="math notranslate nohighlight">
 \[

@@ -16,16 +16,19 @@ we typically look at a single data point in a multi-class
 classification setting.
 
 The cross-entropy loss $\mathcal{L}$ is given by the following equation:
+
 $$
     \begin{align}
         \mathcal{L} & = - \mathbf{y}^{\intercal} \log(\mathbf{\hat{y}}) \nonumber \\
                     & = - \sum_{j=0}^{C-1} p(j) \log \hat{p}(j),
     \end{align}
 $$
+
 where $p$ and $\hat{p}$ are ground-truth and model-prediction proabibilities
 respectively.
 
 The softmax layer is characterized by the following equation:
+
 $$
     \begin{align}
         \hat{y}_j &  = \sigma \left(h^{\text{(logit)}}_j \right) \nonumber \\  
@@ -33,6 +36,7 @@ $$
                     { \sum\limits_{k=0}^{C-1} \exp \left( h^{\text{(logit)}}_k\right) } ,
     \end{align}
 $$
+
 where $\mathbf{\hat{y}}$ is the softmax output, which is also the model output.
 
 From the Chain Rule, we obtian the following relationship:
