@@ -74,16 +74,40 @@ $$\mathcal{L} = - \sum_{k=0}^{C-1} y_k \log \hat{y}_k$$
 
 Taking the partial derivative with respect to a specific softmax output 
 $\hat{y}_k$:
-$$\frac{\partial \mathcal{L}}{\partial \hat{y}_k} = \frac{\partial}{\partial \hat{y}_k} \left( - y_k \log \hat{y}_k \right) = -\frac{y_k}{\hat{y}_k}$$
+
+$$
+\begin{align}
+    \frac{\partial \mathcal{L}}{\partial \hat{y}_k} = \frac{\partial}{\partial \hat{y}_k} \left( - y_k \log \hat{y}_k \right) = -\frac{y_k}{\hat{y}_k}
+\end{align}
+$$
 
 ### 2. Derivative of Softmax Output with respect to Logits
 
-The softmax function is given by $\hat{y}_k = \frac{e^{h_k}}{\sum_{m} e^{h_m}}$. We must consider two cases when differentiating $\hat{y}_k$ with respect to the $j$-th logit $h_j$:
+The softmax function is given by $\hat{y}_k = \dfrac{e^{h_k}}{\sum_{m} e^{h_m}}$. We must consider two cases when differentiating $\hat{y}_k$ with respect to the $j$-th logit $h_j$:
 
-Case 1: $k = j$ (Diagonal elements)Using the quotient rule:$$\frac{\partial \hat{y}_j}{\partial h_j} = \frac{e^{h_j} \sum e^{h_m} - e^{h_j} e^{h_j}}{(\sum e^{h_m})^2} = \frac{e^{h_j}}{\sum e^{h_m}} \left( \frac{\sum e^{h_m} - e^{h_j}}{\sum e^{h_m}} \right) = \hat{y}_j(1 - \hat{y}_j)$$
+Case 1: $k = j$ (Diagonal elements)Using the quotient rule:
 
-Case 2: $k \neq j$ (Off-diagonal elements)$$\frac{\partial \hat{y}_k}{\partial h_j} = \frac{0 \cdot \sum e^{h_m} - e^{h_k} e^{h_j}}{(\sum e^{h_m})^2} = -\frac{e^{h_k}}{\sum e^{h_m}} \frac{e^{h_j}}{\sum e^{h_m}} = -\hat{y}_k \hat{y}_j$$
-We can unify these using the Kronecker delta $\delta_{kj}$:$$\frac{\partial \hat{y}_k}{\partial h_j} = \hat{y}_k (\delta_{kj} - \hat{y}_j)$$
+$$
+\begin{align}
+\frac{\partial \hat{y}_j}{\partial h_j} = \frac{e^{h_j} \sum e^{h_m} - e^{h_j} e^{h_j}}{(\sum e^{h_m})^2} = \frac{e^{h_j}}{\sum e^{h_m}} \left( \frac{\sum e^{h_m} - e^{h_j}}{\sum e^{h_m}} \right) = \hat{y}_j(1 - \hat{y}_j)
+\end{align}
+$$
+
+Case 2: $k \neq j$ (Off-diagonal elements)
+
+$$
+\begin{align}
+\frac{\partial \hat{y}_k}{\partial h_j} = \frac{0 \cdot \sum e^{h_m} - e^{h_k} e^{h_j}}{(\sum e^{h_m})^2} = -\frac{e^{h_k}}{\sum e^{h_m}} \frac{e^{h_j}}{\sum e^{h_m}} = -\hat{y}_k \hat{y}_j
+\end{align}
+$$
+
+We can unify these using the Kronecker delta $\delta_{kj}$:
+
+$$
+    \begin{align}
+        \frac{\partial \hat{y}_k}{\partial h_j} = \hat{y}_k (\delta_{kj} - \hat{y}_j)
+    \end{align}
+$$
 
 ### 3. Combining via the Chain Rule
 

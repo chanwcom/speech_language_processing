@@ -460,15 +460,38 @@ iii) combining them using the chain rule.</p>
 <div class="math notranslate nohighlight">
 \[\mathcal{L} = - \sum_{k=0}^{C-1} y_k \log \hat{y}_k\]</div>
 <p>Taking the partial derivative with respect to a specific softmax output
-<span class="math notranslate nohighlight">\(\hat{y}_k\)</span>:
-$<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \hat{y}_k} = \frac{\partial}{\partial \hat{y}_k} \left( - y_k \log \hat{y}_k \right) = -\frac{y_k}{\hat{y}_k}\)</span>$</p>
+<span class="math notranslate nohighlight">\(\hat{y}_k\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+    \frac{\partial \mathcal{L}}{\partial \hat{y}_k} = \frac{\partial}{\partial \hat{y}_k} \left( - y_k \log \hat{y}_k \right) = -\frac{y_k}{\hat{y}_k}
+\end{align}
+\]</div>
 </section>
 <section id="derivative-of-softmax-output-with-respect-to-logits">
 <h3>2. Derivative of Softmax Output with respect to Logits<a class="headerlink" href="#derivative-of-softmax-output-with-respect-to-logits" title="Link to this heading">#</a></h3>
-<p>The softmax function is given by <span class="math notranslate nohighlight">\(\hat{y}_k = \frac{e^{h_k}}{\sum_{m} e^{h_m}}\)</span>. We must consider two cases when differentiating <span class="math notranslate nohighlight">\(\hat{y}_k\)</span> with respect to the <span class="math notranslate nohighlight">\(j\)</span>-th logit <span class="math notranslate nohighlight">\(h_j\)</span>:</p>
-<p>Case 1: <span class="math notranslate nohighlight">\(k = j\)</span> (Diagonal elements)Using the quotient rule:$<span class="math notranslate nohighlight">\(\frac{\partial \hat{y}_j}{\partial h_j} = \frac{e^{h_j} \sum e^{h_m} - e^{h_j} e^{h_j}}{(\sum e^{h_m})^2} = \frac{e^{h_j}}{\sum e^{h_m}} \left( \frac{\sum e^{h_m} - e^{h_j}}{\sum e^{h_m}} \right) = \hat{y}_j(1 - \hat{y}_j)\)</span>$</p>
-<p>Case 2: <span class="math notranslate nohighlight">\(k \neq j\)</span> (Off-diagonal elements)$<span class="math notranslate nohighlight">\(\frac{\partial \hat{y}_k}{\partial h_j} = \frac{0 \cdot \sum e^{h_m} - e^{h_k} e^{h_j}}{(\sum e^{h_m})^2} = -\frac{e^{h_k}}{\sum e^{h_m}} \frac{e^{h_j}}{\sum e^{h_m}} = -\hat{y}_k \hat{y}_j\)</span><span class="math notranslate nohighlight">\(
-We can unify these using the Kronecker delta \)</span>\delta_{kj}<span class="math notranslate nohighlight">\(:\)</span><span class="math notranslate nohighlight">\(\frac{\partial \hat{y}_k}{\partial h_j} = \hat{y}_k (\delta_{kj} - \hat{y}_j)\)</span>$</p>
+<p>The softmax function is given by <span class="math notranslate nohighlight">\(\hat{y}_k = \dfrac{e^{h_k}}{\sum_{m} e^{h_m}}\)</span>. We must consider two cases when differentiating <span class="math notranslate nohighlight">\(\hat{y}_k\)</span> with respect to the <span class="math notranslate nohighlight">\(j\)</span>-th logit <span class="math notranslate nohighlight">\(h_j\)</span>:</p>
+<p>Case 1: <span class="math notranslate nohighlight">\(k = j\)</span> (Diagonal elements)Using the quotient rule:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{\partial \hat{y}_j}{\partial h_j} = \frac{e^{h_j} \sum e^{h_m} - e^{h_j} e^{h_j}}{(\sum e^{h_m})^2} = \frac{e^{h_j}}{\sum e^{h_m}} \left( \frac{\sum e^{h_m} - e^{h_j}}{\sum e^{h_m}} \right) = \hat{y}_j(1 - \hat{y}_j)
+\end{align}
+\]</div>
+<p>Case 2: <span class="math notranslate nohighlight">\(k \neq j\)</span> (Off-diagonal elements)</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{\partial \hat{y}_k}{\partial h_j} = \frac{0 \cdot \sum e^{h_m} - e^{h_k} e^{h_j}}{(\sum e^{h_m})^2} = -\frac{e^{h_k}}{\sum e^{h_m}} \frac{e^{h_j}}{\sum e^{h_m}} = -\hat{y}_k \hat{y}_j
+\end{align}
+\]</div>
+<p>We can unify these using the Kronecker delta <span class="math notranslate nohighlight">\(\delta_{kj}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+        \frac{\partial \hat{y}_k}{\partial h_j} = \hat{y}_k (\delta_{kj} - \hat{y}_j)
+    \end{align}
+\]</div>
 </section>
 <section id="combining-via-the-chain-rule">
 <h3>3. Combining via the Chain Rule<a class="headerlink" href="#combining-via-the-chain-rule" title="Link to this heading">#</a></h3>
