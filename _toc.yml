@@ -12,4 +12,5 @@ chapters:
 - file: speech_recognition
 - file: speech_synthesis
 - file: exp_env_setup
+- file: forward_backward
 - file: slu_stop_music.md
