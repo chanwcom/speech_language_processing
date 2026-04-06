@@ -625,9 +625,9 @@ expressed as:</p>
 <p>If we respresent the loss at the label index <span class="math notranslate nohighlight">\(l\)</span> by <span class="math notranslate nohighlight">\(\mathcal{L}_l\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-    \mathcal{L}_l =H \Big(
+    \mathcal{L}_l =\mathbb{E}_{X_{0:l} \sim p} \left[H \Big(
                 p \big(x_l \mid X_{0:l} \big), \,
-                \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \Big).
+                \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \Big) \right].
 \]</div>
 <p>Then, we represent the entire loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> by</p>
 <div class="math notranslate nohighlight">
