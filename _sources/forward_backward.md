@@ -24,22 +24,23 @@ $$
 $$
     \begin{align}
     Q\left(\theta \mid \theta^{(t)}\right) & =  
-        \sum\limits_{k=0}^{L-1}
+        \sum\limits_{l=0}^{L-1}
             \sum_{K \in \mathcal{K}^L}  \hat{p}\left(K \mid X, \theta^{(t)}  \right) \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right) \nonumber \\
-        & = \sum\limits_{k=0}^{L-1} \sum_{K \in \mathcal{K}^L} 
+        & = \sum\limits_{l=0}^{L-1} \sum_{K \in \mathcal{K}^L} 
             \hat{p}\left(K | X,\, \theta^{(t)}\right)  
                 \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)  \nonumber \\ 
-        & = \sum\limits_{k=0}^{L-1} \sum_{K_{0:l+1} \in \mathcal{K}^{l+1}} 
+        & = \sum\limits_{l=0}^{L-1} \sum_{K_{0:l+1} \in \mathcal{K}^{l+1}} 
            \underbrace{ \sum_{K_{l+1:L} \in \mathcal{K}^{L-l-1}}
             \hat{p}\left(K | X,\, \theta^{(t)}\right)  }_{\text{Marginalization}}
                 \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)  \nonumber \\
-       & = \sum\limits_{k=0}^{L-1} \sum_{K_{0:l+1} \in \mathcal{K}^{l+1}} 
-            \hat{p}\left(K | X,\, \theta^{(t)}\right)  
+       & = \sum\limits_{l=0}^{L-1} \sum_{K_{0:l+1} \in \mathcal{K}^{l+1}} 
+            \hat{p}\left(K_{0:l+1} | X,\, \theta^{(t)}\right)  
                 \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)   \nonumber \\
-        & = \sum\limits_{k=0}^{L-1} \sum_{K_{0:l+1} \in \mathcal{K}^{l}} 
+        & = \sum\limits_{l=0}^{L-1} \sum_{K_{0:l} \in \mathcal{K}^{l}} 
             \hat{p} \left(K_{0:l}  \mid X,\,\theta^{(t)}\right) \sum_{k_{l} \in \mathcal{K}} 
-            \hat{p}\left(k_l \mid X,\, \theta^{(t)}\right)  
-                \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right) 
+            \hat{p}\left(k_l \mid X,\,K_{0:l},\, \theta^{(t)}\right)  
+                \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)  \nonumber \\
+        & = 
     \end{align}
 $$
 
@@ -57,11 +58,11 @@ Under this assumption:
 $$
 \begin{align}
     Q\left(\theta \mid \theta^{(t)}\right) 
-        & = \sum\limits_{k=0}^{L-1} \underbrace{ \sum_{K_{0:l+1} \in \mathcal{K}^{l}}  
+        & = \sum\limits_{l=0}^{L-1} \underbrace{ \sum_{K_{0:l+1} \in \mathcal{K}^{l}}  
             \hat{p} \left(K_{0:l}  \mid X,\,\theta^{(t)}\right)}_{\text{Marginalization}} \sum_{k_{l} \in \mathcal{K}} 
             \hat{p}\left(k_l \mid X,\, \theta^{(t)}\right)  
                 \log \hat{p} \left(k_l  \mid \theta \right) \nonumber \\
-        & = \sum_{k=0}^{L-1} \sum_{k_l \in \mathcal{K}} 
+        & = \sum_{l=0}^{L-1} \sum_{k_l \in \mathcal{K}} 
             \hat{p}\left(k_l \mid X,\, \theta^{(t)}\right)  
                 \log \hat{p} \left(k_l  \mid \theta \right) 
 \end{align}
