@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>The forward-backward algorithm &#8212; Introduction to Speech and Language Processing using Deep Learning</title>
+    <title>Derivative of the Sequence Cross Entropy Loss &#8212; Introduction to Speech and Language Processing using Deep Learning</title>
   
   
   
@@ -181,7 +181,8 @@
 <li class="toctree-l1"><a class="reference internal" href="speech_recognition.html">Speech Recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="speech_synthesis.html">Speech Synthesis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exp_env_setup.html">PyTorch-HuggingFace Environment Setup</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">The forward-backward algorithm</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Derivative of the Sequence Cross Entropy Loss</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="slu_stop_music.html">Building a Spoken Language Understanding System</a></li>
 </ul>
 
@@ -352,7 +353,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -363,11 +366,21 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>The forward-backward algorithm</h1>
+    <h1>Derivative of the Sequence Cross Entropy Loss</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Derivative of the Sequence Cross Entropy Loss</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#factoring-out-dependency-from-model-prediction">Factoring Out Dependency from Model Prediction</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -377,78 +390,186 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-forward-backward-algorithm">
-<h1>The forward-backward algorithm<a class="headerlink" href="#the-forward-backward-algorithm" title="Link to this heading">#</a></h1>
-<p>From E-M theory, we obtained the following relationship:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^L} 
-    \hat{p}\left(Z \mid X, \theta^{(t)}\right)  \log \hat{p}(X, Z \mid \theta) \\
-&amp; =   \sum_{K \in \mathcal{K}^L} \hat{p}\left(K \mid X, \theta^{(t)}\right)  \log \hat{p}(K \mid \theta). 
-\end{aligned}
-\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(K\)</span> is a sequence of complete data, and <span class="math notranslate nohighlight">\(X\)</span> is a sequence of observed data.</p>
-<p>Since <span class="math notranslate nohighlight">\(\log \hat{p}(K \mid \theta)\)</span> can be represented in the following way:</p>
+  <section id="derivative-of-the-sequence-cross-entropy-loss">
+<h1>Derivative of the Sequence Cross Entropy Loss<a class="headerlink" href="#derivative-of-the-sequence-cross-entropy-loss" title="Link to this heading">#</a></h1>
+<p>In this section, we derive the derivative of the sequence entropy loss
+when the target and model output are not aligned. This problem
+frequently occurs when modalities are dfferrent.</p>
+<p>Suppose that we have a target sequence given by:</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
-    \log \hat{p}\left(K \mid \theta \right) = \sum_{l=0}^{L-1} \log \hat{p} 
-        \left(k_l  \mid K_{0:l}, \, \theta \right),
+        C = \left[c_0, \, c_1, \cdots , c_{L-1}\right]
     \end{align}
 \]</div>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-    \begin{align}
-    Q\left(\theta \mid \theta^{(t)}\right) &amp; =  
-        \sum\limits_{l=0}^{L-1}
-            \sum_{K \in \mathcal{K}^L}  \hat{p}\left(K \mid X, \theta^{(t)}  \right) \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right) \nonumber \\
-        &amp; = \sum\limits_{l=0}^{L-1} \sum_{K \in \mathcal{K}^L} 
-            \hat{p}\left(K | X,\, \theta^{(t)}\right)  
-                \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)  \nonumber \\ 
-        &amp; = \sum\limits_{l=0}^{L-1} \sum_{K_{0:l+1} \in \mathcal{K}^{l+1}} 
-           \underbrace{ \sum_{K_{l+1:L} \in \mathcal{K}^{L-l-1}}
-            \hat{p}\left(K | X,\, \theta^{(t)}\right)  }_{\text{Marginalization}}
-                \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)  \nonumber \\
-       &amp; = \sum\limits_{l=0}^{L-1} \sum_{K_{0:l+1} \in \mathcal{K}^{l+1}} 
-            \hat{p}\left(K_{0:l+1} | X,\, \theta^{(t)}\right)  
-                \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)   \nonumber \\
-        &amp; = \sum\limits_{l=0}^{L-1} \sum_{K_{0:l} \in \mathcal{K}^{l}} 
-            \hat{p} \left(K_{0:l}  \mid X,\,\theta^{(t)}\right) \sum_{k_{l} \in \mathcal{K}} 
-            \hat{p}\left(k_l \mid X,\,K_{0:l},\, \theta^{(t)}\right)  
-                \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right)  \nonumber \\
-        &amp; = 
-    \end{align}
-\end{split}\]</div>
-<p>If we assume conditional independence,</p>
+<p>The model output sequence is given by:</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
-        \log \hat{p} \left(k_l  \mid K_{0:l}, \, \theta \right) 
-            = \log \hat{p} \left(k_l  \mid \theta \right) 
+    \hat{Z} = \left[\hat{z}_0, \, \hat{z}_1, \cdots \hat{z}_{S-1} \right]    
     \end{align}
 \]</div>
-<p>Under this assumption:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
-    Q\left(\theta \mid \theta^{(t)}\right) 
-        &amp; = \sum\limits_{l=0}^{L-1} \underbrace{ \sum_{K_{0:l+1} \in \mathcal{K}^{l}}  
-            \hat{p} \left(K_{0:l}  \mid X,\,\theta^{(t)}\right)}_{\text{Marginalization}} \sum_{k_{l} \in \mathcal{K}} 
-            \hat{p}\left(k_l \mid X,\, \theta^{(t)}\right)  
-                \log \hat{p} \left(k_l  \mid \theta \right) \nonumber \\
-        &amp; = \sum_{l=0}^{L-1} \sum_{k_l \in \mathcal{K}} 
-            \hat{p}\left(k_l \mid X,\, \theta^{(t)}\right)  
-                \log \hat{p} \left(k_l  \mid \theta \right) 
-\end{align}
-\end{split}\]</div>
-<p>Let us define the estimated target (ET) <span class="math notranslate nohighlight">\(\mathbf{z}_l\)</span> as</p>
+<p><span class="math notranslate nohighlight">\(\hat{Z}\)</span> and <span class="math notranslate nohighlight">\(C\)</span> are not aligend. Thus, let us consider an alignment function
+, which maps the step index <span class="math notranslate nohighlight">\(s\)</span> into a tuple of time index <span class="math notranslate nohighlight">\(t\)</span> and target token
+index <span class="math notranslate nohighlight">\(l\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
-    (\mathbf{z}_l)_j = \hat{p}\left(j \mid X,\, \theta^{(t)}\right) 
+        \phi(s) =  (r(s), q(s)) = (t, l).
     \end{align}
 \]</div>
+<p>Then, using this alignment function <span class="math notranslate nohighlight">\(\phi(s)\)</span> , we obtian the following
+model-output-aligned target:</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+    K = \left[k_0, \cdots, k_l, \cdots, k_{S-1} \right]
+    \end{align}
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+        k_s = c_{q(s)}, \quad 0 \le s \le S-1.
+    \end{align}
+\]</div>
+<p>This model-output-aligned target sequence <span class="math notranslate nohighlight">\(K\)</span> is not directly
+observable, thus, it can be considered a latent variable.</p>
+<p>For a specific <span class="math notranslate nohighlight">\(K\)</span>, now, we can calculate the loss <span class="math notranslate nohighlight">\(\mathcal{L}(K)\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+    \mathcal{L}({K}) &amp; = -  \log  \hat{p} \left( K \mid \theta \right) \nonumber \\
+              &amp;  = -  \sum_{s=0}^{S-1} \log  \hat{p} \left( k_s \mid K_{0:s},\, X,\, \theta \right).
+    \end{align}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(X\)</span> is the input sequence given by:</p>
+<div class="math notranslate nohighlight">
+\[
+    X = \left[\mathbf{x}_0, \mathbf{x}_1, \cdots, \mathbf{x}_{T^{\text{(in)}} - 1} \right]
+\]</div>
+<p>Let us represent the model output at the step index <span class="math notranslate nohighlight">\(s\)</span> by <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}_s(K)\)</span>
+where the <span class="math notranslate nohighlight">\(j\)</span>-th component is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+    (\hat{z}_s)_j = \hat{p} \left(k_s = j  \mid K_{0:s}, \, X,\, \theta \right).  
+\]</div>
+<p>When the softmax layer is employed, the differentiation with
+respect to the logit is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+    \dfrac{\partial \mathcal{L} \hspace{8mm}}
+            {\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
+    = - \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s(K) \right)^\intercal
+    \end{align}
+\]</div>
+<p>During the training phase, if we can assume that <span class="math notranslate nohighlight">\((\hat{z}_s)_j\)</span>
+does not depend on <span class="math notranslate nohighlight">\(K_{0:s}\)</span>, the derivative with respect to the logit
+becomes easier. We will discuss when we make this assumption in the
+next setion. When this assumption holds, we obtain the following
+derivatie:</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+    \dfrac{\partial \mathcal{L} \hspace{8mm}}
+            {\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
+    = - \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s \right)^\intercal
+    \end{align}
+\]</div>
+<p>Motivated by the idea of Expectation-Maximization (EM), the entire loss
+<span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is given by considering the distribution of latent variables
+<span class="math notranslate nohighlight">\(K\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+    \mathcal{L} &amp; =  \mathbb{E}_{K \sim p( \cdot \mid C,\,X,\,\theta' )} 
+        \mathcal{L}(K) \nonumber \\
+                &amp; = \sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta') \mathcal{L}(K)
+    \end{align}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+    \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
+    &amp; = - \sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta') 
+        \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s \right)^\intercal \nonumber \\
+    &amp; = - \left[ \sum\limits_{j=0}^{C-1} p(k_s =j \mid C,\,X,\,\theta') \mathbf{e}_j
+            - \hat{\mathbf{z}}_s  \right]^{\intercal}
+    \end{align}
+\end{split}\]</div>
+<p>From the above equation, we conclude that if we define</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+        \tilde{z}_j = p(k_s =j \mid C,\,X,\,\theta') ,
+    \end{align}
+\]</div>
+<p>we may consider a sequence <span class="math notranslate nohighlight">\(\tilde{Z}\)</span> defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+    \tilde{Z} = \left[\tilde{z}_0, \, \tilde{z}_1, \cdots \tilde{z}_{S-1} \right]    
+\]</div>
+<p>then <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is the sequence cross entropy-loss between
+<span class="math notranslate nohighlight">\(\tilde{Z}\)</span> and <span class="math notranslate nohighlight">\(\hat{Z}\)</span>. Thus <span class="math notranslate nohighlight">\(\tilde{\mathbf{z}} = (\tilde{z}_j)_{0}^{C-1}\)</span>
+can be considered as Estimated Target (ET).</p>
+</section>
+<section id="factoring-out-dependency-from-model-prediction">
+<h1>Factoring Out Dependency from Model Prediction<a class="headerlink" href="#factoring-out-dependency-from-model-prediction" title="Link to this heading">#</a></h1>
+<p>In the above derivation, we made the following assumption:</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{z}(k_s=j \mid  K_{0:s},\, \theta) = \hat{z}(k_s=j \mid \theta)
+\]</div>
+<p>There are two ways of achieving this objective:</p>
+<ul class="simple">
+<li><p>Conditional Independence</p></li>
+</ul>
+<p>In this case, we assume that the model prediction probability at step index <span class="math notranslate nohighlight">\(s\)</span>
+does not depend on the seqeunce history at all:
+$<span class="math notranslate nohighlight">\(
+    (\hat{z}_s)_j = \hat{p} \left(k_s = j  \mid X,\, \theta \right).  
+\)</span>$
+This is a very strong assumption, which will impact the speech recognition
+accuracy to some degree.</p>
+<ul class="simple">
+<li><p>Separating Axes and Assuming Teacher-Forcing</p></li>
+</ul>
+<p>Instead of imposing a strict conditional independence assumption,
+we can maintain the dependency on the previous label sequence
+by restructuring the step index. We decompose the unified index <span class="math notranslate nohighlight">\(s\)</span>
+into two distinct axes: time (<span class="math notranslate nohighlight">\(t\)</span>) and label index (<span class="math notranslate nohighlight">\(l\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+        s = (t, l).
+    \end{align}
+\]</div>
+<p>In this framework, the model prediction at a specific grid point <span class="math notranslate nohighlight">\((t, l)\)</span>
+is represented as:</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+        (\hat{z}_{t,l})_j = \hat{p} \left(k_{t,l} = j \mid K_{0:s}, X, \theta \right).
+    \end{align}
+\]</div>
+<p>Under the Teacher-Forcing paradigm, we replace the dependency on the
+potentially stochastic, model-aligned latent sequence <span class="math notranslate nohighlight">\(K_{0:s}\)</span> with
+the fixed ground-truth prefix <span class="math notranslate nohighlight">\(C_{0:l}\)</span>. Consequently, the probability
+becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+    (\hat{z}_{t,l})_j = \hat{p} \left(k_{t,l} = j \mid C_{0:l}, X, \theta \right).
+    \end{align}
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(C_{0:l}\)</span> is a fixed constant provided by the training data, the
+model prediction <span class="math notranslate nohighlight">\((\hat{z}_{t,l})_j\)</span> at each coordinate <span class="math notranslate nohighlight">\((t, l)\)</span> no longer
+depends on the specific path taken by the latent variable <span class="math notranslate nohighlight">\(K\)</span> during the
+expectation calculation. This allows us to factor <span class="math notranslate nohighlight">\((\hat{z}_{t,l})\)</span> out of the
+summation over the latent paths <span class="math notranslate nohighlight">\(\mathcal{K}^S\)</span> when computing the gradient,
+effectively simplifying the derivative of the total loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>
+while still preserving the essential linguistic context provided by <span class="math notranslate nohighlight">\(C_{0:l}\)</span>.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -505,6 +626,25 @@ Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^L}
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Derivative of the Sequence Cross Entropy Loss</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#factoring-out-dependency-from-model-prediction">Factoring Out Dependency from Model Prediction</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
