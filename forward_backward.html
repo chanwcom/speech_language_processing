@@ -394,7 +394,7 @@
 <h1>Derivative of the Sequence Cross Entropy Loss<a class="headerlink" href="#derivative-of-the-sequence-cross-entropy-loss" title="Link to this heading">#</a></h1>
 <p>In this section, we derive the derivative of the sequence entropy loss
 when the target and model output are not aligned. This problem
-frequently occurs when modalities are dfferrent.</p>
+frequently occurs when modalities are different.</p>
 <p>Suppose that we have a target sequence given by:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -406,7 +406,7 @@ frequently occurs when modalities are dfferrent.</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
-    \hat{Z} = \left[\hat{z}_0, \, \hat{z}_1, \cdots \hat{z}_{S-1} \right]    
+        \hat{Z} = \left[\hat{z}_0, \, \hat{z}_1, \cdots \hat{z}_{S-1} \right]    
     \end{align}
 \]</div>
 <p><span class="math notranslate nohighlight">\(\hat{Z}\)</span> and <span class="math notranslate nohighlight">\(C\)</span> are not aligend. Thus, let us consider an alignment function
@@ -521,9 +521,9 @@ can be considered as Estimated Target (ET).</p>
 \[
     \hat{z}(k_s=j \mid  K_{0:s},\, \theta) = \hat{z}(k_s=j \mid \theta)
 \]</div>
-<p>There are two ways of achieving this objective:</p>
+<p>There are three ways of achieving this objective:</p>
 <ul class="simple">
-<li><p>Conditional Independence</p></li>
+<li><p>Conditional Independence Assumption Approach</p></li>
 </ul>
 <p>In this case, we assume that the model prediction probability at step index <span class="math notranslate nohighlight">\(s\)</span>
 does not depend on the seqeunce history at all:
@@ -533,16 +533,16 @@ $<span class="math notranslate nohighlight">\(
 This is a very strong assumption, which will impact the speech recognition
 accuracy to some degree.</p>
 <ul class="simple">
-<li><p>Separating Axes and Assuming Teacher-Forcing</p></li>
+<li><p>Axis Separation with Teacher Forcing Approach</p></li>
 </ul>
 <p>Instead of imposing a strict conditional independence assumption,
 we can maintain the dependency on the previous label sequence
 by restructuring the step index. We decompose the unified index <span class="math notranslate nohighlight">\(s\)</span>
-into two distinct axes: time (<span class="math notranslate nohighlight">\(t\)</span>) and label index (<span class="math notranslate nohighlight">\(l\)</span>):</p>
+into two distinct axes: time (<span class="math notranslate nohighlight">\(r(s)\)</span>) and label index (<span class="math notranslate nohighlight">\(q(s)\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
-        s = (t, l).
+        (t, l) = (r(s), q(s)).
     \end{align}
 \]</div>
 <p>In this framework, the model prediction at a specific grid point <span class="math notranslate nohighlight">\((t, l)\)</span>
@@ -568,8 +568,20 @@ model prediction <span class="math notranslate nohighlight">\((\hat{z}_{t,l})_j\
 depends on the specific path taken by the latent variable <span class="math notranslate nohighlight">\(K\)</span> during the
 expectation calculation. This allows us to factor <span class="math notranslate nohighlight">\((\hat{z}_{t,l})\)</span> out of the
 summation over the latent paths <span class="math notranslate nohighlight">\(\mathcal{K}^S\)</span> when computing the gradient,
-effectively simplifying the derivative of the total loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>
+effectively simplifying the derivative of the total sequence loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>
 while still preserving the essential linguistic context provided by <span class="math notranslate nohighlight">\(C_{0:l}\)</span>.</p>
+<ul class="simple">
+<li><p>Model Output Feedback Approach</p></li>
+</ul>
+<p>In this approach, we do not perform teacher-forcing, but directly apply
+model output as the feedback. Then the probability depdens on <span class="math notranslate nohighlight">\(\hat{K}_{0:s}\)</span>
+rather than <span class="math notranslate nohighlight">\(K_{0:s}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+        \hat{z}_s = \hat{p} \left(k_{t,l} = j \mid \hat{K}_{0:s}, X, \theta \right).
+    \end{align}
+\]</div>
 </section>
 
     <script type="text/x-thebe-config">

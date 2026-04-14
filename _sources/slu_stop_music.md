@@ -2,19 +2,45 @@
 
 ## 1. Introduction
 
-Spoken Language Understanding (SLU) represents a critical bridge between human auditory communication and machine-actionable intelligence. Traditionally, SLU systems have relied on a modular pipeline architecture, where a Speech-to-Text (STT) engine first transcribes audio into text, followed by a Natural Language Understanding (NLU) unit that extracts semantic intent and entities. In this project, we explore the implementation of a robust SLU framework by leveraging state-of-the-art self-supervised learning models and modern transformer architectures.
+Spoken Language Understanding (SLU) represents a critical bridge between human
+auditory communication and machine-actionable intelligence. Traditionally, SLU
+systems have relied on a modular pipeline architecture, where a Speech-to-Text
+(STT) engine first transcribes audio into text, followed by a Natural Language
+Understanding (NLU) unit that extracts semantic intent and entities. In
+this project, we explore the implementation of a robust SLU framework by
+leveraging state-of-the-art self-supervised learning models and modern
+transformer architectures.
 
 ### 1.1 The Cascaded Pipeline Approach
-Our primary implementation follows a high-performance cascaded strategy, which allows for independent optimization of the acoustic and semantic components:
+Our primary implementation follows a high-performance cascaded strategy, which
+allows for independent optimization of the acoustic and semantic components:
 
-Acoustic Modeling with wav2vec 2.0: We utilize wav2vec 2.0 (Baevski et al., 2020), a framework for self-supervised learning of speech representations. By fine-tuning a pre-trained wav2vec 2.0 model on labeled speech data using Connectionist Temporal Classification (CTC) loss, we build a powerful automatic speech recognition (ASR) engine capable of capturing nuanced phonetic features even with limited supervised data.
+Acoustic Modeling with wav2vec 2.0: We utilize wav2vec 2.0 (Baevski et al.,
+2020), a framework for self-supervised learning of speech representations. By
+fine-tuning a pre-trained wav2vec 2.0 model on labeled speech data using
+Connectionist Temporal Classification (CTC) loss, we build a powerful
+automatic speech recognition (ASR) engine capable of capturing nuanced
+phonetic features even with limited supervised data.
 
-Intent Classification with BERT: Once the audio is converted into a textual representation, it is processed by BERT (Bidirectional Encoder Representations from Transformers) (Devlin et al., 2019). We fine-tune BERT for the specific downstream task of user intent classification, enabling the system to understand the underlying goal of the speaker's utterance with high contextual accuracy.
+Intent Classification with BERT: Once the audio is converted into a
+textual representation, it is processed by BERT (Bidirectional Encoder
+Representations from Transformers) (Devlin et al., 2019). We fine-tune BERT
+for the specific downstream task of user intent classification, enabling
+the system to understand the underlying goal of the speaker's utterance with
+high contextual accuracy.
 
-### 1.2 Transitioning to End-to-End SLU
-While the cascaded approach is highly effective, it often suffers from "error propagation," where transcription mistakes in the ASR phase lead to catastrophic failures in intent classification. To address this, this project further investigates End-to-End (E2E) SLU models.
+### 1.2 Transitioning to End-to-End SLU While the cascaded approach
+is highly effective, it often suffers from "error propagation," where
+transcription mistakes in the ASR phase lead to catastrophic failures in
+intent classification. To address this, this project further investigates
+End-to-End (E2E) SLU models.
 
-We explore an Encoder-Decoder Attention architecture that maps acoustic features directly to semantic labels without generating an explicit intermediate transcript. By utilizing a transformer-based encoder for audio and a cross-attention mechanism within the decoder, the model can learn to prioritize task-relevant acoustic cues, potentially surpassing the limitations of traditional decoupled systems.
+We explore an Encoder-Decoder Attention architecture that maps acoustic
+features directly to semantic labels without generating an explicit
+intermediate transcript. By utilizing a transformer-based encoder for audio
+and a cross-attention mechanism within the decoder, the model can learn to
+prioritize task-relevant acoustic cues, potentially surpassing the limitations
+of traditional decoupled systems.
 
 ### 1.3 Project Scope and Objectives
 The goal of this project is to provide a comprehensive guide and implementation for building a modern SLU system. We will cover:

@@ -2,7 +2,7 @@
 
 In this section, we derive the derivative of the sequence entropy loss
 when the target and model output are not aligned. This problem
-frequently occurs when modalities are dfferrent.
+frequently occurs when modalities are different.
 
 Suppose that we have a target sequence given by:
 
@@ -16,7 +16,7 @@ The model output sequence is given by:
 
 $$
     \begin{align}
-    \hat{Z} = \left[\hat{z}_0, \, \hat{z}_1, \cdots \hat{z}_{S-1} \right]    
+        \hat{Z} = \left[\hat{z}_0, \, \hat{z}_1, \cdots \hat{z}_{S-1} \right]    
     \end{align}
 $$
 
@@ -149,9 +149,9 @@ $$
 $$
 
 
-There are two ways of achieving this objective:
+There are three ways of achieving this objective:
 
- - Conditional Independence
+ - Conditional Independence Assumption Approach
 
 In this case, we assume that the model prediction probability at step index $s$ 
 does not depend on the seqeunce history at all:
@@ -161,17 +161,17 @@ $$
 This is a very strong assumption, which will impact the speech recognition
 accuracy to some degree.
 
- - Separating Axes and Assuming Teacher-Forcing
+ - Axis Separation with Teacher Forcing Approach
  
 
 Instead of imposing a strict conditional independence assumption, 
 we can maintain the dependency on the previous label sequence 
 by restructuring the step index. We decompose the unified index $s$ 
-into two distinct axes: time ($t$) and label index ($l$):
+into two distinct axes: time ($r(s)$) and label index ($q(s)$):
 
 $$
     \begin{align}
-        s = (t, l).
+        (t, l) = (r(s), q(s)).
     \end{align}
 $$
 
@@ -200,5 +200,18 @@ model prediction $(\hat{z}_{t,l})_j$ at each coordinate $(t, l)$ no longer
 depends on the specific path taken by the latent variable $K$ during the
 expectation calculation. This allows us to factor $(\hat{z}_{t,l})$ out of the
 summation over the latent paths $\mathcal{K}^S$ when computing the gradient,
-effectively simplifying the derivative of the total loss $\mathcal{L}$
+effectively simplifying the derivative of the total sequence loss $\mathcal{L}$
 while still preserving the essential linguistic context provided by $C_{0:l}$.
+
+
+ - Model Output Feedback Approach
+ 
+ In this approach, we do not perform teacher-forcing, but directly apply
+model output as the feedback. Then the probability depdens on $\hat{K}_{0:s}$
+rather than $K_{0:s}$.
+
+$$
+    \begin{align}
+        \hat{z}_s = \hat{p} \left(k_{t,l} = j \mid \hat{K}_{0:s}, X, \theta \right).
+    \end{align}
+$$
