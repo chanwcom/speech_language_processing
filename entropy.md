@@ -254,9 +254,9 @@ $$
 If we respresent the loss at the label index $l$ by $\mathcal{L}_l$:
 
 $$
-    \mathcal{L}_l =H \Big(
+    \mathcal{L}_l =\mathbb{E}_{X_{0:l} \sim p} \left[H \Big(
                 p \big(x_l \mid X_{0:l} \big), \,
-                \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \Big).
+                \hat{p} \left( x_l \mid X_{0:l},\, \theta \right) \Big) \right].
 $$
 
 Then, we represent the entire loss $\mathcal{L}$ by
