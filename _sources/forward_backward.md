@@ -111,6 +111,14 @@ $\mathcal{L}$ is given by considering the distribution of latent variables
 $K$:
 
 
+$$
+    \begin{align}
+    \mathcal{L}_Q
+        =  \mathbb{E} {K \sim p( \mid) }
+    \end{align}
+$$
+
+
 Performing differentiation with respect to $\mathbf{h}^{\text{(logit)}}_s$ 
 leads to:
 
