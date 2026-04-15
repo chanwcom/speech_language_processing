@@ -71,26 +71,32 @@ Let us represent the model output at the step index $s$ by $\hat{\mathbf{z}}_s(K
 where the $j$-th component is given by:
 
 $$
-    (\hat{z}_s)_j = \hat{p} \left(k_s = j  \mid K_{0:s}, \, X,\, \theta \right).  
+    \hat{z}_{s,j}(K) = \hat{p} \left(k_s = j  \mid K_{0:s}, \, X,\, \theta \right).  
 $$
 
 
-When the softmax layer is employed, the differentiation with 
-respect to the logit is given by:
+
+When employing the softmax layer with a cross-entropy loss, the
+gradient of the loss $\mathcal{L}$ with respect to the logit vector
+$\mathbf{h}^{\text{(logit)}}_s$ simplifies to the difference between the
+prediction and the ground truth:
 
 $$
     \begin{align}
     \dfrac{\partial \mathcal{L} \hspace{8mm}}
             {\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
-    = - \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s(K) \right)^\intercal
+    = - \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s(K) \right)^\intercal,
     \end{align}
 $$
 
-During the training phase, if we can assume that $(\hat{z}_s)_j$
-does not depend on $K_{0:s}$, the derivative with respect to the logit
-becomes easier. We will discuss when we make this assumption in the
-next setion. When this assumption holds, we obtain the following
-derivatie:
+where $\hat{\mathbf{z}}_s(K)$
+represents the vector of predicted probabilities, and $\mathbf{e}_{k_s}$ is a
+one-hot encoded vector whose $k_s$-th element is 1 and all other elements are
+0, representing the ground truth label for the $s$-th sample.  During the
+training phase, if we can assume that $\hat{\mathbf{z}}_s(K)$ does not depend on
+$K$, the derivative with respect to the logit becomes easier. We will
+discuss when we make this assumption in the next setion. When this assumption
+holds, we obtain the following derivatie:
 
 $$
     \begin{align}
@@ -104,36 +110,85 @@ Motivated by the idea of Expectation-Maximization (EM), the entire loss
 $\mathcal{L}$ is given by considering the distribution of latent variables
 $K$:
 
-$$
-    \begin{align}
-    \mathcal{L} & =  \mathbb{E}_{K \sim p( \cdot \mid C,\,X,\,\theta' )} 
-        \mathcal{L}(K) \nonumber \\
-                & = \sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta') \mathcal{L}(K)
-    \end{align}
-$$
+
+Performing differentiation with respect to $\mathbf{h}^{\text{(logit)}}_s$ 
+leads to:
 
 $$
     \begin{align}
     \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
     & = - \sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta') 
         \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s \right)^\intercal \nonumber \\
+    \end{align}
+$$
+
+Let us define A and B as follows:
+
+$$
+    \begin{align}
+    A & :=\sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta')  \mathbf{e}_{k_s}  \nonumber \\
+    B & :=\sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta')  \hat{\mathbf{z}}_{s}(K)  \nonumber \\
+    \end{align}
+$$
+
+Let's first arrange A. Separating the summation 
+$\sum_{K \in \mathcal{K}^S} $ into two summations
+$\sum_{k_s \in \mathcal{K}} \sum_{K_{\setminus s} \in \mathcal{K}^{S-1}} $,
+and noting that $\sum_{k_s \in \mathcal{K}}$ is identical to $\sum_{k_s = 1}^{C-1}$ leads to:
+
+$$
+    \begin{align}
+        A & =   \sum_{k_s=0}^{C-1} \underbrace{\sum_{K_{\setminus s} \in \mathcal{K}^{S-1}}
+                p(K_{\setminus s} k_s  \mid C,\,X,\,\theta')}_{\text{Marginalization}}  \mathbf{e}_{k_s} \nonumber \\
+         & = \sum_{j=0}^{C-1}  p(k_s = j \mid C,\,X,\,\theta') \mathbf{e}_{j} 
+    \end{align}
+$$
+
+In case of the second term $B$, since $\hat{\mathbf{z}}_s(K)$ also depends on $K$, 
+we cannot further simply the expression. If we may assume $\hat{\mathbf{z}}_s(K)$ 
+does not depend on $K$, and simply represent it by $\hat{\mathbf{z}}$, then 
+$B$ is simplified using marginalization as follows:
+
+$$
+    \begin{align}
+    B = \hat{\mathbf{z}}_{s}  
+    \end{align}
+$$
+
+In the next section, we show examples of three cases where this assumption
+is met.
+
+Using (XX) and (XX), the derivative in (XX) is simplified as:
+$$
+    \begin{align}
+    \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
     & = - \left[ \sum\limits_{j=0}^{C-1} p(k_s =j \mid C,\,X,\,\theta') \mathbf{e}_j
             - \hat{\mathbf{z}}_s  \right]^{\intercal}
     \end{align}
 $$
 
-From the above equation, we conclude that if we define 
+From the above equation, we define an Estimated Target (ET) vector 
+$\tilde{\mathbf{z}}_s$ whose $j$-th element $(0 \le j \le C-1)$ is defined by:
 
 $$
     \begin{align}
-        \tilde{z}_j = p(k_s =j \mid C,\,X,\,\theta') ,
+        \tilde{z}_{s, j} := p(k_s =j \mid C,\,X,\,\theta').
     \end{align}
 $$
 
-we may consider a sequence $\tilde{Z}$ defined as:
+The Estimated Target vector sequence $\hat{Z}$ is given by:
 
 $$
-    \tilde{Z} = \left[\tilde{z}_0, \, \tilde{z}_1, \cdots \tilde{z}_{S-1} \right]    
+    \tilde{Z} = \left[\tilde{\mathbf{z}}_0, \, \tilde{\mathbf{z}}_1, \cdots \tilde{\mathbf{z}}_{S-1} \right].
+$$
+
+Then, the above equation can be written as 
+
+$$
+    \begin{align}
+    \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
+    & = - \left(\tilde{\mathbf{z}}_s  - \hat{\mathbf{z}}_s \right)^\intercal 
+    \end{align}
 $$
 
 then $\mathcal{L}$ is the sequence cross entropy-loss between 
