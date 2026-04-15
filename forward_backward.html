@@ -452,23 +452,28 @@ observable, thus, it can be considered a latent variable.</p>
 where the <span class="math notranslate nohighlight">\(j\)</span>-th component is given by:</p>
 <div class="math notranslate nohighlight">
 \[
-    (\hat{z}_s)_j = \hat{p} \left(k_s = j  \mid K_{0:s}, \, X,\, \theta \right).  
+    \hat{z}_{s,j}(K) = \hat{p} \left(k_s = j  \mid K_{0:s}, \, X,\, \theta \right).  
 \]</div>
-<p>When the softmax layer is employed, the differentiation with
-respect to the logit is given by:</p>
+<p>When employing the softmax layer with a cross-entropy loss, the
+gradient of the loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> with respect to the logit vector
+<span class="math notranslate nohighlight">\(\mathbf{h}^{\text{(logit)}}_s\)</span> simplifies to the difference between the
+prediction and the ground truth:</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
     \dfrac{\partial \mathcal{L} \hspace{8mm}}
             {\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
-    = - \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s(K) \right)^\intercal
+    = - \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s(K) \right)^\intercal,
     \end{align}
 \]</div>
-<p>During the training phase, if we can assume that <span class="math notranslate nohighlight">\((\hat{z}_s)_j\)</span>
-does not depend on <span class="math notranslate nohighlight">\(K_{0:s}\)</span>, the derivative with respect to the logit
-becomes easier. We will discuss when we make this assumption in the
-next setion. When this assumption holds, we obtain the following
-derivatie:</p>
+<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}_s(K)\)</span>
+represents the vector of predicted probabilities, and <span class="math notranslate nohighlight">\(\mathbf{e}_{k_s}\)</span> is a
+one-hot encoded vector whose <span class="math notranslate nohighlight">\(k_s\)</span>-th element is 1 and all other elements are
+0, representing the ground truth label for the <span class="math notranslate nohighlight">\(s\)</span>-th sample.  During the
+training phase, if we can assume that <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}_s(K)\)</span> does not depend on
+<span class="math notranslate nohighlight">\(K\)</span>, the derivative with respect to the logit becomes easier. We will
+discuss when we make this assumption in the next setion. When this assumption
+holds, we obtain the following derivatie:</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
@@ -480,35 +485,76 @@ derivatie:</p>
 <p>Motivated by the idea of Expectation-Maximization (EM), the entire loss
 <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is given by considering the distribution of latent variables
 <span class="math notranslate nohighlight">\(K\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-    \begin{align}
-    \mathcal{L} &amp; =  \mathbb{E}_{K \sim p( \cdot \mid C,\,X,\,\theta' )} 
-        \mathcal{L}(K) \nonumber \\
-                &amp; = \sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta') \mathcal{L}(K)
-    \end{align}
-\end{split}\]</div>
+<p>Performing differentiation with respect to <span class="math notranslate nohighlight">\(\mathbf{h}^{\text{(logit)}}_s\)</span>
+leads to:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{align}
     \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
     &amp; = - \sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta') 
         \left(\mathbf{e}_{k_s} - \hat{\mathbf{z}}_s \right)^\intercal \nonumber \\
-    &amp; = - \left[ \sum\limits_{j=0}^{C-1} p(k_s =j \mid C,\,X,\,\theta') \mathbf{e}_j
-            - \hat{\mathbf{z}}_s  \right]^{\intercal}
     \end{align}
 \end{split}\]</div>
-<p>From the above equation, we conclude that if we define</p>
+<p>Let us define A and B as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+    A &amp; :=\sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta')  \mathbf{e}_{k_s}  \nonumber \\
+    B &amp; :=\sum_{K \in \mathcal{K}^S} p(K \mid C,\,X,\,\theta')  \hat{\mathbf{z}}_{s}(K)  \nonumber \\
+    \end{align}
+\end{split}\]</div>
+<p>Let’s first arrange A. Separating the summation
+<span class="math notranslate nohighlight">\(\sum_{K \in \mathcal{K}^S} \)</span> into two summations
+<span class="math notranslate nohighlight">\(\sum_{k_s \in \mathcal{K}} \sum_{K_{\setminus s} \in \mathcal{K}^{S-1}} \)</span>,
+and noting that <span class="math notranslate nohighlight">\(\sum_{k_s \in \mathcal{K}}\)</span> is identical to <span class="math notranslate nohighlight">\(\sum_{k_s = 1}^{C-1}\)</span> leads to:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align}
+        A &amp; =   \sum_{k_s=0}^{C-1} \underbrace{\sum_{K_{\setminus s} \in \mathcal{K}^{S-1}}
+                p(K_{\setminus s} k_s  \mid C,\,X,\,\theta')}_{\text{Marginalization}}  \mathbf{e}_{k_s} \nonumber \\
+         &amp; = \sum_{j=0}^{C-1}  p(k_s = j \mid C,\,X,\,\theta') \mathbf{e}_{j} 
+    \end{align}
+\end{split}\]</div>
+<p>In case of the second term <span class="math notranslate nohighlight">\(B\)</span>, since <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}_s(K)\)</span> also depends on <span class="math notranslate nohighlight">\(K\)</span>,
+we cannot further simply the expression. If we may assume <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}_s(K)\)</span>
+does not depend on <span class="math notranslate nohighlight">\(K\)</span>, and simply represent it by <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}\)</span>, then
+<span class="math notranslate nohighlight">\(B\)</span> is simplified using marginalization as follows:</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{align}
-        \tilde{z}_j = p(k_s =j \mid C,\,X,\,\theta') ,
+    B = \hat{\mathbf{z}}_{s}  
     \end{align}
 \]</div>
-<p>we may consider a sequence <span class="math notranslate nohighlight">\(\tilde{Z}\)</span> defined as:</p>
+<p>In the next section, we show examples of three cases where this assumption
+is met.</p>
+<p>Using (XX) and (XX), the derivative in (XX) is simplified as:
+$<span class="math notranslate nohighlight">\(
+    \begin{align}
+    \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
+    &amp; = - \left[ \sum\limits_{j=0}^{C-1} p(k_s =j \mid C,\,X,\,\theta') \mathbf{e}_j
+            - \hat{\mathbf{z}}_s  \right]^{\intercal}
+    \end{align}
+\)</span>$</p>
+<p>From the above equation, we define an Estimated Target (ET) vector
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{z}}_s\)</span> whose <span class="math notranslate nohighlight">\(j\)</span>-th element <span class="math notranslate nohighlight">\((0 \le j \le C-1)\)</span> is defined by:</p>
 <div class="math notranslate nohighlight">
 \[
-    \tilde{Z} = \left[\tilde{z}_0, \, \tilde{z}_1, \cdots \tilde{z}_{S-1} \right]    
+    \begin{align}
+        \tilde{z}_{s, j} := p(k_s =j \mid C,\,X,\,\theta').
+    \end{align}
+\]</div>
+<p>The Estimated Target vector sequence <span class="math notranslate nohighlight">\(\hat{Z}\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+    \tilde{Z} = \left[\tilde{\mathbf{z}}_0, \, \tilde{\mathbf{z}}_1, \cdots \tilde{\mathbf{z}}_{S-1} \right].
+\]</div>
+<p>Then, the above equation can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+    \begin{align}
+    \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
+    &amp; = - \left(\tilde{\mathbf{z}}_s  - \hat{\mathbf{z}}_s \right)^\intercal 
+    \end{align}
 \]</div>
 <p>then <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is the sequence cross entropy-loss between
 <span class="math notranslate nohighlight">\(\tilde{Z}\)</span> and <span class="math notranslate nohighlight">\(\hat{Z}\)</span>. Thus <span class="math notranslate nohighlight">\(\tilde{\mathbf{z}} = (\tilde{z}_j)_{0}^{C-1}\)</span>
