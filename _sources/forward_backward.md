@@ -159,6 +159,7 @@ In the next section, we show examples of three cases where this assumption
 is met.
 
 Using (XX) and (XX), the derivative in (XX) is simplified as:
+
 $$
     \begin{align}
     \dfrac{\partial \mathcal{L} \hspace{8mm}}{\partial   {\mathbf{h}^{\text{(logit)}}}_s } 
