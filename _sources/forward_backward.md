@@ -1,4 +1,4 @@
-## Derivative of the Sequence Cross Entropy Loss
+## Unaligned Sequence Loss
 
 In this section, we derive the derivative of the sequence entropy loss
 when the target and model output are not aligned. This problem
