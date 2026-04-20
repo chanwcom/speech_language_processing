@@ -55,7 +55,7 @@ For a specific $K$, now, we can calculate the loss $\mathcal{L}(K)$ as follows:
 
 $$
     \begin{align}
-    \mathcal{L}({K}) & = -  \log  \hat{p} \left( K \mid \theta \right) \nonumber \\
+    \mathcal{L}({K}) & = -  \log  \hat{p} \left( K \mid X,\, \theta \right) \nonumber \\
               &  = -  \sum_{s=0}^{S-1} \log  \hat{p} \left( k_s \mid K_{0:s},\, X,\, \theta \right).
     \end{align}
 $$
@@ -114,7 +114,10 @@ $K$:
 $$
     \begin{align}
     \mathcal{L}_Q
-        =  \mathbb{E} {K \sim p( \mid) }
+        & =  \mathbb{E}_{K \sim \hat{p}(\cdot \mid C, X, \theta')} 
+            { \log \hat{p}(K \mid X,\, \theta)   } \nonumber \\
+        & =  \sum_{K \in \mathcal{K}^{S} } \hat{p}(K \mid C,\, X,\, \theta')
+            { \log \hat{p}(K \mid X,\, \theta)   } 
     \end{align}
 $$
 

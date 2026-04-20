@@ -439,7 +439,7 @@ observable, thus, it can be considered a latent variable.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{align}
-    \mathcal{L}({K}) &amp; = -  \log  \hat{p} \left( K \mid \theta \right) \nonumber \\
+    \mathcal{L}({K}) &amp; = -  \log  \hat{p} \left( K \mid X,\, \theta \right) \nonumber \\
               &amp;  = -  \sum_{s=0}^{S-1} \log  \hat{p} \left( k_s \mid K_{0:s},\, X,\, \theta \right).
     \end{align}
 \end{split}\]</div>
@@ -486,12 +486,15 @@ holds, we obtain the following derivatie:</p>
 <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is given by considering the distribution of latent variables
 <span class="math notranslate nohighlight">\(K\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[
+\[\begin{split}
     \begin{align}
     \mathcal{L}_Q
-        =  \mathbb{E} {K \sim p( \mid) }
+        &amp; =  \mathbb{E}_{K \sim \hat{p}(\cdot \mid C, X, \theta')} 
+            { \log \hat{p}(K \mid X,\, \theta)   } \nonumber \\
+        &amp; =  \sum_{K \in \mathcal{K}^{S} } \hat{p}(K \mid C,\, X,\, \theta')
+            { \log \hat{p}(K \mid X,\, \theta)   } 
     \end{align}
-\]</div>
+\end{split}\]</div>
 <p>Performing differentiation with respect to <span class="math notranslate nohighlight">\(\mathbf{h}^{\text{(logit)}}_s\)</span>
 leads to:</p>
 <div class="math notranslate nohighlight">

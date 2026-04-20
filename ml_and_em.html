@@ -396,7 +396,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-the-m-step-maximization">B. The M-Step (Maximization)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-modification-of-the-e-step-equation">2.3 Further Modification of the E-Step Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-i-d-assumption">2.3 i.i.d Assumption</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.4 Why Does it Work? (Jensen’s Inequality)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-representation-of-the-auxiliary-function">2.5 Alternative Representation of the Auxiliary Function</a></li>
 </ul>
@@ -602,8 +602,8 @@ Q(\theta \mid \theta^{(t)}) =
 \[\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})\]</div>
 </section>
 </section>
-<section id="further-modification-of-the-e-step-equation">
-<h3>2.3 Further Modification of the E-Step Equation<a class="headerlink" href="#further-modification-of-the-e-step-equation" title="Link to this heading">#</a></h3>
+<section id="i-i-d-assumption">
+<h3>2.3 i.i.d Assumption<a class="headerlink" href="#i-i-d-assumption" title="Link to this heading">#</a></h3>
 <p>Let us modify the <strong>auxilary function</strong> given in the following form:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -640,6 +640,7 @@ Q(\theta | \theta^{(t)}) &amp; =
     \log p\left(x_i, z_i, \mid \theta \right) \right]  
 \end{align}
 \end{split}\]</div>
+<p>The conclusion is that the i.i.d. assumption allows the global auxiliary function to be decomposed into a sum of individual auxiliary functions for each data point.</p>
 </section>
 <section id="why-does-it-work-jensen-s-inequality">
 <h3>2.4 Why Does it Work? (Jensen’s Inequality)<a class="headerlink" href="#why-does-it-work-jensen-s-inequality" title="Link to this heading">#</a></h3>
@@ -807,7 +808,7 @@ Q\left(\theta \mid \theta^{(t)}\right) &amp; = \sum_{Z \in \mathcal{Z}^I}
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-the-m-step-maximization">B. The M-Step (Maximization)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-modification-of-the-e-step-equation">2.3 Further Modification of the E-Step Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-i-d-assumption">2.3 i.i.d Assumption</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-it-work-jensen-s-inequality">2.4 Why Does it Work? (Jensen’s Inequality)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-representation-of-the-auxiliary-function">2.5 Alternative Representation of the Auxiliary Function</a></li>
 </ul>
