@@ -186,7 +186,7 @@ We update the parameters by maximizing the Q-function:
 
 $$\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)})$$
 
-### 2.3 Further Modification of the E-Step Equation
+### 2.3 i.i.d Assumption
 
 Let us modify the **auxilary function** given in the following form:
 
@@ -227,7 +227,7 @@ $$
 \end{align}
 $$
 
-
+The conclusion is that the i.i.d. assumption allows the global auxiliary function to be decomposed into a sum of individual auxiliary functions for each data point.
 
 
 ### 2.4 Why Does it Work? (Jensen's Inequality)
