@@ -282,3 +282,51 @@ $$
         \hat{z}_s = \hat{p} \left(k_{t,l} = j \mid \hat{K}_{0:s}, X, \theta \right).
     \end{align}
 $$
+
+
+## Forward-Backward Algorithm
+
+The forward-backward variables are defined slightly differently between
+the CTC and the Transducer case. First, the following is the CTC case.
+
+$$
+    \alpha_{t,l}  = \sum_{\mathcal{B}(\phi_{0:s+1}) = c_{0:l}}  P( \phi_{0:s},\, \phi(s) = (t,l) \mid X,\, \theta') \\
+    \beta_{t,l}  =  \sum_{\mathcal{B}(\phi_{s:S}) = c_{l:L}} P( \phi_{s+1:S} \mid \phi(s) = (t,l),\, X,\, \theta')
+$$
+
+Next, the following is the Transducer case.
+
+$$
+    \alpha_{t,l}  = \sum_{\mathcal{B}(\phi_{0:s+1}) = c_{0:l}}  P( \phi_{0:s},\, \phi(s) = (t,l) \mid X,\, \theta') \\
+    \beta_{t,l}  =  \sum_{\mathcal{B}(\phi_{s:S}) = c_{l+1:L}} P( \phi_{s+1:S} \mid \phi(s) = (t,l),\, X,\, \theta')
+$$
+
+TODO: Explain why $\beta_{t,l}$ are different.
+
+From (XX), we obtain the following representation:
+
+$$
+    \left(\hat{\mathbf{z}}_s\right)_j = p(k_s = j \mid C,\,X,\,\theta') = \frac{p(C,\, k_s = j \mid X,\,\theta') }
+        {p(C \mid X,\,\theta')}
+$$
+
+We can compute the numerator of (XX) efficiently.
+
+
+### CTC case
+
+$$
+\begin{align}
+p(C,\, k_s = j \mid X,\,\theta')  = \sum_{c_l = j }p(C,\, \phi_{s} = (t, l) \mid X,\,\theta')   \nonumber \\
+                                  = \sum_{c_l = j }p(C,\, \phi_{s} = (t, l) \mid X,\,\theta')  
+\end{align}
+$$
+
+### Transducer case
+
+
+
+
+
+
+

@@ -183,6 +183,7 @@
 <li class="toctree-l1"><a class="reference internal" href="exp_env_setup.html">PyTorch-HuggingFace Environment Setup</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Unaligned Sequence Loss</a></li>
 
+
 <li class="toctree-l1"><a class="reference internal" href="slu_stop_music.html">Building a Spoken Language Understanding System</a></li>
 </ul>
 
@@ -378,6 +379,11 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Unaligned Sequence Loss</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#factoring-out-dependency-from-model-prediction">Factoring Out Dependency from Model Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-backward-algorithm">Forward-Backward Algorithm</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctc-case">CTC case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transducer-case">Transducer case</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -640,6 +646,43 @@ rather than <span class="math notranslate nohighlight">\(K_{0:s}\)</span>.</p>
     \end{align}
 \]</div>
 </section>
+<section id="forward-backward-algorithm">
+<h1>Forward-Backward Algorithm<a class="headerlink" href="#forward-backward-algorithm" title="Link to this heading">#</a></h1>
+<p>The forward-backward variables are defined slightly differently between
+the CTC and the Transducer case. First, the following is the CTC case.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \alpha_{t,l}  = \sum_{\mathcal{B}(\phi_{0:s+1}) = c_{0:l}}  P( \phi_{0:s},\, \phi(s) = (t,l) \mid X,\, \theta') \\
+    \beta_{t,l}  =  \sum_{\mathcal{B}(\phi_{s:S}) = c_{l:L}} P( \phi_{s+1:S} \mid \phi(s) = (t,l),\, X,\, \theta')
+\end{split}\]</div>
+<p>Next, the following is the Transducer case.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \alpha_{t,l}  = \sum_{\mathcal{B}(\phi_{0:s+1}) = c_{0:l}}  P( \phi_{0:s},\, \phi(s) = (t,l) \mid X,\, \theta') \\
+    \beta_{t,l}  =  \sum_{\mathcal{B}(\phi_{s:S}) = c_{l+1:L}} P( \phi_{s+1:S} \mid \phi(s) = (t,l),\, X,\, \theta')
+\end{split}\]</div>
+<p>TODO: Explain why <span class="math notranslate nohighlight">\(\beta_{t,l}\)</span> are different.</p>
+<p>From (XX), we obtain the following representation:</p>
+<div class="math notranslate nohighlight">
+\[
+    \left(\hat{\mathbf{z}}_s\right)_j = p(k_s = j \mid C,\,X,\,\theta') = \frac{p(C,\, k_s = j \mid X,\,\theta') }
+        {p(C \mid X,\,\theta')}
+\]</div>
+<p>We can compute the numerator of (XX) efficiently.</p>
+<section id="ctc-case">
+<h2>CTC case<a class="headerlink" href="#ctc-case" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+p(C,\, k_s = j \mid X,\,\theta')  = \sum_{c_l = j }p(C,\, \phi_{s} = (t, l) \mid X,\,\theta')   \nonumber \\
+                                  = \sum_{c_l = j }p(C,\, \phi_{s} = (t, l) \mid X,\,\theta')  
+\end{align}
+\end{split}\]</div>
+</section>
+<section id="transducer-case">
+<h2>Transducer case<a class="headerlink" href="#transducer-case" title="Link to this heading">#</a></h2>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -709,6 +752,11 @@ rather than <span class="math notranslate nohighlight">\(K_{0:s}\)</span>.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Unaligned Sequence Loss</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#factoring-out-dependency-from-model-prediction">Factoring Out Dependency from Model Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-backward-algorithm">Forward-Backward Algorithm</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctc-case">CTC case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transducer-case">Transducer case</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
